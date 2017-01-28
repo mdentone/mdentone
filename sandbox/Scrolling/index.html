@@ -45,7 +45,7 @@ body {
         resize();
         document.body.appendChild(app.view);
 
-        var background, sidebar, fader, pausetext;
+        var background, sidebar, fader, pausetext, pausebutton;
         var paused = false;
 
         PIXI.loader
@@ -65,6 +65,24 @@ body {
                 sidebar.x = app.renderer.width - sidebar.width;
 
                 app.stage.addChild(sidebar);
+
+                var graphics = new PIXI.Graphics();
+                graphics.lineStyle(0);
+                graphics.beginFill(0, 0);
+                graphics.drawRect(0, 0, 236, 110);
+                graphics.endFill();
+
+                graphics.x = sidebar.x;
+                graphics.y = 480;
+
+                graphics.interactive = true;
+                graphics.buttonMode = true;
+                graphics.on("click", pause);
+                graphics.on("touchend", pause);
+
+                app.stage.addChild(graphics);
+
+                pausebutton = graphics;
 
                 gameloop();
             });
@@ -115,6 +133,7 @@ body {
             graphics.interactive = true;
             graphics.buttonMode = true;
             graphics.once("click", resume);
+            graphics.once("touchend", resume);
 
             app.stage.addChild(graphics);
 
@@ -184,6 +203,7 @@ body {
             );
             if (sidebar) {
                 sidebar.x = app.renderer.width - sidebar.width;
+                pausebutton.x = sidebar.x;
             }
         };
 
