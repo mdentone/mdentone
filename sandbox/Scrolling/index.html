@@ -115,11 +115,13 @@ body {
             requestAnimationFrame(gameloop);
         }
 
-        function pause() {
+        function pause(evt) {
             if (paused) {
                 return;
             }
             logger.log("Pause");
+
+            if (evt && evt.stopPropagation) evt.stopPropagation();
 
             app.ticker.stop();
             paused = true;
@@ -166,11 +168,13 @@ body {
             pausetext = text;
         }
 
-        function resume() {
+        function resume(evt) {
             if (!paused) {
                 return;
             }
             logger.log("Resume");
+
+            if (evt && evt.stopPropagation) evt.stopPropagation();
 
             app.stage.removeChild(pausetext);
             app.stage.removeChild(fader);
