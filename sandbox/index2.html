@@ -27,7 +27,16 @@
 </head>
 <body ondragstart="return false;" ondrop="return false;">
     <noscript>:/ no javascript?!</noscript>
-    <span>0</span>
-    <script>Game.run();</script>
+    <span>1</span>
+    <script>
+        window.onerror = function (msg, url, li, co, err) {
+            var s = ":( error";
+            if (msg) s += msg;
+            if (url) s += url;
+            if (err && err.stack) s += err.stack;
+            alert(s);
+        }
+        Game.run();
+    </script>
 </body>
 </html>
