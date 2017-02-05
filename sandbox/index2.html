@@ -25,18 +25,23 @@
         body { margin: 0; padding: 0; overflow: hidden; }
     </style>
 </head>
-<body ondragstart="return false;" ondrop="return false;">
+<body ondragstart="return false;" ondrop="return false;" onload="Game.run();">
     <noscript>:/ no javascript?!</noscript>
-    <span>1</span>
+    <span>2</span>
     <script>
         window.onerror = function (msg, url, li, co, err) {
-            var s = ":( error";
-            if (msg) s += msg;
-            if (url) s += url;
-            if (err && err.stack) s += err.stack;
-            alert(s);
+            var to = "<p><pre>", tc = "</pre></p>";
+            var es = "<div>";
+            es += to + ":( error" + tc;
+            if (msg)
+                es += to + msg + tc;
+            if (url && li > 0 && co > 0)
+                es += to + url + ":" + li + ":" + co + tc;
+            if (err && err.stack) 
+                es += to + err.stack + tc;
+            es += "</div>";
+            document.body.innerHTML = es;
         }
-        Game.run();
     </script>
 </body>
 </html>
