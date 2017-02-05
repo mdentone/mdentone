@@ -119,6 +119,15 @@ global.Game = (function () {
     //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
     function setupEventHandlers() {
+        window.onerror = function (msg, url, li, co, err) {
+            document.open();
+            document.writeln(":( error");
+            if (msg !== undefined) document(msg);
+            if (url !== undefined) document(url);
+            if (err !== undefined && err.stack) document(err.stack);
+            document.close();
+        }
+
         window.onblur = appContainer.onblur = instance.suspend;
         window.onfocus = appContainer.onfocus = instance.resume;
         appContainer.onresize = resize;
