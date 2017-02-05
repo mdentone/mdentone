@@ -121,10 +121,11 @@ global.Game = (function () {
     function setupEventHandlers() {
         window.onerror = function (msg, url, li, co, err) {
             document.open();
-            document.writeln(":( error");
-            if (msg !== undefined) document(msg);
-            if (url !== undefined) document(url);
-            if (err !== undefined && err.stack) document(err.stack);
+            var to = "<p><pre>", tc = "</pre></p>";
+            document.write(to + ":( error" + tc);
+            if (msg) document.write(to + msg + tc);
+            if (url) document.write(to + url + tc);
+            if (err && err.stack) document.write(to + err.stack + tc);
             document.close();
         }
 
