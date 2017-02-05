@@ -32,7 +32,7 @@ if (typeof global.requestAnimationFrame !== "function") {
 
 //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
-global.Game = (function () {
+var Game = (function () {
     var instance = { };
 
     // Properties
@@ -48,15 +48,13 @@ global.Game = (function () {
     /// </summary>
     instance.run = function (container) {
         instance.run = function () { console.warn("Run already called."); };
+        console.info("Run!");
 
         if (typeof PIXI !== "object") {
             document.write(":( error loading");
             return;
         }
         appContainer = container || document.body;
-
-        logger.enabled = true;
-        logger.log("Run");
 
         constants.initialize();
 
@@ -111,14 +109,12 @@ global.Game = (function () {
         });
         app.view.style.width = "100%";
         app.view.style.height = "100%";
-
-        // TBR:
-        instance.app = app;
     }
 
     //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
     function setupEventHandlers() {
+        // global error handler
         window.onerror = function (msg, url, li, co, err) {
             document.open();
             var to = "<p><pre>", tc = "</pre></p>";
@@ -128,7 +124,7 @@ global.Game = (function () {
             if (err && err.stack) document.write(to + err.stack + tc);
             document.close();
         }
-
+        // game state handlers
         window.onblur = appContainer.onblur = instance.suspend;
         window.onfocus = appContainer.onfocus = instance.resume;
         appContainer.onresize = resize;
@@ -259,7 +255,7 @@ global.Game = (function () {
     //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
     function resize() {
-        logger.log("Resize");
+        console.debug("Resize");
         var iW, iH;
         if (appContainer === document.body) {
             iW = window.innerWidth;
@@ -286,29 +282,6 @@ global.Game = (function () {
         }
         app.render();
     };
-
-    // Private Objects
-    //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-
-    var logger = (function () {
-        var instance = {};
-
-        // Properties
-        //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-
-        instance.enabled = true;
-
-        // Methods
-        //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-
-        instance.log = function (args) {
-            if (instance.enabled) {
-                console.log.apply(null, arguments);
-            }
-        };
-
-        return instance;
-    })();
 
     //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
@@ -617,11 +590,11 @@ global.Game = (function () {
         instance.enter = function (state) {
             if (state === currentState) return;
             if (instance.current) {
-                logger.log("Exiting state %d", currentState);
+                console.debug("Exiting state %d", currentState);
                 instance.current.exit();
             }
             instance.current = screens[currentState = state];
-            logger.log("Entering state %d", currentState);
+            console.debug("Entering state %d", currentState);
             instance.current.enter();
         };
 
@@ -986,9 +959,6 @@ global.Game = (function () {
             for (var i = 0; i < explosions.length; i++) {
                 explosions[i].destroy(true);
             }
-            //////for (i = 0; i < explosionTextures.length; i++) {
-            //////    explosionTextures[i].destroy(true);
-            //////}
             explosionTextures = null;
         };
 
@@ -996,10 +966,8 @@ global.Game = (function () {
 
         screen.gameloop = function () {
             if (++frameSkipper % 26 > 0) {
-                console.log("skipping");
                 return;
             }
-            console.log("doing");
 
             var explosion = explosions[++currentExplosion % explosions.length];
             explosion.position.set(
