@@ -27,6 +27,13 @@
 </head>
 <body ondragstart="return false;" ondrop="return false;">
     <noscript>:/ no javascript?!</noscript>
-    <script>Game.run();</script>
+    <script>
+        (function autorun() {
+            if (Game) 
+                Game.run();
+            else
+                setTimeout(autorun, 200);
+        })();
+    </script>
 </body>
 </html>

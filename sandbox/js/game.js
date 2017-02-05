@@ -15,13 +15,33 @@
 
 //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
-var global = global || window;
+window.onerror = function (msg, url, li, co, err) {
+    var to = "<pre>", tc = "</pre>";
+    var es = "<div>";
+    es += to + ":( error" + tc;
+    if (msg)
+        es += to + msg + tc;
+    if (url && li > 0 && co > 0)
+        es += to + url + ":" + li + ":" + co + tc;
+    if (err && err.stack)
+        es += to + err.stack + tc;
+    es += "</div>";
+    if (document && document.body)
+        document.body.innerHTML = es;
+    else if (document) {
+        document.open();
+        document.write(es);
+        document.close();
+    }
+    else
+        alert(es);
+}
 
 // Polyfills
 //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
-if (typeof global.requestAnimationFrame !== "function") {    
-    global.requestAnimationFrame = function (callback) {
+if (typeof window.requestAnimationFrame !== "function") {    
+    window.requestAnimationFrame = function (callback) {
         return setTimeout(callback, 16.6667);
     }
 }
@@ -114,16 +134,6 @@ var Game = (function () {
     //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
     function setupEventHandlers() {
-        // global error handler
-        window.onerror = function (msg, url, li, co, err) {
-            document.open();
-            var to = "<p><pre>", tc = "</pre></p>";
-            document.write(to + ":( error" + tc);
-            if (msg) document.write(to + msg + tc);
-            if (url) document.write(to + url + tc);
-            if (err && err.stack) document.write(to + err.stack + tc);
-            document.close();
-        }
         // game state handlers
         window.onblur = appContainer.onblur = instance.suspend;
         window.onfocus = appContainer.onfocus = instance.resume;
