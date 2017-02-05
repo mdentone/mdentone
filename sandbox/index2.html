@@ -42,7 +42,7 @@
             es += "</div>";
             document.body.innerHTML = es;
         }
-        setTimeout(Game.run, 5000);
+        setTimeout(function() { Game.run(); }, 5000);
     </script>
 </body>
 </html>
