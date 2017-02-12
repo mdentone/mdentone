@@ -29,10 +29,8 @@
     <noscript>:/ no javascript?!</noscript>
     <script>
         (function autorun() {
-            if (Game) 
-                Game.run();
-            else
-                setTimeout(autorun, 200);
+            if (Game) Game.run();
+            else setTimeout(autorun, 200);
         })();
     </script>
 </body>

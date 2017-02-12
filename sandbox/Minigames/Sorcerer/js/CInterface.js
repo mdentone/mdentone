@@ -59,7 +59,7 @@ function CInterface(){
     this.nextLevel = function(iLevel,iScore){
         // mat:
         //_oNextLevelPanel.show(iLevel, iScore);
-        $(s_oMain).trigger("level_end");
+        $(s_oMain).trigger("end_level");
         // /mat
     };
     

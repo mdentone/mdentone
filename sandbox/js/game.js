@@ -135,8 +135,8 @@ var Game = (function () {
 
     function setupEventHandlers() {
         // game state handlers
-        window.onblur = appContainer.onblur = instance.suspend;
-        window.onfocus = appContainer.onfocus = instance.resume;
+        window.onblur = /*appContainer.onblur =*/ instance.suspend;
+        window.onfocus = /*appContainer.onfocus =*/ instance.resume;
         appContainer.onresize = resize;
     }
 
@@ -155,7 +155,6 @@ var Game = (function () {
                 loadingtext.text = str;
             })
             .load(function (loader, resources) {
-                Game.GameData.Background =
                 background = new PIXI.Sprite(resources.background.texture);
 
                 Game.GameData.Helpers.createSquares(background);
@@ -250,6 +249,38 @@ var Game = (function () {
 
         // delete
     }
+
+    //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+
+    function launch(game, level, callback) {
+        if (minigameContainer) {
+            console.warn("A minigame is already running");
+            return;
+        }
+        instance.suspend();
+        var games = ["Bubble", "Frogger", "Ninja", "Sheep", "Sorcerer"],
+            game = games[game];
+        minigameContainer = document.createElement("IFRAME");
+        minigameContainer.style.cssText =
+            "position:absolute;position:fixed;" +
+            "left:0;top:0;width:100%;height:100%;z-index:1000;" +
+            "background-color:black;";
+        minigameContainer.src = "./minigames/" + game + "/index.html?level=" + level;
+        appContainer.appendChild(minigameContainer);
+        window.endLevel = function (passed) {
+            window.endLevel = function (passed) { };
+            appContainer.removeChild(minigameContainer);
+            minigameContainer = null;
+            setTimeout(function () {
+                instance.resume();
+                callback(passed);
+            }, 200);
+        };
+    }
+
+    //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+
+    window.endLevel = function(passed) { };
 
     //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
@@ -422,7 +453,6 @@ var Game = (function () {
 
         instance.init = function () {
             var gd = Game.GameData;
-            background = gd.Background;
             player = gd.Player;
             squares = gd.Squares;
         };
@@ -448,7 +478,7 @@ var Game = (function () {
             if (steps) {
                 moves++;
                 walks = steps;
-                backward = false;
+                backward = steps < 0;
             }
             prevSquare = currSquare;
             if (backward)
@@ -502,7 +532,7 @@ var Game = (function () {
 
         var prevSquare = 0, currSquare = 0, backward = false;
 
-        var background, player, squares;
+        var player, squares;
 
         var stepx, stepy, moves, walks;
 
@@ -821,38 +851,45 @@ var Game = (function () {
 
         screen.gameloop = function () {
             switch (state) {
-                case DICE:
-                    // todo
-                    state = ROLL;
-                    break;
-                case ROLL:
-                    if (Dice.roll()) {
-                        Player.move(Dice.last());
-                        state = WALK;
-                    }
-                    break;
-                case WALK:
-                    if (Player.walk()) state = PLAY;
-                    break;
-                case PLAY:
-                    var square = Game.GameData.Squares[Player.currentSquare()];
-                    if (square.type === Game.GameData.SquareTypes.Finish) {
-                        screens.enter(constants.gameStates.finish);
-                    }
-                    else if (square.type === Game.GameData.SquareTypes.Game) {
-                        // todo
-                        //////////alert("play minigame");
-                        if (true) {
+            case DICE:
+                // todo
+                state = ROLL;
+                break;
+            case ROLL:
+                if (Dice.roll()) {
+                    Player.move(Dice.last());
+                    state = WALK;
+                }
+                break;
+            case WALK:
+                if (Player.walk()) state = PLAY;
+                break;
+            case PLAY:
+                var square = Game.GameData.Squares[Player.currentSquare()];
+                if (square.type === Game.GameData.SquareTypes.Finish) {
+                    screens.enter(constants.gameStates.finish);
+                }
+                else if (square.type === Game.GameData.SquareTypes.Game) {
+                    state = GAME;
+                    launch(square.data.game, square.data.levels[square.data.level],
+                    function (passed) {
+                        if (passed) {
+                            square.data.level++;
+                            if (square.data.level >= square.data.levels.length) {
+                                square.data.level = 0;
+                            }
                             state = DICE;
                         }
                         else {
                             Player.move(-Dice.last());
+                            state = WALK;
                         }
-                    }
-                    else {
-                        state = DICE;
-                    }
-                    break;
+                    });
+                }
+                else {
+                    state = DICE;
+                }
+                break;
             }
         };
 
@@ -870,6 +907,9 @@ var Game = (function () {
         //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
         screen.suspend = function () {
+            if (state === GAME) {
+                return;
+            }
             paused = true;
 
             var graphics = new PIXI.Graphics();
@@ -896,13 +936,13 @@ var Game = (function () {
         //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
         screen.resume = function () {
-            return paused === false;
+            return state === GAME || paused === false;
         };
 
         // Private Members
         //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
-        var DICE = 0, ROLL = 1, WALK = 2, PLAY = 3;
+        var DICE = 0, ROLL = 1, WALK = 2, PLAY = 3, GAME = 4;
         var state = DICE;
 
         var paused = false;
@@ -1019,6 +1059,9 @@ var Game = (function () {
 
     // dom element to contain the app
     var appContainer;
+
+    // dom element to contain the minigames
+    var minigameContainer;
 
     // pixi application
     var app;

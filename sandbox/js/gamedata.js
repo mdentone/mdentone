@@ -59,7 +59,11 @@ Game.GameData.Squares = [
         x: 200, y: 220, data: {}
     }, {
         texture: "", type: Game.GameData.SquareTypes.Game,
-        x: 310, y: 390, data: {}
+        x: 310, y: 390, data: {
+            game   : 0, // Bubble
+            level  : 0,
+            levels : [1, 2, 3, 4, 5]
+        }
     }, {
         texture: "", type: Game.GameData.SquareTypes.Normal,
         x: 400, y: 220, data: {}
@@ -68,7 +72,11 @@ Game.GameData.Squares = [
         x: 620, y: 240, data: {}
     }, {
         texture: "", type: Game.GameData.SquareTypes.Game,
-        x: 760, y: 420, data: {}
+        x: 760, y: 420, data: {
+            game   : 1, // Frogger
+            level  : 0,
+            levels : [1, 2, 3, 4, 5]
+        }
     }, {
         texture: "", type: Game.GameData.SquareTypes.Normal,
         x: 840, y: 240, data: {}
@@ -80,7 +88,11 @@ Game.GameData.Squares = [
         x: 1180, y: 440, data: {}
     }, {
         texture: "", type: Game.GameData.SquareTypes.Game,
-        x: 1280, y: 280, data: {}
+        x: 1280, y: 280, data: {
+            game   : 2, // Ninja
+            level  : 0,
+            levels : [1, 5, 10, 20, 50]
+        }
     }, {
         texture: "", type: Game.GameData.SquareTypes.Normal,
         x: 1500, y: 270, data: {}
@@ -89,13 +101,21 @@ Game.GameData.Squares = [
         x: 1710, y: 290, data: {}
     }, {
         texture: "", type: Game.GameData.SquareTypes.Game,
-        x: 1600, y: 440, data: {}
+        x: 1600, y: 440, data: {
+            game   : 3, // Sheep
+            level  : 0,
+            levels : [1, 3, 5, 10, 20]
+        }
     }, {
         texture: "", type: Game.GameData.SquareTypes.Normal,
         x: 1720, y: 590, data: {}
     }, {
         texture: "", type: Game.GameData.SquareTypes.Game,
-        x: 1500, y: 590, data: {}
+        x: 1500, y: 590, data: {
+            game   : 4, // Sorcerer
+            level  : 0,
+            levels : [1, 2, 3]
+        }
     }, {
         texture: "", type: Game.GameData.SquareTypes.Normal,
         x: 1400, y: 440, data: {}
