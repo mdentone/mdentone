@@ -265,7 +265,7 @@ var Game = (function () {
             "position:absolute;position:fixed;" +
             "left:0;top:0;width:100%;height:100%;z-index:1000;" +
             "background-color:black;";
-        minigameContainer.src = "./minigames/" + game + "/index.html?level=" + level;
+        minigameContainer.src = "minigames/" + game + "/index.html?level=" + level;
         appContainer.appendChild(minigameContainer);
         window.endLevel = function (passed) {
             window.endLevel = function (passed) { };
