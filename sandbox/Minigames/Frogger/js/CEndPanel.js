@@ -68,7 +68,7 @@ function CEndPanel(oSpriteBg){
         createjs.Tween.get(_oGroup).to({alpha:1 }, 500).call(function() {oParent._initListener();});
 
         $(s_oMain).trigger("save_score",[iScore]);
-        $(s_oMain).trigger("end_level",s_iCurLevel);
+        $(s_oMain).trigger("end_level", 0);
         $(s_oMain).trigger("share_event", iScore); 
 
     };

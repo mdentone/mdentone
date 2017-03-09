@@ -201,9 +201,9 @@ function CInterface(){
     };
     
     this._onExit = function(){
-        $(s_oMain).trigger("end_level",s_iCurLevel+1);
+        $(s_oMain).trigger("end_level", 0);
         $(s_oMain).trigger("end_session");
-        $(s_oMain).trigger("share_event", s_iScore); 
+        $(s_oMain).trigger("share_event", 0); 
         
       s_oGame.onExit();  
     };

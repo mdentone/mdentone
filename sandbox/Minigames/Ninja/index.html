@@ -91,7 +91,7 @@
 
             $(oMain).on("end_level", function (evt, passed) {
                 if (getParamValue('ctl-arcade') === "true") {
-                    parent.__ctlArcadeEndLevel({ level: iLevel });
+                    parent.__ctlArcadeEndLevel({ level: 1 /* mat */ });
                 }
 
                 // mat:

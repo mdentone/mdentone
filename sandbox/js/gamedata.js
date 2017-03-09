@@ -53,96 +53,105 @@ Game.GameData.SquareTypes = {
 Game.GameData.Squares = [
     {
         texture: "", type: Game.GameData.SquareTypes.Start,
-        x: 90, y: 370, data: {}
+        x: 90, y: 370, data: null
     }, {
         texture: "", type: Game.GameData.SquareTypes.Normal,
-        x: 200, y: 220, data: {}
+        x: 200, y: 220, data: null
     }, {
         texture: "", type: Game.GameData.SquareTypes.Game,
-        x: 310, y: 390, data: {
-            game   : 0, // Bubble
-            level  : 0,
-            levels : [1, 2, 3, 4, 5]
-        }
+        x: 310, y: 390, data: 0
     }, {
         texture: "", type: Game.GameData.SquareTypes.Normal,
-        x: 400, y: 220, data: {}
+        x: 400, y: 220, data: null
     }, {
         texture: "", type: Game.GameData.SquareTypes.Normal,
-        x: 620, y: 240, data: {}
+        x: 620, y: 240, data: null
     }, {
         texture: "", type: Game.GameData.SquareTypes.Game,
-        x: 760, y: 420, data: {
-            game   : 1, // Frogger
-            level  : 0,
-            levels : [1, 2, 3, 4, 5]
-        }
+        x: 760, y: 420, data: 1
     }, {
         texture: "", type: Game.GameData.SquareTypes.Normal,
-        x: 840, y: 240, data: {}
+        x: 840, y: 240, data: null
     }, {
         texture: "", type: Game.GameData.SquareTypes.Normal,
-        x: 1060, y: 270, data: {}
+        x: 1060, y: 270, data: null
     }, {
         texture: "", type: Game.GameData.SquareTypes.Normal,
-        x: 1180, y: 440, data: {}
+        x: 1180, y: 440, data: null
     }, {
         texture: "", type: Game.GameData.SquareTypes.Game,
-        x: 1280, y: 280, data: {
-            game   : 2, // Ninja
-            level  : 0,
-            levels : [1, 5, 10, 20, 50]
-        }
+        x: 1280, y: 280, data: 2
     }, {
         texture: "", type: Game.GameData.SquareTypes.Normal,
-        x: 1500, y: 270, data: {}
+        x: 1500, y: 270, data: null
     }, {
         texture: "", type: Game.GameData.SquareTypes.Normal,
-        x: 1710, y: 290, data: {}
+        x: 1710, y: 290, data: null
     }, {
         texture: "", type: Game.GameData.SquareTypes.Game,
-        x: 1600, y: 440, data: {
-            game   : 3, // Sheep
-            level  : 0,
-            levels : [1, 3, 5, 10, 20]
-        }
+        x: 1600, y: 440, data: 3
     }, {
         texture: "", type: Game.GameData.SquareTypes.Normal,
-        x: 1720, y: 590, data: {}
+        x: 1720, y: 590, data: null
     }, {
         texture: "", type: Game.GameData.SquareTypes.Game,
-        x: 1500, y: 590, data: {
-            game   : 4, // Sorcerer
-            level  : 0,
-            levels : [1, 2, 3]
-        }
+        x: 1500, y: 590, data: 4
     }, {
         texture: "", type: Game.GameData.SquareTypes.Normal,
-        x: 1400, y: 440, data: {}
+        x: 1400, y: 440, data: null
     }, {
         texture: "", type: Game.GameData.SquareTypes.Normal,
-        x: 1280, y: 590, data: {}
+        x: 1280, y: 590, data: null
     }, {
         texture: "", type: Game.GameData.SquareTypes.Normal,
-        x: 1050, y: 590, data: {}
+        x: 1050, y: 590, data: null
     }, {
         texture: "", type: Game.GameData.SquareTypes.Normal,
-        x: 960, y: 420, data: {}
+        x: 960, y: 420, data: null
     }, {
         texture: "", type: Game.GameData.SquareTypes.Normal,
-        x: 820, y: 580, data: {}
+        x: 820, y: 580, data: null
     }, {
         texture: "", type: Game.GameData.SquareTypes.Normal,
-        x: 600, y: 580, data: {}
+        x: 600, y: 580, data: null
     }, {
         texture: "", type: Game.GameData.SquareTypes.Normal,
-        x: 540, y: 410, data: {}
+        x: 540, y: 410, data: null
     }, {
         texture: "", type: Game.GameData.SquareTypes.Normal,
-        x: 370, y: 590, data: {}
+        x: 370, y: 590, data: null
     }, {
         texture: "", type: Game.GameData.SquareTypes.Finish,
-        x: 170, y: 580, data: {}
+        x: 170, y: 580, data: null
+    }
+];
+
+//::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+
+// Game.GameData.Squares.Data object
+
+//::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+
+Game.GameData.Squares.Data = [{
+        game    : 0, // Bubble
+        level   : 0,
+        levels  : [1, 2, 3, 4, 5]
+    }, {
+        game    : 1, // Frogger
+        level   : 0,
+        levels  : [1, 2, 3, 4, 5]
+    }, {
+        game    : 2, // Ninja
+        level   : 0,
+        levels  : [1, 5, 10, 20, 50]
+    }, {
+        game    : 3, // Sheep
+        level   : 0,
+        levels  : [1, 3, 5, 10, 20]
+    }, {
+        game    : 4, // Sorcerer
+        level   : 0,
+        levels  : [1, 2, 3]
     }
 ];
 

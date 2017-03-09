@@ -25,7 +25,7 @@ var MinigameController = (function () {
     // Members
     //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
-    instance.level = qs().level;
+    instance.level = Number(qs().level);
 
     // Private Members
     //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::

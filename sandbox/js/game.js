@@ -135,8 +135,8 @@ var Game = (function () {
 
     function setupEventHandlers() {
         // game state handlers
-        window.onblur = /*appContainer.onblur =*/ instance.suspend;
-        window.onfocus = /*appContainer.onfocus =*/ instance.resume;
+        window.onblur = instance.suspend;
+        window.onfocus = instance.resume;
         appContainer.onresize = resize;
     }
 
@@ -871,12 +871,13 @@ var Game = (function () {
                 }
                 else if (square.type === Game.GameData.SquareTypes.Game) {
                     state = GAME;
-                    launch(square.data.game, square.data.levels[square.data.level],
+                    var g = square.data, d = Game.GameData.Squares.Data[g];
+                    launch(g, d.levels[d.level],
                     function (passed) {
                         if (passed) {
-                            square.data.level++;
-                            if (square.data.level >= square.data.levels.length) {
-                                square.data.level = 0;
+                            d.level++;
+                            if (d.level >= d.levels.length) {
+                                d.level = 0;
                             }
                             state = DICE;
                         }
