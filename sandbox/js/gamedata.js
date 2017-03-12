@@ -61,7 +61,7 @@ Game.GameData.Squares = [
         texture: "", type: Game.GameData.SquareTypes.Game,
         x: 310, y: 390, data: 0
     }, {
-        texture: "", type: Game.GameData.SquareTypes.Normal,
+        texture: "", type: Game.GameData.SquareTypes.Game,
         x: 400, y: 220, data: 3
     }, {
         texture: "", type: Game.GameData.SquareTypes.Normal,
@@ -73,7 +73,7 @@ Game.GameData.Squares = [
         texture: "", type: Game.GameData.SquareTypes.Normal,
         x: 840, y: 240, data: null
     }, {
-        texture: "", type: Game.GameData.SquareTypes.Normal,
+        texture: "", type: Game.GameData.SquareTypes.Game,
         x: 1060, y: 270, data: 4
     }, {
         texture: "", type: Game.GameData.SquareTypes.Normal,
@@ -85,13 +85,13 @@ Game.GameData.Squares = [
         texture: "", type: Game.GameData.SquareTypes.Normal,
         x: 1500, y: 270, data: null
     }, {
-        texture: "", type: Game.GameData.SquareTypes.Normal,
+        texture: "", type: Game.GameData.SquareTypes.Game,
         x: 1710, y: 290, data: 0
     }, {
         texture: "", type: Game.GameData.SquareTypes.Game,
         x: 1600, y: 440, data: 3
     }, {
-        texture: "", type: Game.GameData.SquareTypes.Normal,
+        texture: "", type: Game.GameData.SquareTypes.Game,
         x: 1720, y: 590, data: 1
     }, {
         texture: "", type: Game.GameData.SquareTypes.Game,
@@ -100,7 +100,7 @@ Game.GameData.Squares = [
         texture: "", type: Game.GameData.SquareTypes.Normal,
         x: 1400, y: 440, data: null
     }, {
-        texture: "", type: Game.GameData.SquareTypes.Normal,
+        texture: "", type: Game.GameData.SquareTypes.Game,
         x: 1280, y: 590, data: 2
     }, {
         texture: "", type: Game.GameData.SquareTypes.Normal,

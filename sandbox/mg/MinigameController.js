@@ -22,6 +22,13 @@
 var MinigameController = (function () {
     var instance = {};
 
+    window.onerror = function (msg, url, li, co, err) {
+        alert(
+            msg + "\n" + url + ":" + li + ":" + co + "\n" + 
+            (err && err.stack ? err.stack : (err || "no stack info"))
+        );
+    };
+
     // Members
     //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
