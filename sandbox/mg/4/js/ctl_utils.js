@@ -29,6 +29,65 @@ function isIOS() {
     }
     return false;
 }
+
+function getSize(Name) {
+    var size;
+    var name = Name.toLowerCase();
+    var document = window.document;
+    var documentElement = document.documentElement;
+    if (window["inner" + Name] === undefined) {
+        // IE6 & IE7 don't have window.innerWidth or innerHeight
+        size = documentElement["client" + Name];
+    }
+    else if (window["inner" + Name] != documentElement["client" + Name]) {
+        // WebKit doesn't include scrollbars while calculating viewport size so we have to get fancy
+
+        // Insert markup to test if a media query will match document.doumentElement["client" + Name]
+        var bodyElement = document.createElement("body");
+        bodyElement.id = "vpw-test-b";
+        bodyElement.style.cssText = "overflow:scroll";
+        var divElement = document.createElement("div");
+        divElement.id = "vpw-test-d";
+        divElement.style.cssText = "position:absolute;top:-1000px";
+        // Getting specific on the CSS selector so it won't get overridden easily
+        divElement.innerHTML = "<style>@media(" + name + ":" + documentElement["client" + Name] + "px){body#vpw-test-b div#vpw-test-d{" + name + ":7px!important}}</style>";
+        bodyElement.appendChild(divElement);
+        documentElement.insertBefore(bodyElement, document.head);
+
+        if (divElement["offset" + Name] == 7) {
+            // Media query matches document.documentElement["client" + Name]
+            size = documentElement["client" + Name];
+        }
+        else {
+            // Media query didn't match, use window["inner" + Name]
+            size = window["inner" + Name];
+        }
+        // Cleanup
+        documentElement.removeChild(bodyElement);
+    }
+    else {
+        // Default to use window["inner" + Name]
+        size = window["inner" + Name];
+    }
+    return size;
+};
+
+function getIOSWindowHeight() {
+    // Get zoom level of mobile Safari
+    // Note, that such zoom detection might not work correctly in other browsers
+    // We use width, instead of height, because there are no vertical toolbars :)
+    var zoomLevel = document.documentElement.clientWidth / window.innerWidth;
+
+    // window.innerHeight returns height of the visible area. 
+    // We multiply it by zoom and get out real height.
+    return window.innerHeight * zoomLevel;
+};
+
+// You can also get height of the toolbars that are currently displayed
+function getHeightOfIOSToolbars() {
+    var tH = (window.orientation === 0 ? screen.height : screen.width) - getIOSWindowHeight();
+    return tH > 1 ? tH : 0;
+};
 // /mat
 
 window.addEventListener("orientationchange", onOrientationChange );
@@ -49,23 +108,79 @@ function onOrientationChange() {
 }
 
 function sizeHandler() {
+    window.scrollTo(0, 1);
 
-	window.scrollTo(0, 1);
+    if (!$("#canvas")) {
+        return;
+    }
 
-	if (!$("#canvas")){
-		return;
-	}
+    var h;
+    var iOS = (navigator.userAgent.match(/(iPad|iPhone|iPod)/g) ? true : false);
 
-	var rw = CANVAS_WIDTH;
-	var rh = CANVAS_HEIGHT;
-	var w = window.innerWidth;
-	var h = window.innerHeight;
-	multiplier = Math.min((h / rh), (w / rw));
-	var destW = rw * multiplier;
-	var destH = rh * multiplier;
-	$("#canvas").css("width",destW+"px");
-	$("#canvas").css("height",destH+"px");
-	$("#canvas").css("left",((w / 2) - (destW / 2))+"px");
+    if (iOS) {
+        h = getIOSWindowHeight();
+    } else {
+        h = getSize("Height");
+    }
+
+    var w = getSize("Width");
+
+    var multiplier = Math.min((h / CANVAS_HEIGHT), (w / CANVAS_WIDTH));
+
+    var destW = CANVAS_WIDTH * multiplier;
+    var destH = CANVAS_HEIGHT * multiplier;
+
+    var iAdd = 0;
+    if (destH < h) {
+        iAdd = h - destH;
+        destH += iAdd;
+        destW += iAdd * (CANVAS_WIDTH / CANVAS_HEIGHT);
+    } else if (destW < w) {
+        iAdd = w - destW;
+        destW += iAdd;
+        destH += iAdd * (CANVAS_HEIGHT / CANVAS_WIDTH);
+    }
+
+    var fOffsetY = ((h / 2) - (destH / 2));
+    var fOffsetX = ((w / 2) - (destW / 2));
+    var fGameInverseScaling = (CANVAS_WIDTH / destW);
+
+    if (fOffsetX * fGameInverseScaling < -EDGEBOARD_X ||
+        fOffsetY * fGameInverseScaling < -EDGEBOARD_Y) {
+        multiplier = Math.min(h / (CANVAS_HEIGHT - (EDGEBOARD_Y * 2)), w / (CANVAS_WIDTH - (EDGEBOARD_X * 2)));
+        destW = CANVAS_WIDTH * multiplier;
+        destH = CANVAS_HEIGHT * multiplier;
+        fOffsetY = (h - destH) / 2;
+        fOffsetX = (w - destW) / 2;
+
+        fGameInverseScaling = (CANVAS_WIDTH / destW);
+    }
+
+    s_iOffsetX = (-1 * fOffsetX * fGameInverseScaling);
+    s_iOffsetY = (-1 * fOffsetY * fGameInverseScaling);
+
+    if (fOffsetY >= 0) {
+        s_iOffsetY = 0;
+    }
+
+    if (fOffsetX >= 0) {
+        s_iOffsetX = 0;
+    }
+
+    if (s_oInterface !== null) {
+        //s_oInterface.refreshButtonPos(s_iOffsetX, s_iOffsetY);
+    }
+
+    $("#canvas").css("width", destW + "px");
+    $("#canvas").css("height", destH + "px");
+
+    if (fOffsetY < 0) {
+        $("#canvas").css("top", fOffsetY + "px");
+    } else {
+        $("#canvas").css("top", "0px");
+    }
+
+    $("#canvas").css("left", fOffsetX + "px");
 };
 
 
