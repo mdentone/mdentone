@@ -81,6 +81,13 @@
             $(oMain).on("end_level", function (evt) {
                 window.top.endLevel(levelPassed = true);
             });
+
+            if (isIOS()) {
+                setTimeout(function () { sizeHandler(); }, 200);
+            } else {
+                sizeHandler();
+            }
+
             // /mat
         });
 
