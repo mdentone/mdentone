@@ -229,3 +229,6 @@ var s_oSpriteLibrary;
 
 var s_aLevelsData;
 // mat: var s_oSavings;
+
+// mat:
+var s_iLastLevel = 1;
