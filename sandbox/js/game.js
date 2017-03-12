@@ -258,14 +258,12 @@ var Game = (function () {
             return;
         }
         instance.suspend();
-        var games = ["Bubble", "Frogger", "Ninja", "Sheep", "Sorcerer"],
-            game = games[game];
         minigameContainer = document.createElement("IFRAME");
         minigameContainer.style.cssText =
             "position:absolute;position:fixed;" +
             "left:0;top:0;width:100%;height:100%;z-index:1000;" +
             "background-color:black;";
-        minigameContainer.src = "Minigames/" + game + "/index.html?level=" + level;
+        minigameContainer.src = "mg/" + game + "/index.html?level=" + level;
         appContainer.appendChild(minigameContainer);
         window.endLevel = function (passed) {
             window.endLevel = function (passed) { };
@@ -476,7 +474,7 @@ var Game = (function () {
 
         instance.move = function (steps) {
             if (steps) {
-                moves++;
+                //countMoves++;
                 walks = steps;
                 backward = steps < 0;
             }
