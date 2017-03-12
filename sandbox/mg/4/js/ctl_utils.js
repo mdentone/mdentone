@@ -122,74 +122,11 @@ function sizeHandler() {
     }
     var w = getSize("Width");
 
-    /*
-    var multiplier = Math.min((h / CANVAS_HEIGHT), (w / CANVAS_WIDTH));
-
-    var destW = CANVAS_WIDTH * multiplier;
-    var destH = CANVAS_HEIGHT * multiplier;
-
-    var iAdd = 0;
-    if (destH < h) {
-        iAdd = h - destH;
-        destH += iAdd;
-        destW += iAdd * (CANVAS_WIDTH / CANVAS_HEIGHT);
-    } else if (destW < w) {
-        iAdd = w - destW;
-        destW += iAdd;
-        destH += iAdd * (CANVAS_HEIGHT / CANVAS_WIDTH);
-    }
-
-    var fOffsetY = ((h / 2) - (destH / 2));
-    var fOffsetX = ((w / 2) - (destW / 2));
-    var fGameInverseScaling = (CANVAS_WIDTH / destW);
-
-    if (fOffsetX * fGameInverseScaling < -EDGEBOARD_X ||
-        fOffsetY * fGameInverseScaling < -EDGEBOARD_Y) {
-        multiplier = Math.min(h / (CANVAS_HEIGHT - (EDGEBOARD_Y * 2)), w / (CANVAS_WIDTH - (EDGEBOARD_X * 2)));
-        destW = CANVAS_WIDTH * multiplier;
-        destH = CANVAS_HEIGHT * multiplier;
-        fOffsetY = (h - destH) / 2;
-        fOffsetX = (w - destW) / 2;
-
-        fGameInverseScaling = (CANVAS_WIDTH / destW);
-    }
-
-    s_iOffsetX = (-1 * fOffsetX * fGameInverseScaling);
-    s_iOffsetY = (-1 * fOffsetY * fGameInverseScaling);
-
-    if (fOffsetY >= 0) {
-        s_iOffsetY = 0;
-    }
-
-    if (fOffsetX >= 0) {
-        s_iOffsetX = 0;
-    }
-
-    if (s_oInterface !== null) {
-        //s_oInterface.refreshButtonPos(s_iOffsetX, s_iOffsetY);
-    }
-
-    $("#canvas").css("width", destW + "px");
-    $("#canvas").css("height", destH + "px");
-
-    if (fOffsetY < 0) {
-        $("#canvas").css("top", fOffsetY + "px");
-    } else {
-        $("#canvas").css("top", "0px");
-    }
-
-    $("#canvas").css("left", fOffsetX + "px");
-    */
-
     var rw = CANVAS_WIDTH;
     var rh = CANVAS_HEIGHT;
-
     var multiplier = Math.min((h / rh), (w / rw));
     var destW = rw * multiplier;
     var destH = rh * multiplier;
-    alert("multiplier " + multiplier + " rw " + rw + " rh " + rh + " w " + w + " h " + h +
-          " W " + window.innerWidth + " H " + window.innerHeight +
-          " topW " + window.top.innerWidth + " topH " + window.top.innerHeight);
     $("#canvas").css("width", destW + "px");
     $("#canvas").css("height", destH + "px");
     $("#canvas").css("left", ((w / 2) - (destW / 2)) + "px");
