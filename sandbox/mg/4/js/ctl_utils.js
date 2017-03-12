@@ -187,6 +187,7 @@ function sizeHandler() {
     var multiplier = Math.min((h / rh), (w / rw));
     var destW = rw * multiplier;
     var destH = rh * multiplier;
+    alert("multiplier " + multiplier + " rw " + rw + " rh " + rh);
     $("#canvas").css("width", destW + "px");
     $("#canvas").css("height", destH + "px");
     $("#canvas").css("left", ((w / 2) - (destW / 2)) + "px");
