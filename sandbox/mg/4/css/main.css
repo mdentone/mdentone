@@ -31,9 +31,6 @@ body{
 ::-moz-selection { background: transparent;color:inherit; }
 
 #canvas{
-    width:1024px;
-    height: 768px;
-    
     position: absolute;
     
 }
