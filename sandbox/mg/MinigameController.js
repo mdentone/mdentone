@@ -7,7 +7,7 @@
 
 // Author    : Mario Dentone [MDE]
 // Date      : Jan 2017
-// Revisions :
+// Revisions : Mar 2017
 
 //============================================================================
 
@@ -23,11 +23,9 @@ var MinigameController = (function () {
     var instance = {};
 
     window.onerror = function (msg, url, li, co, err) {
-        alert(
-            msg + "\n" + url + ":" + li + ":" + co + "\n" +
-            "-- stack --\n" +
-            (err && err.stack ? err.stack : (err || "no stack info"))
-        );
+        alert(msg + "\n" + url + ":" + li + ":" + co + "\n" +
+              "-- stack --\n" +
+              (err && err.stack ? err.stack : (err || "no stack info")));
     };
 
     // Members

@@ -7,7 +7,7 @@
 
 // Author    : Mario Dentone [MDE]
 // Date      : Jan 2017
-// Revisions :
+// Revisions : Mar 2017
 
 //============================================================================
 
@@ -16,25 +16,9 @@
 //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
 window.onerror = function (msg, url, li, co, err) {
-    var to = "<pre>", tc = "</pre>";
-    var es = "<div>";
-    es += to + ":( error" + tc;
-    if (msg)
-        es += to + msg + tc;
-    if (url && li > 0 && co > 0)
-        es += to + url + ":" + li + ":" + co + tc;
-    if (err && err.stack)
-        es += to + err.stack + tc;
-    es += "</div>";
-    if (document && document.body)
-        document.body.innerHTML = es;
-    else if (document) {
-        document.open();
-        document.write(es);
-        document.close();
-    }
-    else
-        alert(es);
+    alert(msg + "\n" + url + ":" + li + ":" + co + "\n" +
+          "-- stack --\n" +
+          (err && err.stack ? err.stack : (err || "no stack info")));
 }
 
 // Polyfills
@@ -58,7 +42,7 @@ var Game = (function () {
     // Properties
     //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
-    instance.version = "1.0.1701.2900";
+    instance.version = "1.0.1703.1200";
 
     // Methods
     //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
@@ -262,7 +246,7 @@ var Game = (function () {
         minigameContainer.style.cssText =
             "position:absolute;position:fixed;" +
             "left:0;top:0;width:100%;height:100%;z-index:1000;" +
-            "background-color:black;";
+            "background-color:black; border:0;";
         minigameContainer.src = "mg/" + game + "/index.html?level=" + level;
         appContainer.appendChild(minigameContainer);
         window.endLevel = function (passed) {

@@ -19,6 +19,7 @@ $(window).ready(function() {
 });
  */
 
+// mat:
 function isIOS() {
     var iDevices = ['iPad Simulator', 'iPhone Simulator', 'iPod Simulator', 'iPad', 'iPhone', 'iPod'];
     while (iDevices.length) {
@@ -28,10 +29,12 @@ function isIOS() {
     }
     return false;
 }
+// /mat
 
 window.addEventListener("orientationchange", onOrientationChange );
 
-function onOrientationChange(){
+function onOrientationChange() {
+    /* mat:
     if (window.matchMedia("(orientation: portrait)").matches) {
        // you're in PORTRAIT mode	   
 	   sizeHandler();
@@ -41,7 +44,8 @@ function onOrientationChange(){
        // you're in LANDSCAPE mode   
 	   sizeHandler();
     }
-	
+	 */
+    sizeHandler();
 }
 
 function sizeHandler() {
