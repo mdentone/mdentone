@@ -115,16 +115,14 @@ function sizeHandler() {
     }
 
     var h;
-    var iOS = (navigator.userAgent.match(/(iPad|iPhone|iPod)/g) ? true : false);
-
-    if (iOS) {
+    if (isIOS()) {
         h = getIOSWindowHeight();
     } else {
         h = getSize("Height");
     }
-
     var w = getSize("Width");
 
+    /*
     var multiplier = Math.min((h / CANVAS_HEIGHT), (w / CANVAS_WIDTH));
 
     var destW = CANVAS_WIDTH * multiplier;
@@ -181,6 +179,17 @@ function sizeHandler() {
     }
 
     $("#canvas").css("left", fOffsetX + "px");
+    */
+
+    var rw = CANVAS_WIDTH;
+    var rh = CANVAS_HEIGHT;
+
+    var multiplier = Math.min((h / rh), (w / rw));
+    var destW = rw * multiplier;
+    var destH = rh * multiplier;
+    $("#canvas").css("width", destW + "px");
+    $("#canvas").css("height", destH + "px");
+    $("#canvas").css("left", ((w / 2) - (destW / 2)) + "px");
 };
 
 
