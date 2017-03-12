@@ -212,7 +212,7 @@ function CLevelMenu(){
     };
     
     this._onButLevelRelease = function(iLevel){
-        s_oSavings.levelSelected(iLevel+1);
+        // mat: s_oSavings.levelSelected(iLevel+1);
     };
     
     this._onAudioToggle = function(){

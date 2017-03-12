@@ -690,14 +690,14 @@ function CGame(oData,iCurLevel,iScore){
         if ( _bVictory ){
             _bUpdate = false;
             _iCurLevel++;
-            s_oSavings.setLocalStorageScore(_iCurLevelScore,_iCurLevel);
+            // mat: s_oSavings.setLocalStorageScore(_iCurLevelScore,_iCurLevel);
             
             
             if(_iCurLevel < NUM_LEVELS){
                 if(DISABLE_SOUND_MOBILE === false || s_bMobile === false){
                         createjs.Sound.play("win");
                 }
-                s_oSavings.setLocalStorageLevel(_iCurLevel+1);
+                // mat: s_oSavings.setLocalStorageLevel(_iCurLevel+1);
                 _oInterface.showNextLevel(_iCurLevel,_iScore);
             }else{
                 this._win();

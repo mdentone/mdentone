@@ -24,7 +24,8 @@ var MinigameController = (function () {
 
     window.onerror = function (msg, url, li, co, err) {
         alert(
-            msg + "\n" + url + ":" + li + ":" + co + "\n" + 
+            msg + "\n" + url + ":" + li + ":" + co + "\n" +
+            "-- stack --\n" +
             (err && err.stack ? err.stack : (err || "no stack info"))
         );
     };

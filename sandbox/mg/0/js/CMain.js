@@ -34,8 +34,8 @@ function CMain(oData){
 	
         s_oSpriteLibrary  = new CSpriteLibrary();
         
-        s_oSavings = new CSavingManager("bubble_shooter");
-        s_oSavings.addEventListener(ON_LEVEL_SELECTED,this.gotoGame);
+        /* mat: s_oSavings = new CSavingManager("bubble_shooter");
+        s_oSavings.addEventListener(ON_LEVEL_SELECTED,this.gotoGame); */
         
         //ADD PRELOADER
         _oPreloader = new CPreloader();
@@ -228,4 +228,4 @@ var s_oSpriteLibrary;
 
 
 var s_aLevelsData;
-var s_oSavings;
+// mat: var s_oSavings;
