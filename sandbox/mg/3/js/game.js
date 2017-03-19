@@ -109,7 +109,8 @@ function goPage(page){
 	resultContainer.visible=false;
 	
 	removeGameButton();
-	stopAnimateButton(buttonStartTxt);
+    // mat: stopAnimateButton(buttonStartTxt);
+	stopAnimateButton(buttonStart);
     // mat: stopAnimateButton(buttonReplayTxt);
 	stopSoundLoop('soundAmbience');
 	
@@ -118,7 +119,8 @@ function goPage(page){
 		case 'main':
 			targetContainer = mainContainer;
 			setupGameButton();
-			startAnimateButton(buttonStartTxt);
+		    // mat: startAnimateButton(buttonStartTxt);
+			startAnimateButton(buttonStart);
 		break;
 		
 		case 'game':

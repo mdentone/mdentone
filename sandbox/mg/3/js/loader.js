@@ -19,7 +19,8 @@ function initPreload(){
 	
 	loader = new createjs.LoadQueue(false);
 	manifest=[{src:'assets/background.png', id:'background'},
-			{src:'assets/logo.png', id:'logo'},
+			{ src: 'assets/cover.jpg', id: 'logo' }, // mat
+            { src: 'assets/play.png', id: 'playButton' }, // mat
 			{src:'assets/bgGrass.png', id:'bgGrass'},
 			{src:'assets/bgGrass2.png', id:'bgGrass2'},
 			{src:'assets/bgGreen.png', id:'bgGreen'},

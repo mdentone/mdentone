@@ -24,7 +24,7 @@ function initGameCanvas(w,h){
 }
 
 var canvasContainer, bgContainer, rockContainer, sheepContainer, shadowContainer, mainContainer, gameContainer, resultContainer;
-var background, logo, buttonStartTxt, bgGround, bgGrass, bgRock, sheepData, sheepAnimate, sheepShadow, txtScore, txtScoreShadow, wood, instruction, txtInstruction, txtInstructionShadow, buttonFacebook, buttonTwitter, buttonGoogle, txtResultTitle, txtResultTitleShadow, txtResultScore, txtResultScoreShadow, buttonReplayTxt, txtShare;
+var background, logo, /* mat: buttonStartTxt */ buttonStart, bgGround, bgGrass, bgRock, sheepData, sheepAnimate, sheepShadow, txtScore, txtScoreShadow, wood, instruction, txtInstruction, txtInstructionShadow, buttonFacebook, buttonTwitter, buttonGoogle, txtResultTitle, txtResultTitleShadow, txtResultScore, txtResultScoreShadow, buttonReplayTxt, txtShare;
 
 var background_arr = [];
 var rock_arr = [];
@@ -50,6 +50,7 @@ function buildGameCanvas(){
 	background = new createjs.Bitmap(loader.getResult('background'));
 	logo = new createjs.Bitmap(loader.getResult('logo'));
 	
+    /* mat:
 	buttonStartTxt = new createjs.Text();
 	buttonStartTxt.font = "40px merkinregular";
 	buttonStartTxt.color = "#ffffff";
@@ -58,7 +59,13 @@ function buildGameCanvas(){
 	buttonStartTxt.textBaseline='alphabetic';
 	buttonStartTxt.x = canvasW/2;
 	buttonStartTxt.y = canvasH/100 * 80;
-	
+     */
+	buttonStart = new createjs.Bitmap(loader.getResult('playButton'));
+	centerReg(buttonStart);
+	buttonStart.x = canvasW / 2;
+	buttonStart.y = canvasH / 100 * 90;
+	buttonStart.hitArea = new createjs.Shape(new createjs.Graphics().beginFill("#000").drawRect(-200, -30, 400, 40));
+
 	bgGround = new createjs.Shape();
 	bgGround.graphics.beginFill(groundColor).drawCircle(0,0,radiusNum);
 	bgGround.x = canvasW/2;
@@ -135,7 +142,7 @@ function buildGameCanvas(){
 	});
 	
 	sheepAnimate = new createjs.Sprite(sheepData, "run");
-	sheepAnimate.framerate = 20;
+	sheepAnimate.framerate = 25;
 	
 	sheepShadow = new createjs.Bitmap(loader.getResult('sheepShadow'));
 	sheepShadow.x = -200;
@@ -262,7 +269,7 @@ function buildGameCanvas(){
 	//buttonReplayTxt.hitArea = new createjs.Shape(new createjs.Graphics().beginFill("#000").drawRect(-200, -30, 400, 40));
     // /mat
 
-	mainContainer.addChild(logo, buttonStartTxt);
+	mainContainer.addChild(logo, /* mat: buttonStartTxt */ buttonStart);
 	gameContainer.addChild(sheepAnimate, sheepShadow, shadowContainer, wood, sheepContainer, txtScoreShadow, txtScore, instruction, txtInstructionShadow, txtInstruction);
     // mat: resultContainer.addChild(buttonFacebook, buttonTwitter, buttonGoogle, txtResultTitleShadow, txtResultTitle, txtResultScoreShadow, txtResultScore, buttonReplayTxt, txtShare);
 	resultContainer.addChild(txtResultTitleShadow, txtResultTitle, txtResultScoreShadow, txtResultScore);
