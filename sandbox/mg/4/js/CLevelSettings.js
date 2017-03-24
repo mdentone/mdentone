@@ -32,13 +32,13 @@ function CLevelSettings(){
         _aBallNumber = new Array();
         
         //LEVEL 1
-        _aBallNumber[0] = 60;
+        _aBallNumber[0] = 30;
         
         //LEVEL 2
-        _aBallNumber[1] = 80;
+        _aBallNumber[1] = 40;
         
         //LEVEL 3
-        _aBallNumber[2] = 100;
+        _aBallNumber[2] = 50;
     };
     
     this._initBallColors = function(){
