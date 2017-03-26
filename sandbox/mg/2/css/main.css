@@ -6,7 +6,7 @@ body{
     background-color: #000;
     background-repeat: repeat-x;
     background-position: top;
-    background-image: url(../sprites/bg_tile.jpg);    
+    background-image: url(../sprites/bg_tile.jpg);
 }
 
 *, *:before, *:after {
@@ -52,17 +52,4 @@ canvas {
     user-select: none;
     outline: none;
     -webkit-tap-highlight-color: transparent; /* mobile webkit */
-}
-
-/***************FONTS*******************/
-@font-face {
-    font-family: 'katanaregular';
-    src: url('katanf-webfont.eot');
-    src: url('katanf-webfont.eot?#iefix') format('embedded-opentype'),
-         url('katanf-webfont.woff') format('woff'),
-         url('katanf-webfont.ttf') format('truetype'),
-         url('katanf-webfont.svg#katanaregular') format('svg');
-    font-weight: normal;
-    font-style: normal;
-
 }

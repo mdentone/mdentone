@@ -7,7 +7,7 @@ var EDGEBOARD_Y = 0;
 var DISABLE_SOUND_MOBILE = false;
 
 var FPS_TIME      = 1000/24;
-var FONT_GAME = "katanaregular";
+var FONT_GAME = "helvneueblk";
 
 var STATE_LOADING = 0;
 var STATE_MENU    = 1;

@@ -31,6 +31,8 @@ var rock_arr = [];
 var sheep_arr = [];
 var sheepShadow_arr = [];
 
+var FONT_GAME = "helvneueblk";
+
 /*!
  * 
  * BUILD GAME CANVAS ASSERTS - This is the function that runs to build game canvas asserts
@@ -52,7 +54,7 @@ function buildGameCanvas(){
 	
     /* mat:
 	buttonStartTxt = new createjs.Text();
-	buttonStartTxt.font = "40px merkinregular";
+	buttonStartTxt.font = "40px " + FONT_GAME;
 	buttonStartTxt.color = "#ffffff";
 	buttonStartTxt.text = startButtonText;
 	buttonStartTxt.textAlign = "center";
@@ -153,7 +155,7 @@ function buildGameCanvas(){
 	wood.regY = 107;
 	
 	txtScore = new createjs.Text();
-	txtScore.font = "120px merkinregular";
+	txtScore.font = "120px " + FONT_GAME;
 	txtScore.color = "#ffffff";
 	txtScore.text = '0';
 	txtScore.textAlign = "center";
@@ -162,7 +164,7 @@ function buildGameCanvas(){
 	txtScore.y = canvasH/100 * 25;
 	
 	txtScoreShadow = new createjs.Text();
-	txtScoreShadow.font = "120px merkinregular";
+	txtScoreShadow.font = "120px " + FONT_GAME;
 	txtScoreShadow.color = "#000000";
 	txtScoreShadow.text = '0';
 	txtScoreShadow.textAlign = "center";
@@ -177,7 +179,7 @@ function buildGameCanvas(){
 	instruction.y = canvasH/100 * 30;
 	
 	txtInstruction = new createjs.Text();
-	txtInstruction.font = "50px merkinregular";
+	txtInstruction.font = "50px " + FONT_GAME;
 	txtInstruction.color = "#ffffff";
 	txtInstruction.textAlign = "center";
 	txtInstruction.textBaseline='alphabetic';
@@ -185,7 +187,7 @@ function buildGameCanvas(){
 	txtInstruction.y = canvasH/100 * 22;
 	
 	txtInstructionShadow = new createjs.Text();
-	txtInstructionShadow.font = "50px merkinregular";
+	txtInstructionShadow.font = "50px " + FONT_GAME;
 	txtInstructionShadow.color = "#000000";
 	txtInstructionShadow.textAlign = "center";
 	txtInstructionShadow.textBaseline='alphabetic';
@@ -211,7 +213,7 @@ function buildGameCanvas(){
     // /mat
 
 	txtResultTitle = new createjs.Text();
-	txtResultTitle.font = "90px merkinregular";
+	txtResultTitle.font = "90px " + FONT_GAME;
 	txtResultTitle.color = "#ffffff";
 	txtResultTitle.text = textResultTitle;
 	txtResultTitle.textAlign = "center";
@@ -220,7 +222,7 @@ function buildGameCanvas(){
 	txtResultTitle.y = canvasH/100 * 20;
 	
 	txtResultTitleShadow = new createjs.Text();
-	txtResultTitleShadow.font = "90px merkinregular";
+	txtResultTitleShadow.font = "90px " + FONT_GAME;
 	txtResultTitleShadow.color = "#000000";
 	txtResultTitleShadow.text = textResultTitle;
 	txtResultTitleShadow.textAlign = "center";
@@ -230,7 +232,7 @@ function buildGameCanvas(){
 	txtResultTitleShadow.y = txtResultTitle.y+10;
 	
 	txtResultScore = new createjs.Text();
-	txtResultScore.font = "120px merkinregular";
+	txtResultScore.font = "120px " + FONT_GAME;
 	txtResultScore.color = "#ffffff";
 	txtResultScore.text = '54';
 	txtResultScore.textAlign = "center";
@@ -239,7 +241,7 @@ function buildGameCanvas(){
 	txtResultScore.y = canvasH/100 * 37;
 	
 	txtResultScoreShadow = new createjs.Text();
-	txtResultScoreShadow.font = "120px merkinregular";
+	txtResultScoreShadow.font = "120px " + FONT_GAME;
 	txtResultScoreShadow.color = "#000000";
 	txtResultScoreShadow.text = '54';
 	txtResultScoreShadow.textAlign = "center";
@@ -250,7 +252,7 @@ function buildGameCanvas(){
 	
     // mat:	
 	//txtShare = new createjs.Text();
-	//txtShare.font = "40px merkinregular";
+    //txtShare.font = "40px " + FONT_GAME;
 	//txtShare.color = "#ffffff";
 	//txtShare.text = shareText;
 	//txtShare.textAlign = "center";
@@ -259,7 +261,7 @@ function buildGameCanvas(){
 	//txtShare.y = canvasH/100 * 50;
 
 	//buttonReplayTxt = new createjs.Text();
-	//buttonReplayTxt.font = "50px merkinregular";
+    //buttonReplayTxt.font = "50px " + FONT_GAME;
 	//buttonReplayTxt.color = "#ffffff";
 	//buttonReplayTxt.text = replayButtonText;
 	//buttonReplayTxt.textAlign = "center";

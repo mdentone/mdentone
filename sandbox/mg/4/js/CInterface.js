@@ -8,7 +8,7 @@ function CInterface(){
     
     this._init = function(){
         
-        _oScoreText = new createjs.Text(TEXT_SCORE +" 0","bold 38px Chewy", "#fff");
+        _oScoreText = new createjs.Text(TEXT_SCORE + " 0", "bold 38px " + FONT_GAME, "#fff");
         _oScoreText.x = 10;
         _oScoreText.y = 10;
         _oScoreText.textAlign = "left";

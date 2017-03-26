@@ -4,6 +4,8 @@ var CANVAS_HEIGHT = 768;
 var FPS_TIME      = 1000/24;
 var DISABLE_SOUND_MOBILE = true;
 
+var FONT_GAME = "helvneueblk";
+
 var STATE_LOADING = 0;
 var STATE_MENU    = 1;
 var STATE_HELP    = 1;

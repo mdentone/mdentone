@@ -7,7 +7,7 @@ var EDGEBOARD_Y = 0;
 var FPS_TIME      = 1000/24;
 var DISABLE_SOUND_MOBILE = false;
 
-var PRIMARY_FONT = "walibi";
+var PRIMARY_FONT = "helvneueblk";
 
 var STATE_LOADING = 0;
 var STATE_MENU    = 1;

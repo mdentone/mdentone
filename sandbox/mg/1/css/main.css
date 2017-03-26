@@ -14,7 +14,7 @@ body{
     background-color: #2786ee;
     background-repeat: repeat-x;
     background-position: top;
-    background-image: url(../sprites/bg_tile.jpg);    
+    background-image: url(../sprites/bg_tile.jpg);
 }
 
 *, *:before, *:after {
@@ -37,10 +37,7 @@ input, input:before, input:after {
 ::-moz-selection { background: transparent;color:inherit; }
 
 #canvas{
-    
     position: fixed;
-    
-    
 }
 
 canvas {
@@ -48,7 +45,7 @@ canvas {
     image-rendering:-o-crisp-edges;
     image-rendering:-webkit-optimize-contrast;
     -ms-interpolation-mode: nearest-neighbor;
-	-ms-touch-action: none;
+    -ms-touch-action: none;
 }
 
 .ani_hack{
@@ -63,20 +60,4 @@ canvas {
     user-select: none;
     outline: none;
     -webkit-tap-highlight-color: transparent; /* mobile webkit */
-}
-
-/***************FONTS*******************/
-
-
-@font-face {
-    font-family: 'walibi';
-    src: url('walibi-holland-webfont.eot');
-    src: url('walibi-holland-webfont.eot?#iefix') format('embedded-opentype'),
-         url('walibi-holland-webfont.woff2') format('woff2'),
-         url('walibi-holland-webfont.woff') format('woff'),
-         url('walibi-holland-webfont.ttf') format('truetype'),
-         url('walibi-holland-webfont.svg#walibi0615bold') format('svg');
-    font-weight: normal;
-    font-style: normal;
-
 }

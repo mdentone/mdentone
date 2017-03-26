@@ -15,7 +15,7 @@ function CHelpPanel(){
         }
 	_oText = new createjs.Text(szText,"70px "+FONT_GAME, "#FFCC00");
         _oText.x = CANVAS_WIDTH/2;
-        _oText.y = 538; 
+        _oText.y = 450; // mat 
         _oText.textAlign = "center";
         _oText.textBaseline = "alphabetic";
         _oText.lineHeight = 70;

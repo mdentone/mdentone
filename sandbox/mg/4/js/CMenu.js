@@ -8,7 +8,7 @@ function CMenu(){
         _oBg = new createjs.Bitmap(s_oSpriteLibrary.getSprite('bg_menu'));
         s_oStage.addChild(_oBg);
         var oSprite = s_oSpriteLibrary.getSprite('but_bg');
-        _oButPlay = new CTextButton((CANVAS_WIDTH/2),CANVAS_HEIGHT -100,oSprite,TEXT_PLAY,"Chewy","#ffffff",40);
+        _oButPlay = new CTextButton((CANVAS_WIDTH / 2), CANVAS_HEIGHT - 100, oSprite, TEXT_PLAY, FONT_GAME, "#ffffff", 40);
         _oButPlay.addEventListener(ON_MOUSE_UP, this._onButPlayRelease, this);
 
         if(DISABLE_SOUND_MOBILE === false || s_bMobile === false){

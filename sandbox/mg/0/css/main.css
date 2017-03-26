@@ -6,7 +6,7 @@ body{
     background-color: #006cff;
     background-repeat: repeat-x;
     background-position: top;
-    background-image: url(../sprites/bg_tile.jpg); 
+    background-image: url(../sprites/bg_tile.jpg);
 }
 
 *, *:before, *:after {
@@ -37,7 +37,7 @@ canvas {
     image-rendering:-o-crisp-edges;
     image-rendering:-webkit-optimize-contrast;
     -ms-interpolation-mode: nearest-neighbor;
-	-ms-touch-action: none;
+    -ms-touch-action: none;
 }
 
 .ani_hack{
@@ -52,16 +52,4 @@ canvas {
     user-select: none;
     outline: none;
     -webkit-tap-highlight-color: transparent; /* mobile webkit */
-}
-
-@font-face {
-    font-family: 'comic_sans_msregular';
-    src: url('comic-webfont.eot');
-    src: url('comic-webfont.eot?#iefix') format('embedded-opentype'),
-         url('comic-webfont.woff') format('woff'),
-         url('comic-webfont.ttf') format('truetype'),
-         url('comic-webfont.svg#comic_sans_msregular') format('svg');
-    font-weight: normal;
-    font-style: normal;
-
 }

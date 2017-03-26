@@ -4,7 +4,7 @@ var CANVAS_HEIGHT = 1504;
 var EDGEBOARD_X = 50;
 var EDGEBOARD_Y = 240;
 
-var FONT_GAME = "comic_sans_msregular";
+var FONT_GAME = "helvneueblk";
 
 var FPS_TIME      = 1000/24;
 var DISABLE_SOUND_MOBILE = false;

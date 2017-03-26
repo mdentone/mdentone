@@ -11,22 +11,22 @@ function CNextLevel(){
         _oBg.x = 0;
         _oBg.y = 0;
 
-        _oMsgTextBack = new createjs.Text("","bold 58px Chewy", "#000");
+        _oMsgTextBack = new createjs.Text("", "bold 58px " + FONT_GAME, "#000");
         _oMsgTextBack.x = CANVAS_WIDTH/2 +32;
         _oMsgTextBack.y = (CANVAS_HEIGHT/2)-138;
         _oMsgTextBack.textAlign = "center";
 
-        _oMsgText = new createjs.Text("","bold 58px Chewy", "#ffffff");
+        _oMsgText = new createjs.Text("", "bold 58px " + FONT_GAME, "#ffffff");
         _oMsgText.x = CANVAS_WIDTH/2 + 30;
         _oMsgText.y = (CANVAS_HEIGHT/2)-140;
         _oMsgText.textAlign = "center";
         
-        _oScoreTextBack = new createjs.Text("","bold 44px Chewy", "#000");
+        _oScoreTextBack = new createjs.Text("", "bold 44px " + FONT_GAME, "#000");
         _oScoreTextBack.x = CANVAS_WIDTH/2 +32;
         _oScoreTextBack.y = (CANVAS_HEIGHT/2)+40;
         _oScoreTextBack.textAlign = "center";
 
-        _oScoreText = new createjs.Text("","bold 44px Chewy", "#ffffff");
+        _oScoreText = new createjs.Text("", "bold 44px " + FONT_GAME, "#ffffff");
         _oScoreText.x = CANVAS_WIDTH/2 +30;
         _oScoreText.y = (CANVAS_HEIGHT/2)+38;
         _oScoreText.textAlign = "center";

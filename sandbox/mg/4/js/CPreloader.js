@@ -10,7 +10,7 @@ function CPreloader(){
     };
     
     this._onAllPreloaderImagesLoaded = function(){
-        _oLoadingText = new createjs.Text("","bold 22px Arial center", "#ffffff");
+        _oLoadingText = new createjs.Text("", "bold 22px " + FONT_GAME, "#ffffff");
         _oLoadingText.x = (CANVAS_WIDTH/2)-40;
         _oLoadingText.y = CANVAS_HEIGHT/2;
         s_oStage.addChild(_oLoadingText);
