@@ -164,9 +164,10 @@ var Game = (function () {
                 Game.GameData.Helpers.createSquares(field);
 
                 sidebar = new PIXI.Sprite(resources.sidebar.texture);
-                sidebar.x = app.renderer.width - sidebar.width;
                 app.stage.addChild(sidebar);
                 sidebar.sidebarvisible = true;
+
+                scene.resize();
 
                 Game.GameData.Helpers.createPlayer(field);
                 Player.init();
