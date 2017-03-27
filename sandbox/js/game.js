@@ -164,12 +164,16 @@ var Game = (function () {
                 Game.GameData.Helpers.createSquares(field);
 
                 sidebar = new PIXI.Sprite(resources.sidebar.texture);
+                sidebar.x = app.renderer.width - sidebar.width;
+                app.stage.addChild(sidebar);
+                sidebar.sidebarvisible = true;
 
                 Game.GameData.Helpers.createPlayer(field);
                 Player.init();
 
                 Game.GameData.Helpers.createDiceFaces();
 
+/* /////
                 dicebutton = new PIXI.Graphics();
                 dicebutton.lineStyle(0);
                 dicebutton.beginFill(0x0FFFF00, 0.5);
@@ -222,6 +226,7 @@ var Game = (function () {
                     app.stage.removeChild(yestext);
                     app.stage.removeChild(notext);
                 });
+ //// */
 
                 loadingtext.destroy(true);
                 loadingtext = null;
@@ -633,6 +638,8 @@ var Game = (function () {
 
         instance.resize = function () {
             if (!front) return;
+
+            sidebar.x = app.renderer.width - sidebar.width;
             vwwidth = app.renderer.width - (sidebarvisible ? sidebar.width : 0);
 
             var dx = vwwidth - front.x - front.width;
@@ -811,9 +818,9 @@ var Game = (function () {
         //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
         screen.enter = function () {
-            app.stage.removeChild(sidebar);
-            sidebar.sidebarvisible = false;
-            resize();
+            ////app.stage.removeChild(sidebar);
+            ////sidebar.sidebarvisible = false;
+            ////resize();
             /*
             playtext = generator.makeButton(
                 generator.addText(constants.strings.start),
@@ -895,10 +902,10 @@ var Game = (function () {
         //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
         screen.gameloop = function () {
-            sidebar.x = app.renderer.width - sidebar.width;
-            app.stage.addChild(sidebar);
-            sidebar.sidebarvisible = true;
-            resize();
+            //////sidebar.x = app.renderer.width - sidebar.width;
+            //////app.stage.addChild(sidebar);
+            //////sidebar.sidebarvisible = true;
+            //////resize();
 
             var sq1 = Game.GameData.Squares[0].x;
             if (scene.center(sq1, scrollStep) < scrollStep) {
@@ -1002,7 +1009,6 @@ var Game = (function () {
         //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
         screen.resize = function () {
-            sidebar.x = app.renderer.width - sidebar.width;
             Player.center();
             if (pausetext) {
                 pausetext.x = (app.view.width - pausetext.width) / 2;
