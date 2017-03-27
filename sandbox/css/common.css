@@ -1,4 +1,4 @@
-
+﻿
 /*============================================================================
  |
  | Copyright (c) Matussi. All rights reserved.
@@ -19,4 +19,11 @@
 
 html {
 	font-family : helvneueblk, Arial Black, Helvetica, Arial, sans-serif;
+    background-color : black;
+    color            : white;
+}
+
+body {
+    margin  : 0; 
+    padding : 0;
 }

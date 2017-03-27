@@ -53,76 +53,64 @@ Game.GameData.SquareTypes = {
 Game.GameData.Squares = [
     {
         texture: "", type: Game.GameData.SquareTypes.Start,
-        x: 90, y: 370, data: null
+        x: 1625, y: 100, data: null
     }, {
         texture: "", type: Game.GameData.SquareTypes.Normal,
-        x: 200, y: 220, data: null
+        x: 1450, y: 240, data: null
     }, {
         texture: "", type: Game.GameData.SquareTypes.Game,
-        x: 310, y: 390, data: 0
+        x: 1300, y: 390, data: 2
+    }, {
+        texture: "", type: Game.GameData.SquareTypes.Normal,
+        x: 1090, y: 275, data: null
+    }, {
+        texture: "", type: Game.GameData.SquareTypes.Normal,
+        x: 870, y: 320, data: null
+    }, {
+        texture: "", type: Game.GameData.SquareTypes.Normal,
+        x: 650, y: 115, data: null
+    }, {
+        texture: "", type: Game.GameData.SquareTypes.Normal,
+        x: 300, y: 160, data: null
+    }, {
+        texture: "", type: Game.GameData.SquareTypes.Normal,
+        x: 540, y: 300, data: null
+    }, {
+        texture: "", type: Game.GameData.SquareTypes.Normal,
+        x: 675, y: 475, data: null
     }, {
         texture: "", type: Game.GameData.SquareTypes.Game,
-        x: 400, y: 220, data: 3
+        x: 440, y: 440, data: 4
     }, {
         texture: "", type: Game.GameData.SquareTypes.Normal,
-        x: 620, y: 240, data: null
+        x: 200, y: 425, data: null
+    }, {
+        texture: "", type: Game.GameData.SquareTypes.Normal,
+        x: 45, y: 560, data: null
+    }, {
+        texture: "", type: Game.GameData.SquareTypes.Normal,
+        x: 330, y: 560, data: null
     }, {
         texture: "", type: Game.GameData.SquareTypes.Game,
-        x: 760, y: 420, data: 1
+        x: 480, y: 635, data: 3
     }, {
         texture: "", type: Game.GameData.SquareTypes.Normal,
-        x: 840, y: 240, data: null
+        x: 760, y: 625, data: null
     }, {
         texture: "", type: Game.GameData.SquareTypes.Game,
-        x: 1060, y: 270, data: 4
+        x: 1065, y: 640, data: 0
     }, {
         texture: "", type: Game.GameData.SquareTypes.Normal,
-        x: 1180, y: 440, data: null
+        x: 1170, y: 470, data: null
+    }, {
+        texture: "", type: Game.GameData.SquareTypes.Normal,
+        x: 1330, y: 630, data: null
     }, {
         texture: "", type: Game.GameData.SquareTypes.Game,
-        x: 1280, y: 280, data: 2
-    }, {
-        texture: "", type: Game.GameData.SquareTypes.Normal,
-        x: 1500, y: 270, data: null
-    }, {
-        texture: "", type: Game.GameData.SquareTypes.Game,
-        x: 1710, y: 290, data: 0
-    }, {
-        texture: "", type: Game.GameData.SquareTypes.Game,
-        x: 1600, y: 440, data: 3
-    }, {
-        texture: "", type: Game.GameData.SquareTypes.Game,
-        x: 1720, y: 590, data: 1
-    }, {
-        texture: "", type: Game.GameData.SquareTypes.Game,
-        x: 1500, y: 590, data: 4
-    }, {
-        texture: "", type: Game.GameData.SquareTypes.Normal,
-        x: 1400, y: 440, data: null
-    }, {
-        texture: "", type: Game.GameData.SquareTypes.Game,
-        x: 1280, y: 590, data: 2
-    }, {
-        texture: "", type: Game.GameData.SquareTypes.Normal,
-        x: 1050, y: 590, data: null
-    }, {
-        texture: "", type: Game.GameData.SquareTypes.Normal,
-        x: 960, y: 420, data: null
-    }, {
-        texture: "", type: Game.GameData.SquareTypes.Normal,
-        x: 820, y: 580, data: null
-    }, {
-        texture: "", type: Game.GameData.SquareTypes.Normal,
-        x: 600, y: 580, data: null
-    }, {
-        texture: "", type: Game.GameData.SquareTypes.Normal,
-        x: 540, y: 410, data: null
-    }, {
-        texture: "", type: Game.GameData.SquareTypes.Normal,
-        x: 370, y: 590, data: null
+        x: 1460, y: 500, data: 1
     }, {
         texture: "", type: Game.GameData.SquareTypes.Finish,
-        x: 170, y: 580, data: null
+        x: 1605, y: 410, data: null
     }
 ];
 
@@ -205,14 +193,16 @@ Game.GameData.Helpers = {
 
     //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
-    createSquares: function(container) {
+    createSquares: function (container) {
+        if (Game.debug !== true) {
+            return;
+        }
         var gd = Game.GameData,
             sl = gd.Squares,
             st = gd.SquareTypes;
         for (var i = 0; i < sl.length; i++) {
             var sq = sl[i];
 
-            // TODO // TBR
             var square = new PIXI.Graphics();
             square.lineStyle(1);
             if (sq.type === st.Start)
@@ -227,7 +217,6 @@ Game.GameData.Helpers = {
             square.endFill();
             square.position.set(sq.x, sq.y);
 
-            // TODO // TBR
             var text = new PIXI.Text(i+1, { fontSize: 40 });
             text.position.set(-text.width / 2, -text.height / 2);
 

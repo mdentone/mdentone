@@ -16,15 +16,18 @@
 //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
 window.onerror = function (msg, url, li, co, err) {
-    alert(msg + "\n" + url + ":" + li + ":" + co + "\n" +
-          "-- stack --\n" +
-          (err && err.stack ? err.stack : (err || "no stack info")));
+    if (Game.debug === true) {
+        alert(msg + "\n" + url + ":" + li + ":" + co + "\n" +
+              "-- stack --\n" +
+              (err && err.stack ? err.stack : (err || "no stack info")));
+    }
 }
 
 // Polyfills
 //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
-if (typeof window.requestAnimationFrame !== "function") {    
+if (typeof window.requestAnimationFrame !== "function") {
+    console.debug("Emulating requestAnimationFrame function");
     window.requestAnimationFrame = function (callback) {
         return setTimeout(callback, 16.6667);
     }
@@ -42,7 +45,11 @@ var Game = (function () {
     // Properties
     //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
-    instance.version = "1.0.1703.1200";
+    instance.version = "1.0.1703.2700";
+
+    //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+
+    instance.debug = false;
 
     // Methods
     //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
@@ -58,7 +65,9 @@ var Game = (function () {
             document.write(":( error loading");
             return;
         }
+
         appContainer = container || document.body;
+        appContainer.style.textAlign = "center";
 
         constants.initialize();
 
@@ -108,11 +117,10 @@ var Game = (function () {
     //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
     function setupGameApp() {
-        app = new PIXI.Application(0, 0, {
-            transparent: true
-        });
-        app.view.style.width = "100%";
-        app.view.style.height = "100%";
+        app = new PIXI.Application(0, 0, { transparent: true });
+        if (Game.options.margin) {
+            app.view.style.margin = Game.options.margin + "px";
+        }
     }
 
     //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
@@ -128,7 +136,9 @@ var Game = (function () {
 
     function load() {
         PIXI.loader
-            .add("background", "assets/background.jpg")
+            .add("field", "assets/field.png")
+            .add("background", "assets/background.png")
+            .add("sky", "assets/sky.jpg")
             .add("sidebar", "assets/sidebar.jpg")
             .add('spritesheet', 'assets/explosions.json')
             .on("progress", function (loader, resource) {
@@ -139,15 +149,23 @@ var Game = (function () {
                 loadingtext.text = str;
             })
             .load(function (loader, resources) {
-                background = new PIXI.Sprite(resources.background.texture);
+                var sky = new PIXI.Sprite(resources.sky.texture);
+                app.stage.addChild(sky);
 
-                Game.GameData.Helpers.createSquares(background);
-
+                var background = new PIXI.Sprite(resources.background.texture);
+                background.y = 136;
                 app.stage.addChild(background);
+
+                var field = new PIXI.Sprite(resources.field.texture);
+                app.stage.addChild(field);
+
+                scene.initialize(sky, background, field);
+
+                Game.GameData.Helpers.createSquares(field);
 
                 sidebar = new PIXI.Sprite(resources.sidebar.texture);
 
-                Game.GameData.Helpers.createPlayer(background);
+                Game.GameData.Helpers.createPlayer(field);
                 Player.init();
 
                 Game.GameData.Helpers.createDiceFaces();
@@ -237,6 +255,10 @@ var Game = (function () {
     //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
     function launch(game, level, callback) {
+        if (Game.debug === true) {
+            callback(false);
+            return;
+        }
         if (minigameContainer) {
             console.warn("A minigame is already running");
             return;
@@ -245,8 +267,7 @@ var Game = (function () {
         minigameContainer = document.createElement("IFRAME");
         minigameContainer.style.cssText =
             "position:absolute;position:fixed;" +
-            "left:0;top:0;width:100%;height:100%;z-index:1000;" +
-            "background-color:black; border:0;";
+            "left:0;top:0;width:100%;height:100%;z-index:1000;";
         minigameContainer.src = "mg/" + game + "/index.html?level=" + level;
         appContainer.appendChild(minigameContainer);
         window.endLevel = function (passed) {
@@ -279,27 +300,36 @@ var Game = (function () {
 
     function resize() {
         console.debug("Resize");
+
         var iW, iH;
         if (appContainer === document.body) {
             iW = window.innerWidth;
             iH = window.innerHeight;
         }
         else {
-            iW = appContainer.clientWidth || constants.minW;
-            iH = appContainer.clientHeight || constants.minH;
+            iW = appContainer.clientWidth  || window.innerWidth;
+            iH = appContainer.clientHeight || window.innerHeight;
         }
-        var w, h;
-        if (iW / iH > 0.50) {
-            // make ratio: iW : iH = w : minH => w = (iW * minH) / iH
-            h = constants.minH;
-            w = (iW * h) / iH;
+
+        // apply padding, if set
+        if (Game.options.margin) {
+            iW -= 2 * Game.options.margin;
+            iH -= 2 * Game.options.margin;
         }
-        else {
-            // make ratio: iW : iH = minW : h => h = (iH * minW) / iW
-            w = constants.minW;
-            h = (iH * w) / iW;
-        }
-        app.renderer.resize(w, h);
+
+        // maximize vertical ratio, then round horizontal width:
+        // (note the iH is always diminished: setting the value a little bit 
+        // less than exact height prevents scrollbars to appear...)
+        while (iW / (iH -= 4) < 0.67) { }
+        if (iH / iW < constants.maxR) iW = iH / constants.maxR;
+
+        app.renderer.view.style.width = iW + "px";
+        app.renderer.view.style.height = iH + "px";
+
+        var rW = (iW * constants.minH) / iH;
+        app.renderer.resize(rW, constants.minH);
+
+        scene.resize();
         if (screens && screens.current) {
             screens.current.resize();
         }
@@ -324,15 +354,15 @@ var Game = (function () {
             //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
             instance.defaultTextStyle = new PIXI.TextStyle({
-                fontFamily: 'Arial',
+                fontFamily: ["helvneueblk", "Arial Black", "Helvetica", "Arial"],
                 fontSize: 36,
-                fontStyle: 'normal',
-                fontWeight: 'bold',
-                fill: ['#ffffff', '#00ff99'], // gradient
-                stroke: '#4a1850',
+                fontStyle: "normal",
+                fontWeight: "normal",
+                fill: ["#ffffff", "#00ff99"], // gradient
+                stroke: "#4a1850",
                 strokeThickness: 5,
                 dropShadow: true,
-                dropShadowColor: '#000000',
+                dropShadowColor: "#000000",
                 dropShadowBlur: 4,
                 dropShadowAngle: Math.PI / 6,
                 dropShadowDistance: 6,
@@ -352,8 +382,9 @@ var Game = (function () {
 
             //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
-            instance.minW = 800;
+            instance.minW = 1702;
             instance.minH = 700;
+            instance.maxR = instance.minH / instance.minW;
 
             //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
@@ -481,7 +512,7 @@ var Game = (function () {
         instance.walk = function () {
             if (--moves <= 0) {
                 player.position.set(squares[currSquare].x, squares[currSquare].y);
-                instance.center();
+                instance.center(stepx);
                 if (--walks > 0) {
                     instance.move();
                 }
@@ -492,22 +523,14 @@ var Game = (function () {
             else {
                 player.x += stepx;
                 player.y += stepy;
-                instance.center();
+                instance.center(stepx);
             }
         };
 
         //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
-        instance.center = function () {
-            var vx = app.renderer.width - sidebar.width,
-                cx = vx / 2 - background.x;
-            var step = Math.abs(stepx);
-            if (player.x > cx && background.x + background.width - step >= vx) {
-                background.x -= step;
-            }
-            else if (player.x < cx && background.x + step <= 0) {
-                background.x += step;
-            }
+        instance.center = function (stepx) {
+            scene.center(player.x, stepx || 0);
         }
 
         //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
@@ -525,7 +548,112 @@ var Game = (function () {
 
     //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
-    // Game object
+    // Game.scene object
+
+    //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+
+    var scene = (function () {
+        var instance = { };
+
+        // Methods
+        //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+
+        instance.initialize = function (sky, background, foreground) {
+            sprites.push(sky);
+            sprites.push(background);
+            sprites.push(foreground);
+            front = foreground;
+        };
+
+        //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+
+        instance.front = function () { return front; };
+
+        //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+
+        instance.center = function (x, stepx) {
+            var vx = vwwidth,
+                cx = vx / 2 - front.x,
+                step = Math.abs(stepx);
+            var dx = 0;
+            if (x > cx) {
+                if (front.x + front.width - step >= vx) {
+                    dx = step;
+                }
+                else {
+                    dx = vx - (front.x + front.width - step);
+                }
+            }
+            else if (x < cx) {
+                if (front.x + step <= 0) {
+                    dx = -step;
+                }
+                else {
+                    dx = -step + front.x;
+                }
+            }
+            return Math.abs(instance.render(dx));
+        };
+
+        //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+
+        instance.moveTo = function (x) {
+            if (x > 0) {
+                x = 0;
+            }
+            else if (x + front.width < vwwidth) {
+                x = vwwidth - front.width;
+            }
+            var dx = front.x - x;
+
+            sprites[0].x = ((sprites[0].width-600) * x) / front.width;
+            sprites[1].x = ((sprites[1].width-200) * x) / front.width;
+            sprites[2].x = x;
+
+            return dx;
+        };
+
+        //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+
+        instance.moveBy = function (dx) {
+            return instance.moveTo(front.x - dx);
+        };
+
+        //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+
+        instance.render = function (dx) {
+            var sl = sprites.length;
+            for (var i = 0; i < sl; i++) {
+                sprites[i].x -= dx * (i+1) / sl;
+            }
+            return dx;
+        };
+
+        //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+
+        instance.resize = function () {
+            if (!front) return;
+            vwwidth = app.renderer.width - (sidebarvisible ? sidebar.width : 0);
+
+            var dx = vwwidth - front.x - front.width;
+            if (dx > 0) {
+                instance.render(-dx);
+            }
+        };
+
+        // Private Members
+        //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+
+        var sprites = [], front, vwwidth;
+
+        //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+
+        return instance;
+    })();
+
+    //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+
+    // Game.Dice object
 
     //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
@@ -550,14 +678,14 @@ var Game = (function () {
             var gd = Game.GameData,
                 df = gd.DiceFaces;
 
-            if (lastFace) app.stage.removeChild(lastFace);
+            if (lastFace) sidebar.removeChild(lastFace);
             if (df) {
                 lastFace = df[value - 1];
                 lastFace.pivot.set(50, 50);
                 lastFace.rotation = Math.random() * Math.PI;
                 lastFace.scale.set(0.95 + Math.random() * 0.1);
-                lastFace.position.set(app.renderer.width - 120, 360);
-                app.stage.addChild(lastFace);
+                lastFace.position.set(120, 360);
+                sidebar.addChild(lastFace);
             }
 
             return rolling === 0;
@@ -683,38 +811,37 @@ var Game = (function () {
         //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
         screen.enter = function () {
-            background.x = 0;
+            app.stage.removeChild(sidebar);
+            sidebar.sidebarvisible = false;
+            resize();
+            /*
             playtext = generator.makeButton(
                 generator.addText(constants.strings.start),
                 function () {
                     screens.enter(constants.gameStates.start);
                 }
             );
+            */
         };
 
         //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
         screen.exit = function () {
-            playtext.destroy(true);
+            if (playtext) playtext.destroy(true);
         };
 
         //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
         screen.gameloop = function () {
+            var scrollStep = Math.min(2, (scene.front().width - app.renderer.width) / 60);
             if (scrollToRight === true) {
-                if (background.x + background.width - scrollStep < app.renderer.width) {
+                if (scene.moveBy(scrollStep) === 0) {
                     scrollToRight = false;
-                }
-                else {
-                    background.x -= scrollStep;
                 }
             }
             else {
-                if (background.x + scrollStep > 0) {
+                if (scene.moveBy(-scrollStep) === 0) {
                     scrollToRight = true;
-                }
-                else {
-                    background.x += scrollStep;
                 }
             }
         };
@@ -722,11 +849,9 @@ var Game = (function () {
         //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
         screen.resize = function () {
-            if (background.x + background.width < app.renderer.width) {
-                background.x = app.renderer.width - background.width;
-            }
-            if (background.x > 0) {
-                background.x = 0;
+            if (playtext) {
+                playtext.x = (app.view.width - playtext.width) / 2;
+                playtext.y = (app.view.height - playtext.height) / 2;
             }
         };
 
@@ -741,7 +866,7 @@ var Game = (function () {
         // Private Members
         //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
-        var scrollStep = 2, scrollToRight = true;
+        var scrollToRight = true;
         var playtext;
 
         //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
@@ -770,11 +895,14 @@ var Game = (function () {
         //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
         screen.gameloop = function () {
-            if (background.x + scrollStep > 0) {
+            sidebar.x = app.renderer.width - sidebar.width;
+            app.stage.addChild(sidebar);
+            sidebar.sidebarvisible = true;
+            resize();
+
+            var sq1 = Game.GameData.Squares[0].x;
+            if (scene.center(sq1, scrollStep) < scrollStep) {
                 screens.enter(constants.gameStates.play);
-            }
-            else {
-                background.x += scrollStep;
             }
         };
 
@@ -813,11 +941,7 @@ var Game = (function () {
         //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
         screen.enter = function () {
-            sidebar.x = app.renderer.width - sidebar.width;
-            background.x = 0;
-            app.stage.addChild(sidebar);
-
-            background.addChild(Game.GameData.Player);
+            scene.front().addChild(Game.GameData.Player);
             Player.reset();
         };
 
@@ -825,8 +949,7 @@ var Game = (function () {
 
         screen.exit = function () {
             Dice.clear();
-            background.removeChild(Game.GameData.Player);
-            app.stage.removeChild(sidebar);
+            scene.front().removeChild(Game.GameData.Player);
         };
 
         //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
@@ -950,8 +1073,6 @@ var Game = (function () {
         //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
         screen.enter = function () {
-            background.x = 0;
-
             explosionTextures = [];
             explosions = [];
             var i;
@@ -1050,7 +1171,7 @@ var Game = (function () {
     var app;
 
     // pixi elements
-    var background, sidebar, fader,
+    var sidebar, sidebarvisible = false,
         loadingtext, exittext, yestext, notext,
         dicebutton, pausebutton, exitbutton;
 
