@@ -1,6 +1,6 @@
 {"frames": {
 
-"Explosion_Sequence_A 1.png":
+"explosion1.png":
 {
     "frame": {"x":244,"y":1454,"w":240,"h":240},
     "rotated": false,
@@ -8,7 +8,7 @@
     "spriteSourceSize": {"x":0,"y":0,"w":240,"h":240},
     "sourceSize": {"w":240,"h":240}
 },
-"Explosion_Sequence_A 10.png":
+"explosion10.png":
 {
     "frame": {"x":244,"y":970,"w":240,"h":240},
     "rotated": false,
@@ -16,7 +16,7 @@
     "spriteSourceSize": {"x":0,"y":0,"w":240,"h":240},
     "sourceSize": {"w":240,"h":240}
 },
-"Explosion_Sequence_A 11.png":
+"explosion11.png":
 {
     "frame": {"x":2,"y":970,"w":240,"h":240},
     "rotated": false,
@@ -24,7 +24,7 @@
     "spriteSourceSize": {"x":0,"y":0,"w":240,"h":240},
     "sourceSize": {"w":240,"h":240}
 },
-"Explosion_Sequence_A 12.png":
+"explosion12.png":
 {
     "frame": {"x":728,"y":728,"w":240,"h":240},
     "rotated": false,
@@ -32,7 +32,7 @@
     "spriteSourceSize": {"x":0,"y":0,"w":240,"h":240},
     "sourceSize": {"w":240,"h":240}
 },
-"Explosion_Sequence_A 13.png":
+"explosion13.png":
 {
     "frame": {"x":486,"y":728,"w":240,"h":240},
     "rotated": false,
@@ -40,7 +40,7 @@
     "spriteSourceSize": {"x":0,"y":0,"w":240,"h":240},
     "sourceSize": {"w":240,"h":240}
 },
-"Explosion_Sequence_A 14.png":
+"explosion14.png":
 {
     "frame": {"x":244,"y":728,"w":240,"h":240},
     "rotated": false,
@@ -48,7 +48,7 @@
     "spriteSourceSize": {"x":0,"y":0,"w":240,"h":240},
     "sourceSize": {"w":240,"h":240}
 },
-"Explosion_Sequence_A 15.png":
+"explosion15.png":
 {
     "frame": {"x":2,"y":728,"w":240,"h":240},
     "rotated": false,
@@ -56,7 +56,7 @@
     "spriteSourceSize": {"x":0,"y":0,"w":240,"h":240},
     "sourceSize": {"w":240,"h":240}
 },
-"Explosion_Sequence_A 16.png":
+"explosion16.png":
 {
     "frame": {"x":728,"y":486,"w":240,"h":240},
     "rotated": false,
@@ -64,7 +64,7 @@
     "spriteSourceSize": {"x":0,"y":0,"w":240,"h":240},
     "sourceSize": {"w":240,"h":240}
 },
-"Explosion_Sequence_A 17.png":
+"explosion17.png":
 {
     "frame": {"x":486,"y":486,"w":240,"h":240},
     "rotated": false,
@@ -72,7 +72,7 @@
     "spriteSourceSize": {"x":0,"y":0,"w":240,"h":240},
     "sourceSize": {"w":240,"h":240}
 },
-"Explosion_Sequence_A 18.png":
+"explosion18.png":
 {
     "frame": {"x":244,"y":486,"w":240,"h":240},
     "rotated": false,
@@ -80,7 +80,7 @@
     "spriteSourceSize": {"x":0,"y":0,"w":240,"h":240},
     "sourceSize": {"w":240,"h":240}
 },
-"Explosion_Sequence_A 19.png":
+"explosion19.png":
 {
     "frame": {"x":2,"y":486,"w":240,"h":240},
     "rotated": false,
@@ -88,7 +88,7 @@
     "spriteSourceSize": {"x":0,"y":0,"w":240,"h":240},
     "sourceSize": {"w":240,"h":240}
 },
-"Explosion_Sequence_A 2.png":
+"explosion2.png":
 {
     "frame": {"x":728,"y":1212,"w":240,"h":240},
     "rotated": false,
@@ -96,7 +96,7 @@
     "spriteSourceSize": {"x":0,"y":0,"w":240,"h":240},
     "sourceSize": {"w":240,"h":240}
 },
-"Explosion_Sequence_A 20.png":
+"explosion20.png":
 {
     "frame": {"x":728,"y":244,"w":240,"h":240},
     "rotated": false,
@@ -104,7 +104,7 @@
     "spriteSourceSize": {"x":0,"y":0,"w":240,"h":240},
     "sourceSize": {"w":240,"h":240}
 },
-"Explosion_Sequence_A 21.png":
+"explosion21.png":
 {
     "frame": {"x":486,"y":244,"w":240,"h":240},
     "rotated": false,
@@ -112,7 +112,7 @@
     "spriteSourceSize": {"x":0,"y":0,"w":240,"h":240},
     "sourceSize": {"w":240,"h":240}
 },
-"Explosion_Sequence_A 22.png":
+"explosion22.png":
 {
     "frame": {"x":244,"y":244,"w":240,"h":240},
     "rotated": false,
@@ -120,7 +120,7 @@
     "spriteSourceSize": {"x":0,"y":0,"w":240,"h":240},
     "sourceSize": {"w":240,"h":240}
 },
-"Explosion_Sequence_A 23.png":
+"explosion23.png":
 {
     "frame": {"x":2,"y":244,"w":240,"h":240},
     "rotated": false,
@@ -128,7 +128,7 @@
     "spriteSourceSize": {"x":0,"y":0,"w":240,"h":240},
     "sourceSize": {"w":240,"h":240}
 },
-"Explosion_Sequence_A 24.png":
+"explosion24.png":
 {
     "frame": {"x":728,"y":2,"w":240,"h":240},
     "rotated": false,
@@ -136,7 +136,7 @@
     "spriteSourceSize": {"x":0,"y":0,"w":240,"h":240},
     "sourceSize": {"w":240,"h":240}
 },
-"Explosion_Sequence_A 25.png":
+"explosion25.png":
 {
     "frame": {"x":486,"y":2,"w":240,"h":240},
     "rotated": false,
@@ -144,7 +144,7 @@
     "spriteSourceSize": {"x":0,"y":0,"w":240,"h":240},
     "sourceSize": {"w":240,"h":240}
 },
-"Explosion_Sequence_A 26.png":
+"explosion26.png":
 {
     "frame": {"x":244,"y":2,"w":240,"h":240},
     "rotated": false,
@@ -152,7 +152,7 @@
     "spriteSourceSize": {"x":0,"y":0,"w":240,"h":240},
     "sourceSize": {"w":240,"h":240}
 },
-"Explosion_Sequence_A 27.png":
+"explosion27.png":
 {
     "frame": {"x":2,"y":2,"w":240,"h":240},
     "rotated": false,
@@ -160,7 +160,7 @@
     "spriteSourceSize": {"x":0,"y":0,"w":240,"h":240},
     "sourceSize": {"w":240,"h":240}
 },
-"Explosion_Sequence_A 3.png":
+"explosion3.png":
 {
     "frame": {"x":486,"y":1212,"w":240,"h":240},
     "rotated": false,
@@ -168,7 +168,7 @@
     "spriteSourceSize": {"x":0,"y":0,"w":240,"h":240},
     "sourceSize": {"w":240,"h":240}
 },
-"Explosion_Sequence_A 4.png":
+"explosion4.png":
 {
     "frame": {"x":244,"y":1212,"w":240,"h":240},
     "rotated": false,
@@ -176,7 +176,7 @@
     "spriteSourceSize": {"x":0,"y":0,"w":240,"h":240},
     "sourceSize": {"w":240,"h":240}
 },
-"Explosion_Sequence_A 5.png":
+"explosion5.png":
 {
     "frame": {"x":2,"y":1696,"w":240,"h":240},
     "rotated": false,
@@ -184,7 +184,7 @@
     "spriteSourceSize": {"x":0,"y":0,"w":240,"h":240},
     "sourceSize": {"w":240,"h":240}
 },
-"Explosion_Sequence_A 6.png":
+"explosion6.png":
 {
     "frame": {"x":2,"y":1454,"w":240,"h":240},
     "rotated": false,
@@ -192,7 +192,7 @@
     "spriteSourceSize": {"x":0,"y":0,"w":240,"h":240},
     "sourceSize": {"w":240,"h":240}
 },
-"Explosion_Sequence_A 7.png":
+"explosion7.png":
 {
     "frame": {"x":2,"y":1212,"w":240,"h":240},
     "rotated": false,
@@ -200,7 +200,7 @@
     "spriteSourceSize": {"x":0,"y":0,"w":240,"h":240},
     "sourceSize": {"w":240,"h":240}
 },
-"Explosion_Sequence_A 8.png":
+"explosion8.png":
 {
     "frame": {"x":728,"y":970,"w":240,"h":240},
     "rotated": false,
@@ -208,7 +208,7 @@
     "spriteSourceSize": {"x":0,"y":0,"w":240,"h":240},
     "sourceSize": {"w":240,"h":240}
 },
-"Explosion_Sequence_A 9.png":
+"explosion9.png":
 {
     "frame": {"x":486,"y":970,"w":240,"h":240},
     "rotated": false,

@@ -29,8 +29,6 @@ Game.GameData = { }
 
 Game.GameData.DiceFaces;
 
-Game.GameData.Player;
-
 //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
 // Game.GameData.SquareTypes constants
@@ -52,64 +50,64 @@ Game.GameData.SquareTypes = {
 
 Game.GameData.Squares = [
     {
-        texture: "", type: Game.GameData.SquareTypes.Start,
+        type: Game.GameData.SquareTypes.Start,
         x: 1625, y: 100, data: null
     }, {
-        texture: "", type: Game.GameData.SquareTypes.Normal,
+        type: Game.GameData.SquareTypes.Normal,
         x: 1450, y: 240, data: null
     }, {
-        texture: "", type: Game.GameData.SquareTypes.Game,
+        type: Game.GameData.SquareTypes.Game,
         x: 1300, y: 390, data: 2
     }, {
-        texture: "", type: Game.GameData.SquareTypes.Normal,
+        type: Game.GameData.SquareTypes.Normal,
         x: 1090, y: 275, data: null
     }, {
-        texture: "", type: Game.GameData.SquareTypes.Normal,
+        type: Game.GameData.SquareTypes.Normal,
         x: 870, y: 320, data: null
     }, {
-        texture: "", type: Game.GameData.SquareTypes.Normal,
+        type: Game.GameData.SquareTypes.Normal,
         x: 650, y: 115, data: null
     }, {
-        texture: "", type: Game.GameData.SquareTypes.Normal,
+        type: Game.GameData.SquareTypes.Normal,
         x: 300, y: 160, data: null
     }, {
-        texture: "", type: Game.GameData.SquareTypes.Normal,
+        type: Game.GameData.SquareTypes.Normal,
         x: 540, y: 300, data: null
     }, {
-        texture: "", type: Game.GameData.SquareTypes.Normal,
+        type: Game.GameData.SquareTypes.Normal,
         x: 675, y: 475, data: null
     }, {
-        texture: "", type: Game.GameData.SquareTypes.Game,
+        type: Game.GameData.SquareTypes.Game,
         x: 440, y: 440, data: 4
     }, {
-        texture: "", type: Game.GameData.SquareTypes.Normal,
+        type: Game.GameData.SquareTypes.Normal,
         x: 200, y: 425, data: null
     }, {
-        texture: "", type: Game.GameData.SquareTypes.Normal,
+        type: Game.GameData.SquareTypes.Normal,
         x: 45, y: 560, data: null
     }, {
-        texture: "", type: Game.GameData.SquareTypes.Normal,
+        type: Game.GameData.SquareTypes.Normal,
         x: 330, y: 560, data: null
     }, {
-        texture: "", type: Game.GameData.SquareTypes.Game,
+        type: Game.GameData.SquareTypes.Game,
         x: 480, y: 635, data: 3
     }, {
-        texture: "", type: Game.GameData.SquareTypes.Normal,
+        type: Game.GameData.SquareTypes.Normal,
         x: 760, y: 625, data: null
     }, {
-        texture: "", type: Game.GameData.SquareTypes.Game,
+        type: Game.GameData.SquareTypes.Game,
         x: 1065, y: 640, data: 0
     }, {
-        texture: "", type: Game.GameData.SquareTypes.Normal,
+        type: Game.GameData.SquareTypes.Normal,
         x: 1170, y: 470, data: null
     }, {
-        texture: "", type: Game.GameData.SquareTypes.Normal,
+        type: Game.GameData.SquareTypes.Normal,
         x: 1330, y: 630, data: null
     }, {
-        texture: "", type: Game.GameData.SquareTypes.Game,
+        type: Game.GameData.SquareTypes.Game,
         x: 1460, y: 500, data: 1
     }, {
-        texture: "", type: Game.GameData.SquareTypes.Finish,
+        type: Game.GameData.SquareTypes.Finish,
         x: 1605, y: 410, data: null
     }
 ];
@@ -174,21 +172,6 @@ Game.GameData.Helpers = {
 
             Game.GameData.DiceFaces.push(square);
         }
-    },
-
-    //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-
-    createPlayer: function (container) {
-        var gd = Game.GameData;
-
-        // TODO // TBR
-        var player = new PIXI.Graphics();
-        player.lineStyle(1);
-        player.beginFill(0x000000, 0.75);
-        player.drawCircle(0, 0, 30);
-        player.endFill();
-
-        gd.Player = player;
     },
 
     //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::

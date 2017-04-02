@@ -27,7 +27,7 @@ window.onerror = function (msg, url, li, co, err) {
 //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
 if (typeof window.requestAnimationFrame !== "function") {
-    console.debug("Emulating requestAnimationFrame function");
+    if (Game.debug === true) console.debug("Emulating requestAnimationFrame function");
     window.requestAnimationFrame = function (callback) {
         return setTimeout(callback, 16.6667);
     }
@@ -45,7 +45,7 @@ var Game = (function () {
     // Properties
     //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
-    instance.version = "1.0.1703.2700";
+    instance.version = "1.0.1703.3000";
 
     //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
@@ -59,12 +59,13 @@ var Game = (function () {
     /// </summary>
     instance.run = function (container) {
         instance.run = function () { console.warn("Run already called."); };
-        console.info("Run!");
 
         if (typeof PIXI !== "object") {
             document.write(":( error loading");
             return;
         }
+
+        console.info("Run!");
 
         appContainer = container || document.body;
         appContainer.style.textAlign = "center";
@@ -140,23 +141,28 @@ var Game = (function () {
             .add("background", "assets/background.png")
             .add("sky", "assets/sky.jpg")
             .add("sidebar", "assets/sidebar.jpg")
-            .add('spritesheet', 'assets/explosions.json')
+            .add("characters", "assets/characters.json")
+            .add("explosions", "assets/explosions.json")
             .on("progress", function (loader, resource) {
                 var str = constants.strings.loading + " " + Math.round(loader.progress) + "%";
                 if (!loadingtext) {
                     loadingtext = generator.addText(str);
                 }
-                loadingtext.text = str;
+                else {
+                    loadingtext.text = str;
+                }
             })
             .load(function (loader, resources) {
                 var sky = new PIXI.Sprite(resources.sky.texture);
                 app.stage.addChild(sky);
 
                 var background = new PIXI.Sprite(resources.background.texture);
+                background.x = (sky.width - background.width) / 2;
                 background.y = 136;
                 app.stage.addChild(background);
 
                 var field = new PIXI.Sprite(resources.field.texture);
+                field.x = (sky.width - field.width) / 2;
                 app.stage.addChild(field);
 
                 scene.initialize(sky, background, field);
@@ -164,73 +170,26 @@ var Game = (function () {
                 Game.GameData.Helpers.createSquares(field);
 
                 sidebar = new PIXI.Sprite(resources.sidebar.texture);
+                sidebar.x = constants.MAXW - sidebar.width;
                 app.stage.addChild(sidebar);
-                sidebar.sidebarvisible = true;
+
+                countmovestext = generator.addText("0", sidebar);
+                countmovestext.position.set(sidebar.width - 50, 130);
+                sidebar.addChild(countmovestext);
 
                 scene.resize();
 
-                Game.GameData.Helpers.createPlayer(field);
+                characterTextures = [];
+                for (var i = 0; i < 3; i++) {
+                    var texture = PIXI.Texture.fromFrame("character" + i + ".png");
+                    characterTextures.push(texture);
+                }
+
                 Player.init();
 
                 Game.GameData.Helpers.createDiceFaces();
 
-/* /////
-                dicebutton = new PIXI.Graphics();
-                dicebutton.lineStyle(0);
-                dicebutton.beginFill(0x0FFFF00, 0.5);
-                dicebutton.drawRect(0, 0, sidebar.width, 240);
-                dicebutton.endFill();
-                dicebutton.position.set(0, 240);
-                generator.makeButton(dicebutton, roll);
-                sidebar.addChild(dicebutton);
-
-                pausebutton = new PIXI.Graphics();
-                pausebutton.lineStyle(0);
-                pausebutton.beginFill(0x000FFFF, 0.5);
-                pausebutton.drawRect(0, 0, sidebar.width, 110);
-                pausebutton.endFill();
-                pausebutton.position.set(0, 480);
-                generator.makeButton(pausebutton, instance.suspend);
-                sidebar.addChild(pausebutton);
-
-                exitbutton = new PIXI.Graphics();
-                exitbutton.lineStyle(0);
-                exitbutton.beginFill(0xFF00FF, 0.5);
-                exitbutton.drawRect(0, 0, sidebar.width, 110);
-                exitbutton.endFill();
-                exitbutton.position.set(0, 590);
-                generator.makeButton(exitbutton, exit);
-                sidebar.addChild(exitbutton);
-
-                exittext = generator.createText(constants.strings.exit);
-                exittext.y -= 24;
-
-                yestext = generator.createText(constants.strings.yes);
-                yestext.y += 24;
-                yestext.x -= 48;
-                generator.makeButton(yestext, function () {
-                    app.ticker.start();
-                    mainloop();
-                    screens.enter(constants.gameStates.menu);
-                    app.stage.removeChild(exittext);
-                    app.stage.removeChild(yestext);
-                    app.stage.removeChild(notext);
-                });
-
-                notext = generator.createText(constants.strings.no);
-                notext.y += 24;
-                notext.x += 48;
-                generator.makeButton(notext, function () {
-                    app.ticker.start();
-                    mainloop();
-                    app.stage.removeChild(exittext);
-                    app.stage.removeChild(yestext);
-                    app.stage.removeChild(notext);
-                });
- //// */
-
-                loadingtext.destroy(true);
-                loadingtext = null;
+                loadingtext = generator.release(loadingtext);
 
                 setupEventHandlers();
 
@@ -248,14 +207,6 @@ var Game = (function () {
             screens.current.gameloop();
             requestAnimationFrame(mainloop);
         }
-    }
-
-    //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-
-    function roll(evt) {
-        if (evt && evt.stopPropagation) evt.stopPropagation();
-
-        // delete
     }
 
     //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
@@ -293,19 +244,8 @@ var Game = (function () {
 
     //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
-    function exit(evt) {
-        if (evt && evt.stopPropagation) evt.stopPropagation();
-        app.ticker.stop();
-        app.stage.addChild(exittext);
-        app.stage.addChild(yestext);
-        app.stage.addChild(notext);
-        app.render();
-    }
-
-    //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-
     function resize() {
-        console.debug("Resize");
+        if (Game.debug === true) console.debug("Resize");
 
         var iW, iH;
         if (appContainer === document.body) {
@@ -324,16 +264,21 @@ var Game = (function () {
         }
 
         // maximize vertical ratio, then round horizontal width:
-        // (note the iH is always diminished: setting the value a little bit 
-        // less than exact height prevents scrollbars to appear...)
+        // (note the iH is always diminished: setting the value a little
+        // bit less than exact height prevents scrollbars to appear...)
         while (iW / (iH -= 4) < 0.67) { }
-        if (iH / iW < constants.maxR) iW = iH / constants.maxR;
+        if (iH / iW < constants.MAXR) iW = Math.floor(iH / constants.MAXR);
 
-        app.renderer.view.style.width = iW + "px";
-        app.renderer.view.style.height = iH + "px";
+        app.view.style.width = iW + "px";
+        app.view.style.height = iH + "px";
 
-        var rW = (iW * constants.minH) / iH;
-        app.renderer.resize(rW, constants.minH);
+        var rW = Math.floor((iW * constants.MAXH) / iH);
+        app.renderer.resize(rW, constants.MAXH);
+
+        if (Game.debug === true) console.debug("Final size: ", iW, iH, rW);
+
+        // keep stage right-aligned:
+        app.stage.x = rW - constants.MAXW;
 
         scene.resize();
         if (screens && screens.current) {
@@ -361,9 +306,10 @@ var Game = (function () {
 
             instance.defaultTextStyle = new PIXI.TextStyle({
                 fontFamily: ["helvneueblk", "Arial Black", "Helvetica", "Arial"],
-                fontSize: 36,
+                fontSize: 72,
                 fontStyle: "normal",
                 fontWeight: "normal",
+                align:"center",
                 fill: ["#ffffff", "#00ff99"], // gradient
                 stroke: "#4a1850",
                 strokeThickness: 5,
@@ -372,8 +318,8 @@ var Game = (function () {
                 dropShadowBlur: 4,
                 dropShadowAngle: Math.PI / 6,
                 dropShadowDistance: 6,
-                wordWrap: true,
-                wordWrapWidth: 440
+                wordWrap: false,
+                wordWrapWidth: 560
             });
 
             //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
@@ -388,9 +334,9 @@ var Game = (function () {
 
             //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
-            instance.minW = 1702;
-            instance.minH = 700;
-            instance.maxR = instance.minH / instance.minW;
+            instance.MAXW = 1702 + 234;
+            instance.MAXH = 700;
+            instance.MAXR = instance.MAXH / instance.MAXW;
 
             //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
@@ -398,6 +344,7 @@ var Game = (function () {
                 loading  : "LOADING",
                 paused   : "PAUSED",
                 start    : "START",
+                choose   : "CHOOSE YOUR\nCHARACTER",
                 exit     : "EXIT?",
                 yes      : "YES",
                 no       : "NO",
@@ -424,7 +371,7 @@ var Game = (function () {
         instance.addText = function (str, container) {
             var text = instance.createText(str);
             (container || app.stage).addChild(text);
-            return text;
+            return scene.center(text);
         };
 
         //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
@@ -446,11 +393,23 @@ var Game = (function () {
                 if (evt && evt.stopPropagation) evt.stopPropagation();
                 handler();
             }
-            if (once)
+            if (once) {
                 obj.once("pointerdown", f);
-            else
+            }
+            else {
                 obj.on("pointerdown", f);
+            }
             return obj;
+        }
+
+        //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+
+        instance.release = function (objects) {
+            for (var i = 0; i < arguments.length; i++) {
+                if (!arguments[i]) debugger;
+                arguments[i].destroy();
+            }
+            return null;
         }
 
         //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
@@ -465,15 +424,26 @@ var Game = (function () {
     //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
     var Player = (function () {
-        var instance = {};
+        var instance = { };
+
+        // Properties
+        //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+
+        instance.character = null;
 
         // Methods
         //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
         instance.init = function () {
             var gd = Game.GameData;
-            player = gd.Player;
             squares = gd.Squares;
+        };
+
+        //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+
+        instance.createCharacter = function (i) {
+            instance.character = new PIXI.Sprite(characterTextures[i]);
+            instance.character.anchor.set(0.5);
         };
 
         //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
@@ -485,17 +455,19 @@ var Game = (function () {
         //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
         instance.reset = function () {
-            prevSquare = currSquare = moves = 0;
+            prevSquare = currSquare = moves = countMoves = 0;
             backward = false;
             walks = 0;
-            player.position.set(squares[currSquare].x, squares[currSquare].y);
+            countmovestext.text = "0";
+            var player = instance.character;
+            player.position.set(squares[0].x, squares[0].y);
         };
 
         //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
         instance.move = function (steps) {
             if (steps) {
-                //countMoves++;
+                countmovestext.text = ++countMoves;
                 walks = steps;
                 backward = steps < 0;
             }
@@ -516,6 +488,7 @@ var Game = (function () {
         //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
         instance.walk = function () {
+            var player = instance.character;
             if (--moves <= 0) {
                 player.position.set(squares[currSquare].x, squares[currSquare].y);
                 instance.center(stepx);
@@ -536,14 +509,16 @@ var Game = (function () {
         //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
         instance.center = function (stepx) {
-            scene.center(player.x, stepx || 0);
+            var player = instance.character;
+            //console.log(player.x, player.y);
+            scene.centerView(player.x, stepx);
         }
 
         //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
         var prevSquare = 0, currSquare = 0, backward = false;
 
-        var player, squares;
+        var squares;
 
         var stepx, stepy, moves, walks;
 
@@ -561,6 +536,15 @@ var Game = (function () {
     var scene = (function () {
         var instance = { };
 
+        // Properties
+        //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+
+        instance.front = null;
+
+        //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+
+        instance.scrollability = 0;
+
         // Methods
         //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
@@ -568,91 +552,123 @@ var Game = (function () {
             sprites.push(sky);
             sprites.push(background);
             sprites.push(foreground);
-            front = foreground;
+
+            instance.front = foreground;
+
+            faderGraphics = new PIXI.Graphics();
+            faderGraphics.beginFill(0x000000, 0.67);
+            faderGraphics.drawRect(0, 0, 1, 1);
+            faderGraphics.endFill();
         };
 
         //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
-        instance.front = function () { return front; };
+        instance.fadeIn = function () {
+            if (fader) {
+                fader.count++;
+                return;
+            }
+            fader = new PIXI.Sprite(faderGraphics.generateTexture());
+            fader.position.set(0, 0);
+            fader.width = constants.MAXW;
+            fader.height = constants.MAXH;
+            fader.count = 1;
+            app.stage.addChild(fader);
+        }
 
         //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
-        instance.center = function (x, stepx) {
-            var vx = vwwidth,
-                cx = vx / 2 - front.x,
-                step = Math.abs(stepx);
-            var dx = 0;
-            if (x > cx) {
-                if (front.x + front.width - step >= vx) {
-                    dx = step;
-                }
-                else {
-                    dx = vx - (front.x + front.width - step);
-                }
+        instance.fadeOut = function () {
+            if (--fader.count === 0) {
+                fader = generator.release(fader);
             }
-            else if (x < cx) {
-                if (front.x + step <= 0) {
-                    dx = -step;
-                }
-                else {
-                    dx = -step + front.x;
-                }
+        }
+
+        //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+
+        instance.centerView = function (destx, stepx) {
+            var front = instance.front,
+                maxdx = constants.MAXW - app.renderer.width - front.x,
+                mindx = sidebar.x - front.width - front.x,
+                meddx = (maxdx + mindx) / 2,
+                cx = (constants.MAXW - sidebar.width) / 2,
+                dx = -destx + cx + meddx;
+
+            if (stepx > 0 && Math.abs(dx) > stepx) {
+                dx = PIXI.utils.sign(dx) * stepx;
             }
-            return Math.abs(instance.render(dx));
+
+            return instance.moveBy(dx);
         };
 
         //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
-        instance.moveTo = function (x) {
-            if (x > 0) {
-                x = 0;
+        instance.center = function (obj) {
+            if (obj) {
+                obj.anchor.set(0.5);
+                obj.position.set(
+                    obj.x = constants.MAXW - app.renderer.width / 2,
+                    obj.y = app.renderer.height / 2
+                );
             }
-            else if (x + front.width < vwwidth) {
-                x = vwwidth - front.width;
+            return obj;
+        }
+
+        //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+
+        instance.centerx = function (objects) {
+            for (var i = 0; i < arguments.length; i++) {
+                var obj = arguments[i];
+                if (obj) obj.x = constants.MAXW - app.renderer.width / 2;
             }
-            var dx = front.x - x;
-
-            sprites[0].x = ((sprites[0].width-600) * x) / front.width;
-            sprites[1].x = ((sprites[1].width-200) * x) / front.width;
-            sprites[2].x = x;
-
-            return dx;
-        };
+        }
 
         //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
         instance.moveBy = function (dx) {
-            return instance.moveTo(front.x - dx);
-        };
+            // front is the foreground game field; it can scroll within
+            // viewport boundaries; other sprites (background parallax)
+            // scroll consequently.
 
-        //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+            var front = instance.front,
+                maxdx = constants.MAXW - app.renderer.width - front.x,
+                mindx = sidebar.x - front.width - front.x;
 
-        instance.render = function (dx) {
-            var sl = sprites.length;
-            for (var i = 0; i < sl; i++) {
-                sprites[i].x -= dx * (i+1) / sl;
+            if (dx < mindx) {
+                if (Game.debug === true) console.debug("correct left");
+                dx = mindx;
             }
+            else if (dx > maxdx) {
+                if (Game.debug === true) console.debug("correct right");
+                dx = maxdx;
+            }
+
+            sprites[2].x += dx;
+            sprites[1].x += ((sprites[1].width - 300) * dx) / front.width;
+            sprites[0].x += ((sprites[0].width - 600) * dx) / front.width;
+
             return dx;
         };
 
         //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
         instance.resize = function () {
-            if (!front) return;
+            if (!instance.front) return;
 
-            sidebar.x = app.renderer.width - sidebar.width;
-            vwwidth = app.renderer.width - (sidebarvisible ? sidebar.width : 0);
+            var front = instance.front;
 
-            var dx = vwwidth - front.x - front.width;
-            if (dx > 0) {
-                instance.render(-dx);
-            }
+            instance.scrollability = Math.max(0,
+                front.width - app.renderer.width + sidebar.width);
+
+            // force left/right corrections:
+            instance.moveBy(0);
         };
 
         // Private Members
         //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
-        var sprites = [], front, vwwidth;
+        var sprites = [], scrollability;
+        var faderGraphics, fader;
 
         //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
@@ -692,7 +708,7 @@ var Game = (function () {
                 lastFace.pivot.set(50, 50);
                 lastFace.rotation = Math.random() * Math.PI;
                 lastFace.scale.set(0.95 + Math.random() * 0.1);
-                lastFace.position.set(120, 360);
+                lastFace.position.set(120, 340);
                 sidebar.addChild(lastFace);
             }
 
@@ -702,7 +718,7 @@ var Game = (function () {
         //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
         instance.clear = function () {
-            if (lastFace) app.stage.removeChild(lastFace);
+            if (lastFace) sidebar.removeChild(lastFace);
         };
 
         // Private Members
@@ -748,11 +764,11 @@ var Game = (function () {
         instance.enter = function (state) {
             if (state === currentState) return;
             if (instance.current) {
-                console.debug("Exiting state %d", currentState);
+                if (Game.debug === true) console.debug("Exiting state %d", currentState);
                 instance.current.exit();
             }
             instance.current = screens[currentState = state];
-            console.debug("Entering state %d", currentState);
+            if (Game.debug === true) console.debug("Entering state %d", currentState);
             instance.current.enter();
         };
 
@@ -769,86 +785,87 @@ var Game = (function () {
 
     //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
-    // NullScreen class
-
-    //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-
-    var NullScreen = (function ctor() {
-        var screen = {};
-
-        // Screen Methods
-        //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-
-        screen.enter = function () { };
-
-        //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-
-        screen.exit = function () { };
-
-        //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-
-        screen.gameloop = function () { };
-
-        //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-
-        screen.resize = function () { };
-
-        //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-
-        screen.suspend = function () { };
-
-        //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-
-        screen.resume = function () { };
-
-        //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-
-        return screen;
-    });
-
-    //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-
     // MenuScreen class
 
     //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
-    var MenuScreen = (function ctor() {
-        var screen = {};
+    var MenuScreen = (function () {
+        var screen = { };
 
         // Screen Methods
         //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
         screen.enter = function () {
-            ////app.stage.removeChild(sidebar);
-            ////sidebar.sidebarvisible = false;
-            ////resize();
-            /*
             playtext = generator.makeButton(
                 generator.addText(constants.strings.start),
                 function () {
-                    screens.enter(constants.gameStates.start);
+                    playtext = generator.release(playtext);
+
+                    scene.fadeIn();
+
+                    // PIXI.loader.resources...
+
+                    var gmenu = new PIXI.Graphics();
+                    gmenu.beginFill(0x000000, 0.90);
+                    gmenu.lineStyle(2, 0xFFFFFF);
+                    gmenu.drawRect(0, 0, 640, 640);
+                    gmenu.endFill();
+
+                    menu = new PIXI.Sprite(gmenu.generateTexture());
+
+                    var t0 = generator.addText(constants.strings.choose, menu);
+                    t0.position.set(0, menu.y - 150);
+
+                    var characters = [];
+                    for (var i = 0; i < 3; i++) {
+                        var character = new PIXI.Sprite(characterTextures[i]);
+                        character.position.set(i * 150 - 200, 0);
+                        characters.push(character);
+                        menu.addChild(character);
+                    }
+
+                    generator.makeButton(characters[0], function () {
+                        Player.createCharacter(0);
+                        screens.enter(constants.gameStates.start);
+                    }, true);
+
+                    generator.makeButton(characters[1], function () {
+                        Player.createCharacter(1);
+                        screens.enter(constants.gameStates.start);
+                    }, true);
+
+                    generator.makeButton(characters[2], function () {
+                        Player.createCharacter(2);
+                        screens.enter(constants.gameStates.start);
+                    }, true);
+
+                    app.stage.addChild(scene.center(menu));
                 }
             );
-            */
         };
 
         //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
         screen.exit = function () {
-            if (playtext) playtext.destroy(true);
+            menu = generator.release(menu);
+            scene.fadeOut();
         };
 
         //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
         screen.gameloop = function () {
-            var scrollStep = Math.min(2, (scene.front().width - app.renderer.width) / 60);
+            var scrollStep = scene.scrollability / 60;
+
+            if (scrollStep === 0) return;
+            if (scrollStep > 2) scrollStep = 2;
+
             if (scrollToRight === true) {
-                if (scene.moveBy(scrollStep) === 0) {
+                if (scene.moveBy(-scrollStep) === 0) {
                     scrollToRight = false;
                 }
             }
             else {
-                if (scene.moveBy(-scrollStep) === 0) {
+                if (scene.moveBy(scrollStep) === 0) {
                     scrollToRight = true;
                 }
             }
@@ -857,10 +874,7 @@ var Game = (function () {
         //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
         screen.resize = function () {
-            if (playtext) {
-                playtext.x = (app.view.width - playtext.width) / 2;
-                playtext.y = (app.view.height - playtext.height) / 2;
-            }
+            scene.centerx(playtext, menu);
         };
 
         //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
@@ -875,7 +889,7 @@ var Game = (function () {
         //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
         var scrollToRight = true;
-        var playtext;
+        var playtext, menu;
 
         //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
@@ -888,7 +902,7 @@ var Game = (function () {
 
     //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
-    var StartScreen = (function ctor() {
+    var StartScreen = (function () {
         var screen = {};
 
         // Screen Methods
@@ -903,13 +917,8 @@ var Game = (function () {
         //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
         screen.gameloop = function () {
-            //////sidebar.x = app.renderer.width - sidebar.width;
-            //////app.stage.addChild(sidebar);
-            //////sidebar.sidebarvisible = true;
-            //////resize();
-
-            var sq1 = Game.GameData.Squares[0].x;
-            if (scene.center(sq1, scrollStep) < scrollStep) {
+            var sq1 = Game.GameData.Squares[0];
+            if (scene.centerView(sq1.x, 10) === 0) {
                 screens.enter(constants.gameStates.play);
             }
         };
@@ -926,11 +935,6 @@ var Game = (function () {
 
         screen.resume = function () { };
 
-        // Private Members
-        //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-
-        var scrollStep = 10;
-
         //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
         return screen;
@@ -942,31 +946,103 @@ var Game = (function () {
 
     //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
-    var PlayScreen = (function ctor() {
-        var screen = {};
+    var PlayScreen = (function () {
+        var screen = { };
 
         // Screen Methods
         //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
         screen.enter = function () {
-            scene.front().addChild(Game.GameData.Player);
+
+            dicebutton = new PIXI.Graphics();
+            dicebutton.lineStyle(0);
+            dicebutton.beginFill(0xFF0000);
+            dicebutton.drawRect(0, 0, sidebar.width - 40, 180);
+            dicebutton.endFill();
+            dicebutton.position.set(20, 230);
+            var t0 = generator.addText("ROLL", dicebutton);
+            t0.position.set(100, 100);
+            generator.makeButton(dicebutton, function () {
+                state = ROLL;
+            });
+            sidebar.addChild(dicebutton);
+
+            pausebutton = new PIXI.Graphics();
+            pausebutton.lineStyle(0);
+            if (Game.debug === true)
+                pausebutton.beginFill(0xFFFF00, 0.5);
+            else
+                pausebutton.beginFill(0, 0);
+            pausebutton.drawRect(0, 0, sidebar.width, 110);
+            pausebutton.endFill();
+            pausebutton.position.set(0, 460);
+            generator.makeButton(pausebutton, instance.suspend);
+            sidebar.addChild(pausebutton);
+
+            exitbutton = new PIXI.Graphics();
+            exitbutton.lineStyle(0);
+            if (Game.debug === true)
+                exitbutton.beginFill(0x00FF00, 0.5);
+            else
+                exitbutton.beginFill(0, 0);
+            exitbutton.drawRect(0, 0, sidebar.width, 110);
+            exitbutton.endFill();
+            exitbutton.position.set(0, 580);
+            generator.makeButton(exitbutton, function () {
+                paused = true;
+                app.ticker.stop();
+                scene.fadeIn();
+
+                exittext = generator.addText(constants.strings.exit);
+                exittext.y -= 48;
+
+                yestext = generator.addText(constants.strings.yes);
+                yestext.y += 48;
+                yestext.x -= 96;
+                generator.makeButton(yestext, function () {
+                    paused = false;
+                    generator.release(exittext, yestext, notext);
+                    scene.fadeOut();
+                    app.ticker.start();
+                    mainloop();
+                    screens.enter(constants.gameStates.menu);
+                });
+
+                notext = generator.addText(constants.strings.no);
+                notext.y += 48;
+                notext.x += 96;
+                generator.makeButton(notext, function () {
+                    paused = false;
+                    generator.release(exittext, yestext, notext);
+                    scene.fadeOut();
+                    app.ticker.start();
+                    mainloop();
+                });
+
+                app.render();
+            });
+            sidebar.addChild(exitbutton);
+
+            scene.front.addChild(Player.character);
             Player.reset();
         };
 
         //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
         screen.exit = function () {
+            sidebar.removeChild(dicebutton);
+            sidebar.removeChild(pausebutton);
+            sidebar.removeChild(exitbutton);
             Dice.clear();
-            scene.front().removeChild(Game.GameData.Player);
+            scene.front.removeChild(Player.character);
         };
 
         //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
         screen.gameloop = function () {
             switch (state) {
-            case DICE:
-                // todo
-                state = ROLL;
+                case DICE:
+                    Dice.clear();
                 break;
             case ROLL:
                 if (Dice.roll()) {
@@ -1011,10 +1087,9 @@ var Game = (function () {
 
         screen.resize = function () {
             Player.center();
-            if (pausetext) {
-                pausetext.x = (app.view.width - pausetext.width) / 2;
-                pausetext.y = (app.view.height - pausetext.height) / 2;
-            }
+            scene.centerx(pausetext, exittext, yestext, notext);
+            if (yestext) yestext.x -= 96;
+            if (notext) notext.x += 96;
         };
 
         //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
@@ -1025,23 +1100,15 @@ var Game = (function () {
             }
             paused = true;
 
-            var graphics = new PIXI.Graphics();
-            graphics.lineStyle(0);
-            graphics.beginFill(0x33333CC, 0.75);
-            graphics.drawRect(0, 0, app.stage.width, app.stage.height);
-            graphics.endFill();
+            scene.fadeIn();
 
-            graphics.interactive = true;
-            graphics.buttonMode = true;
-            graphics.once("pointerdown", function () {
-                app.stage.removeChild(graphics);
+            pausetext = generator.addText(constants.strings.paused);
+            generator.makeButton(pausetext, function () {
+                generator.release(pausetext);
+                scene.fadeOut();
                 paused = false;
                 Game.resume();
-            });
-
-            pausetext = generator.addText(constants.strings.paused, graphics);
-
-            app.stage.addChild(graphics);
+            }, true);
 
             app.render();
         };
@@ -1055,12 +1122,14 @@ var Game = (function () {
         // Private Members
         //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
+        var dicebutton, pausebutton, exitbutton;
+
         var DICE = 0, ROLL = 1, WALK = 2, PLAY = 3, GAME = 4;
         var state = DICE;
 
         var paused = false;
 
-        var pausetext;
+        var pausetext, exittext, yestext, notext;
 
         //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
@@ -1073,7 +1142,7 @@ var Game = (function () {
 
     //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
-    var FinishScreen = (function ctor() {
+    var FinishScreen = (function () {
         var screen = {};
 
         // Screen Methods
@@ -1082,26 +1151,27 @@ var Game = (function () {
         screen.enter = function () {
             explosionTextures = [];
             explosions = [];
-            var i;
 
-            for (i = 0; i < 26; i++) {
-                var texture = PIXI.Texture.fromFrame('Explosion_Sequence_A ' + (i + 1) + '.png');
+            for (var i = 0; i < 26; i++) {
+                var texture = PIXI.Texture.fromFrame("explosion" + (i + 1) + ".png");
                 explosionTextures.push(texture);
             }
 
-            for (i = 0; i < 5; i++) {
+            for (var i = 0; i < 5; i++) {
                 // create an explosion AnimatedSprite
                 var explosion = new PIXI.extras.AnimatedSprite(explosionTextures);
                 explosions.push(explosion);
 
                 explosion.animationSpeed = 0.667;
-                explosion.x = Math.random() * app.renderer.width;
-                explosion.y = Math.random() * app.renderer.height /2;
+                explosion.position.set(
+                    constants.MAXW - Math.random() * app.renderer.width,
+                    Math.random() * app.renderer.height / 2
+                );
                 explosion.anchor.set(0.5);
                 explosion.rotation = Math.random() * Math.PI;
                 explosion.scale.set(0.75 + Math.random() * 0.5);
                 explosion.gotoAndPlay(Math.random() * 27);
-                app.stage.addChild(explosion);
+                scene.front.addChild(explosion);
             }
 
             congratstext = generator.addText(constants.strings.congrats);
@@ -1113,13 +1183,12 @@ var Game = (function () {
         //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
         screen.exit = function () {
-            congratstext.destroy(true);
-            congratstext = null;
+            congratstext = generator.release(congratstext);
             
-            var i;
             for (var i = 0; i < explosions.length; i++) {
-                explosions[i].destroy(true);
+                explosions[i] = generator.release(explosions[i]);
             }
+            explosions = [];
             explosionTextures = null;
         };
 
@@ -1132,7 +1201,7 @@ var Game = (function () {
 
             var explosion = explosions[++currentExplosion % explosions.length];
             explosion.position.set(
-                Math.random() * app.renderer.width,
+                constants.MAXW - Math.random() * app.renderer.width,
                 Math.random() * app.renderer.height / 2
             );
             explosion.rotation = Math.random() * Math.PI;
@@ -1141,7 +1210,9 @@ var Game = (function () {
 
         //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
-        screen.resize = function () { };
+        screen.resize = function () {
+            scene.centerx(congratstext);
+        };
 
         //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
@@ -1154,10 +1225,7 @@ var Game = (function () {
         // Private Members
         //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
-        var congratstext = null,
-            explosionTextures = null,
-            explosions = null;
-
+        var congratstext, explosionTextures, explosions;
         var currentExplosion = 0, frameSkipper = 0;
 
         //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
@@ -1178,12 +1246,10 @@ var Game = (function () {
     var app;
 
     // pixi elements
-    var sidebar, sidebarvisible = false,
-        loadingtext, exittext, yestext, notext,
-        dicebutton, pausebutton, exitbutton;
+    var sidebar, loadingtext, characterTextures, countmovestext;
 
     // game status
-    var suspended = false, paused = false;
+    var suspended = false, paused = false, countMoves = 0;
 
     //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
