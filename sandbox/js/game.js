@@ -222,6 +222,7 @@ var Game = (function () {
             console.warn("A minigame is already running");
             return;
         }
+        sounds.playTrack.stop();
         instance.suspend();
         minigameContainer = document.createElement("IFRAME");
         minigameContainer.style.cssText =
@@ -235,6 +236,7 @@ var Game = (function () {
             minigameContainer = null;
             setTimeout(function () {
                 instance.resume();
+                sounds.playTrack.play();
                 callback(passed);
             }, 200);
         };

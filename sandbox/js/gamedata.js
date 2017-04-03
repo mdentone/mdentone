@@ -107,8 +107,11 @@ Game.GameData.Squares = [
         type: Game.GameData.SquareTypes.Game,
         x: 1460, y: 500, data: 1
     }, {
-        type: Game.GameData.SquareTypes.Finish,
+        type: Game.GameData.SquareTypes.Normal,
         x: 1605, y: 410, data: null
+    }, {
+        type: Game.GameData.SquareTypes.Finish,
+        x: 1590, y: 610, data: null
     }
 ];
 
