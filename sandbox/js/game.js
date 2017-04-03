@@ -185,6 +185,8 @@ var Game = (function () {
                     characterTextures.push(texture);
                 }
 
+                sounds.initialize();
+
                 Player.init();
 
                 Game.GameData.Helpers.createDiceFaces();
@@ -500,6 +502,7 @@ var Game = (function () {
             if (--moves <= 0) {
                 player.position.set(squares[currSquare].x, squares[currSquare].y);
                 instance.center(stepx);
+                sounds.stepSound.play();
                 if (--walks > 0) {
                     instance.move();
                 }
@@ -702,10 +705,13 @@ var Game = (function () {
         instance.roll = function () {
             value = next();
 
-            if (rolling === 0)
+            if (rolling === 0) {
                 rolling = 20;
-            else
+                sounds.rollSound.play();
+            }
+            else {
                 rolling--;
+            }
 
             var gd = Game.GameData,
                 df = gd.DiceFaces;
@@ -743,6 +749,65 @@ var Game = (function () {
 
         return instance;
     })();
+
+    //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+
+    // Game.sounds object
+
+    //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+
+    var sounds = (function () {
+        var instance = { };
+
+        // Properties
+        //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+
+        instance.mainTrack = null;
+
+        //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+
+        instance.playTrack = null;
+
+        //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+
+        instance.rollSound = null;
+
+        //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+
+        instance.stepSound = null;
+
+        // Methods
+        //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+
+        instance.initialize = function () {
+            var p = "assets/";
+
+            instance.mainTrack = new Howl({ src: [p + "maintrack.mp3"],
+                loop: true,
+                volume: 0.5
+            });
+
+            instance.playTrack = new Howl({ src: [p + "playtrack.mp3"],
+                loop: true,
+                volume: 0.5
+            });
+
+            instance.rollSound = new Howl({ src: [p + "roll.mp3"] });
+
+            instance.stepSound = new Howl({ src: [p + "step.mp3"] });
+
+            // set global reference
+            Game.sounds = instance;
+        };
+
+        //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+
+        return instance;
+    })();
+
+    //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+
+    // Game.screens object
 
     //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
@@ -804,6 +869,8 @@ var Game = (function () {
         //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
         screen.enter = function () {
+            sounds.mainTrack.play();
+
             playtext = generator.makeButton(
                 generator.addText(constants.strings.start),
                 function () {
@@ -919,7 +986,10 @@ var Game = (function () {
         // Screen Methods
         //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
-        screen.enter = function () { };
+        screen.enter = function () {
+            sounds.mainTrack.stop();
+            sounds.playTrack.play();
+        };
 
         //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
@@ -964,7 +1034,6 @@ var Game = (function () {
         //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
         screen.enter = function () {
-
             dicebutton = new PIXI.Graphics();
             dicebutton.lineStyle(0);
             dicebutton.beginFill(0xE5332C);
@@ -1001,7 +1070,7 @@ var Game = (function () {
             exitbutton.position.set(0, 580);
             generator.makeButton(exitbutton, function () {
                 paused = true;
-                app.ticker.stop();
+                Game.suspend();
                 scene.fadeIn();
 
                 exittext = generator.addText(constants.strings.exit);
@@ -1044,6 +1113,8 @@ var Game = (function () {
             sidebar.removeChild(exitbutton);
             Dice.clear();
             scene.front.removeChild(Player.character);
+
+            sounds.playTrack.stop();
         };
 
         //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
