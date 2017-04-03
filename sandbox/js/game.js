@@ -139,8 +139,8 @@ var Game = (function () {
         PIXI.loader
             .add("field", "assets/field.png")
             .add("background", "assets/background.png")
-            .add("sky", "assets/sky.jpeg")
-            .add("sidebar", "assets/sidebar.jpeg")
+            .add("sky", "assets/sky.png")
+            .add("sidebar", "assets/sidebar.png")
             .add("characters", "assets/characters.json")
             .add("explosions", "assets/explosions.json")
             .on("progress", function (loader, resource) {
