@@ -173,8 +173,8 @@ var Game = (function () {
                 sidebar.x = constants.MAXW - sidebar.width;
                 app.stage.addChild(sidebar);
 
-                countmovestext = generator.addText("0", sidebar);
-                countmovestext.position.set(sidebar.width - 50, 130);
+                countmovestext = generator.addText("0", sidebar, constants.smallerTextStyle);
+                countmovestext.position.set(sidebar.width - 40, 140);
                 sidebar.addChild(countmovestext);
 
                 scene.resize();
@@ -324,6 +324,11 @@ var Game = (function () {
 
             //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
+            instance.smallerTextStyle = instance.defaultTextStyle.clone();
+            instance.smallerTextStyle.fontSize = 36;
+
+            //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+
             instance.gameStates = {
                 load   : 0,
                 menu   : 1,
@@ -343,8 +348,11 @@ var Game = (function () {
             instance.strings = {
                 loading  : "LOADING",
                 paused   : "PAUSED",
-                start    : "START",
+                start    : "PLAY",
                 choose   : "CHOOSE YOUR\nCHARACTER",
+                instrcts : "ROLL THE DICE TO REACH\n" +
+                           "THE GOAL. EARN BONUS IF\n" +
+                           "YOU PASS SPECIAL GAMES",
                 exit     : "EXIT?",
                 yes      : "YES",
                 no       : "NO",
@@ -368,16 +376,16 @@ var Game = (function () {
         // Methods
         //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
-        instance.addText = function (str, container) {
-            var text = instance.createText(str);
+        instance.addText = function (str, container, style) {
+            var text = instance.createText(str, style);
             (container || app.stage).addChild(text);
             return scene.center(text);
         };
 
         //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
-        instance.createText = function (str) {
-            var text = new PIXI.Text(str || "", constants.defaultTextStyle);
+        instance.createText = function (str, style) {
+            var text = new PIXI.Text(str, style || constants.defaultTextStyle);
             text.x = (app.view.width - text.width) / 2;
             text.y = (app.view.height - text.height) / 2;
 
@@ -806,8 +814,7 @@ var Game = (function () {
                     // PIXI.loader.resources...
 
                     var gmenu = new PIXI.Graphics();
-                    gmenu.beginFill(0x000000, 0.90);
-                    gmenu.lineStyle(2, 0xFFFFFF);
+                    gmenu.beginFill(0x000000, 0.85);
                     gmenu.drawRect(0, 0, 640, 640);
                     gmenu.endFill();
 
@@ -816,10 +823,14 @@ var Game = (function () {
                     var t0 = generator.addText(constants.strings.choose, menu);
                     t0.position.set(0, menu.y - 150);
 
+                    var t1 = generator.addText(constants.strings.instrcts, menu, constants.smallerTextStyle);
+                    t1.position.set(0, menu.y + 200);
+
                     var characters = [];
                     for (var i = 0; i < 3; i++) {
                         var character = new PIXI.Sprite(characterTextures[i]);
-                        character.position.set(i * 150 - 200, 0);
+                        character.anchor.set(0.5);
+                        character.position.set(i * 150 - 150, 30);
                         characters.push(character);
                         menu.addChild(character);
                     }
@@ -956,7 +967,7 @@ var Game = (function () {
 
             dicebutton = new PIXI.Graphics();
             dicebutton.lineStyle(0);
-            dicebutton.beginFill(0xFF0000);
+            dicebutton.beginFill(0xE5332C);
             dicebutton.drawRect(0, 0, sidebar.width - 40, 180);
             dicebutton.endFill();
             dicebutton.position.set(20, 230);
@@ -1000,11 +1011,10 @@ var Game = (function () {
                 yestext.y += 48;
                 yestext.x -= 96;
                 generator.makeButton(yestext, function () {
-                    paused = false;
                     generator.release(exittext, yestext, notext);
                     scene.fadeOut();
-                    app.ticker.start();
-                    mainloop();
+                    paused = false;
+                    Game.resume();
                     screens.enter(constants.gameStates.menu);
                 });
 
@@ -1012,11 +1022,10 @@ var Game = (function () {
                 notext.y += 48;
                 notext.x += 96;
                 generator.makeButton(notext, function () {
-                    paused = false;
                     generator.release(exittext, yestext, notext);
                     scene.fadeOut();
-                    app.ticker.start();
-                    mainloop();
+                    paused = false;
+                    Game.resume();
                 });
 
                 app.render();
@@ -1095,7 +1104,7 @@ var Game = (function () {
         //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
         screen.suspend = function () {
-            if (state === GAME) {
+            if (state === GAME || paused === true) {
                 return;
             }
             paused = true;
