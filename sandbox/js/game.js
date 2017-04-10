@@ -314,14 +314,15 @@ var Game = (function () {
                 fontStyle: "normal",
                 fontWeight: "normal",
                 align:"center",
-                fill: ["#ffffff", "#00ff99"], // gradient
-                stroke: "#4a1850",
-                strokeThickness: 5,
-                dropShadow: true,
-                dropShadowColor: "#000000",
-                dropShadowBlur: 4,
-                dropShadowAngle: Math.PI / 6,
-                dropShadowDistance: 6,
+                //fill: ["#ffffff", "#00ff99"], // gradient
+                fill: "#ffffff",
+                //stroke: "#4a1850",
+                //strokeThickness: 5,
+                //dropShadow: true,
+                //dropShadowColor: "#000000",
+                //dropShadowBlur: 4,
+                //dropShadowAngle: Math.PI / 6,
+                //dropShadowDistance: 6,
                 wordWrap: false,
                 wordWrapWidth: 560
             });
@@ -879,14 +880,14 @@ var Game = (function () {
         screen.enter = function () {
             sounds.mainTrack.play();
 
+            scene.fadeIn();
+
             playtext = generator.makeButton(
                 generator.addText(constants.strings.start),
                 function () {
                     playtext = generator.release(playtext);
 
-                    scene.fadeIn();
-
-                    // PIXI.loader.resources...
+                    //scene.fadeIn();
 
                     var gmenu = new PIXI.Graphics();
                     gmenu.beginFill(0x000000, 0.85);
@@ -1239,6 +1240,8 @@ var Game = (function () {
         screen.enter = function () {
             sounds.gainSound.play();
 
+            scene.fadeIn();
+
             explosionTextures = [];
             explosions = [];
 
@@ -1282,6 +1285,8 @@ var Game = (function () {
             explosionTextures = null;
 
             sounds.gainSound.stop();
+
+            scene.fadeOut();
         };
 
         //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
