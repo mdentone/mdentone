@@ -772,6 +772,10 @@ var Game = (function () {
 
         //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
+        instance.gainSound = null;
+
+        //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+
         instance.rollSound = null;
 
         //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
@@ -793,6 +797,8 @@ var Game = (function () {
                 loop: true,
                 volume: 0.5
             });
+
+            instance.gainSound = new Howl({ src: [p + "gain.mp3"] });
 
             instance.rollSound = new Howl({ src: [p + "roll.mp3"] });
 
@@ -1231,6 +1237,8 @@ var Game = (function () {
         //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
         screen.enter = function () {
+            sounds.gainSound.play();
+
             explosionTextures = [];
             explosions = [];
 
@@ -1272,6 +1280,8 @@ var Game = (function () {
             }
             explosions = [];
             explosionTextures = null;
+
+            sounds.gainSound.stop();
         };
 
         //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::

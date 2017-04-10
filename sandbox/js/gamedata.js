@@ -49,67 +49,67 @@ Game.GameData.SquareTypes = {
 //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
 Game.GameData.Squares = [
-    {
+    {       // 1
         type: Game.GameData.SquareTypes.Start,
-        x: 1625, y: 100, data: null
-    }, {
-        type: Game.GameData.SquareTypes.Normal,
-        x: 1450, y: 240, data: null
-    }, {
+        x: 1350, y: 200, data: null
+    }, {    // 2
         type: Game.GameData.SquareTypes.Game,
-        x: 1300, y: 390, data: 2
-    }, {
+        x: 1300, y: 380, data: 2
+    }, {    // 3
         type: Game.GameData.SquareTypes.Normal,
-        x: 1090, y: 275, data: null
-    }, {
+        x: 1130, y: 245, data: null
+    }, {    // 4
         type: Game.GameData.SquareTypes.Normal,
-        x: 870, y: 320, data: null
-    }, {
+        x: 870, y: 300, data: null
+    }, {    // 5
         type: Game.GameData.SquareTypes.Normal,
-        x: 650, y: 115, data: null
-    }, {
+        x: 790, y: 130, data: null
+    }, {    // 6
         type: Game.GameData.SquareTypes.Normal,
-        x: 300, y: 160, data: null
-    }, {
+        x: 210, y: 100, data: null
+    }, {    // 7
+        type: Game.GameData.SquareTypes.Normal,
+        x: 300, y: 220, data: null
+    }, {    // 8
         type: Game.GameData.SquareTypes.Normal,
         x: 540, y: 300, data: null
-    }, {
+    }, {    // 9
         type: Game.GameData.SquareTypes.Normal,
         x: 675, y: 475, data: null
-    }, {
+    }, {    // 10
         type: Game.GameData.SquareTypes.Game,
         x: 440, y: 440, data: 4
-    }, {
+    }, {    // 11
         type: Game.GameData.SquareTypes.Normal,
         x: 200, y: 425, data: null
-    }, {
+    }, {    // 12
         type: Game.GameData.SquareTypes.Normal,
-        x: 45, y: 560, data: null
-    }, {
+        x: 65, y: 565, data: null
+    }, {    // 13
         type: Game.GameData.SquareTypes.Normal,
         x: 330, y: 560, data: null
-    }, {
+    }, {    // 14
         type: Game.GameData.SquareTypes.Game,
         x: 480, y: 635, data: 3
-    }, {
+    }, {    // 15
         type: Game.GameData.SquareTypes.Normal,
         x: 760, y: 625, data: null
-    }, {
+    }, {    // 16
         type: Game.GameData.SquareTypes.Game,
         x: 1065, y: 640, data: 0
-    }, {
+    }, {    // 17
         type: Game.GameData.SquareTypes.Normal,
         x: 1170, y: 470, data: null
-    }, {
+    }, {    // 18
         type: Game.GameData.SquareTypes.Normal,
         x: 1330, y: 630, data: null
-    }, {
+    }, {    // 19
         type: Game.GameData.SquareTypes.Game,
         x: 1460, y: 500, data: 1
-    }, {
+    }, {    // 20
         type: Game.GameData.SquareTypes.Normal,
         x: 1605, y: 410, data: null
-    }, {
+    }, {    // 21
         type: Game.GameData.SquareTypes.Finish,
         x: 1590, y: 610, data: null
     }

@@ -404,7 +404,7 @@ function CGame(oData, iLevel /* mat */) {
 
     this._checkNewLevel = function(){
         _iFrogInNest++;
-        if(_iFrogInNest === 5){
+        if (_iFrogInNest === /* mat: 5 */ s_iCurLevel+1) {
             $(s_oMain).trigger("end_level",s_iCurLevel+1);
             $(s_oMain).trigger("save_score",[s_iScore]);
             $(s_oMain).trigger("show_interlevel_ad");

@@ -159,9 +159,8 @@
                 //...ADD YOUR CODE HERE EVENTUALLY
 
                 // mat:
-                levelPassed = iLevel > (MinigameController.level - 1);
-                if (levelPassed) {
-                    window.top.endLevel(levelPassed);
+                if (iLevel === MinigameController.level) {
+                    window.top.endLevel(true);
                 }
                 // /mat
             });
