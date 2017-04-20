@@ -374,7 +374,7 @@ function loopSheep(){
 
 				    // mat:
 					if (playerData.score >= playerData.target) {
-					    setTimeout(function () { window.top.endLevel(true) }, 1000);
+                        setTimeout(function () { window.parent.endLevel(true) }, 1000);
 					}
                     // /mat
 				}
@@ -581,7 +581,7 @@ function gameEnd(){
 	}});
 
     // mat:
-	setTimeout(function() { window.top.endLevel(false) }, 3000);
+    setTimeout(function () { window.parent.endLevel(false) }, 3000);
     // /mat
 }
 

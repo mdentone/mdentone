@@ -41,12 +41,12 @@
         $(document).ready(function () {
 
             // mat:
-            if (window === window.top) {
+            if (window === window.parent) {
                 window.location = "/";
                 return;
             }
             if (typeof MinigameController === "undefined" || !MinigameController.level > 0) {
-                window.top.location = "/";
+                window.parent.location = "/";
                 return;
             }
             var levelPassed = false;
@@ -66,7 +66,7 @@
                 //alert("iScore: "+iScore);
 
                 // mat:
-                window.top.endLevel(levelPassed = false);
+                window.parent.endLevel(levelPassed = false);
                 // /mat
             });
 
@@ -74,13 +74,13 @@
                 //alert("restart");
 
                 // mat:
-                window.top.endLevel(levelPassed = false);
+                window.parent.endLevel(levelPassed = false);
                 // /mat
             });
 
             // mat:
             $(oMain).on("end_level", function (evt) {
-                window.top.endLevel(levelPassed = true);
+                window.parent.endLevel(levelPassed = true);
             });
 
             if (isIOS()) {

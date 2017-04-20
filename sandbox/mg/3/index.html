@@ -52,12 +52,12 @@
     <script>
         // mat:
         (function () {
-            if (window === window.top) {
+            if (window === window.parent) {
                 window.location = "/";
                 return;
             }
             if (typeof MinigameController === "undefined" || !MinigameController.level > 0) {
-                window.top.location = "/";
+                window.parent.location = "/";
                 return;
             }
         })();

@@ -22,24 +22,19 @@
     <link rel="shortcut icon" href="favicon.ico">
     <link rel="stylesheet" href="css/common.css">
 
-    <style>
-        html, body, div#game-container {
-            height: 100%;
-        }
-        div#game-container {
-            text-align: center;
-            margin-top: 40px;
-        }
-        iframe#game-frame {
-            border: 10px solid white;
-            width: 80%;
-            height: 80%;
-        }
-    </style>
+    <script src="js/howler.core.min.js"></script>
+    <script src="js/pixi.min.js"></script>
+    <script src="js/game.js"></script>
+    <script src="js/gamedata.js"></script>
+    <script src="js/options.js"></script>
 </head>
 <body ondragstart="return false;" ondrop="return false;">
-    <div id="game-container">
-        <iframe id="game-frame" src="game.html"></iframe>
-    </div>
+    <noscript>:/ no javascript?!</noscript>
+    <script>
+        (function autorun() {
+            if (Game) Game.run();
+            else setTimeout(autorun, 200);
+        })();
+    </script>
 </body>
 </html>

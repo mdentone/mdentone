@@ -41,12 +41,12 @@
         $(document).ready(function () {
 
             // mat:
-            if (window === window.top) {
+            if (window === window.parent) {
                 window.location = "/";
                 return;
             }
             if (typeof MinigameController === "undefined" || !MinigameController.level > 0) {
-                window.top.location = "/";
+                window.parent.location = "/";
                 return;
             }
             // /mat
@@ -96,7 +96,7 @@
                 }
 
                 // mat:
-                window.top.endLevel(passed);
+                window.parent.endLevel(passed);
                 // /mat
             });
 

@@ -43,12 +43,12 @@
         $(document).ready(function () {
 
             // mat:
-            if (window === window.top) {
+            if (window === window.parent) {
                 window.location = "/";
                 return;
             }
             if (typeof MinigameController === "undefined" || !MinigameController.level > 0) {
-                window.top.location = "/";
+                window.parent.location = "/";
                 return;
             }
             var levelPassed = false;
@@ -129,7 +129,7 @@
 
                 // mat:
                 if (!levelPassed) {
-                    window.top.endLevel(levelPassed);
+                    window.parent.endLevel(levelPassed);
                 }
                 // /mat
             });
@@ -160,7 +160,7 @@
 
                 // mat:
                 if (iLevel === MinigameController.level) {
-                    window.top.endLevel(true);
+                    window.parent.endLevel(true);
                 }
                 // /mat
             });
