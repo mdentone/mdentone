@@ -961,7 +961,7 @@ var Game = (function () {
                         a.text = "DSQUARED2 GAME RULES"
                         document.body.appendChild(a);
                         // ios replacement for 'click'
-                        var dispatch = document.createEvent("HTMLEvents");
+                        var dispatch = document.createEvent("MouseEvents");
                         dispatch.initEvent("click", true, true);
                         a.dispatchEvent(dispatch);
                         document.body.removeChild(a);
