@@ -100,7 +100,6 @@ var Game = (function () {
         if (suspended && screens.current.resume() !== false) {
             app.ticker.start();
             suspended = false;
-            mainloop();
         }
     };
 
@@ -191,22 +190,10 @@ var Game = (function () {
                 screens.create();
                 screens.enter(constants.gameStates.menu);
 
-                mainloop();
-
                 app.ticker.add(function (delta) {
                     screens.current.gameloop();
                 });
             });
-    }
-
-    //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-
-    function mainloop() {
-/*        if (app.ticker.started) {
-            screens.current.gameloop();
-            requestAnimationFrame(mainloop);
-        }
- */
     }
 
     //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
@@ -268,7 +255,7 @@ var Game = (function () {
         // maximize vertical ratio, then round horizontal width:
         // (note the iH is always diminished: setting the value a little
         // bit less than exact height prevents scrollbars to appear...)
-        while (iW / (iH -= 4) < 0.67) { }
+        while (iW / (iH -= 4) < 1.1) { }
         if (iH / iW < constants.MAXR) iW = Math.floor(iH / constants.MAXR);
 
         app.view.style.width = iW + "px";
@@ -968,8 +955,10 @@ var Game = (function () {
                     generator.makeButton(button, function () {
                         var a = document.createElement("a");
                         a.style.display = "none!important;";
+                        a.style.cursor = "pointer;";
                         a.href = Game.options.rulepage;
-                        a.target = "_blank";
+                        a.target = "DSQUARED2-GAME-RULES-PAGE";
+                        a.text = "DSQUARED2 GAME RULES"
                         document.body.appendChild(a);
                         a.click();
                         document.body.removeChild(a);
