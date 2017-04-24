@@ -35,7 +35,7 @@ var Game = (function () {
     // Properties
     //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
-    instance.version = "1.0.1703.3000";
+    instance.version = "1.0.1704.2400";
 
     //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
@@ -214,10 +214,12 @@ var Game = (function () {
             "position:absolute;position:fixed;" +
             "left:0;top:0;width:100%;height:100%;z-index:1000;";
         minigameContainer.src = "mg/" + game + "/index.html?level=" + level;
+        app.view.style.display = "none!important;";
         appContainer.appendChild(minigameContainer);
         window.endLevel = function (passed) {
             window.endLevel = function (passed) { };
             appContainer.removeChild(minigameContainer);
+            app.view.style.display = "";
             minigameContainer = null;
             setTimeout(function () {
                 instance.resume();
@@ -960,10 +962,7 @@ var Game = (function () {
                         a.target = "DSQUARED2-GAME-RULES-PAGE";
                         a.text = "DSQUARED2 GAME RULES"
                         document.body.appendChild(a);
-                        // ios replacement for 'click'
-                        var dispatch = document.createEvent("MouseEvents");
-                        dispatch.initEvent("click", true, true);
-                        a.dispatchEvent(dispatch);
+                        a.click();
                         document.body.removeChild(a);
                     }, false);
 
