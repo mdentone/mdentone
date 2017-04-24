@@ -960,7 +960,10 @@ var Game = (function () {
                         a.target = "DSQUARED2-GAME-RULES-PAGE";
                         a.text = "DSQUARED2 GAME RULES"
                         document.body.appendChild(a);
-                        a.click();
+                        // ios replacement for 'click'
+                        var dispatch = document.createEvent("HTMLEvents");
+                        dispatch.initEvent("click", true, true);
+                        a.dispatchEvent(dispatch);
                         document.body.removeChild(a);
                     }, false);
 
