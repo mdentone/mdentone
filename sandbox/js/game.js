@@ -23,16 +23,6 @@ window.onerror = function (msg, url, li, co, err) {
     }
 }
 
-// Polyfills
-//::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-
-if (typeof window.requestAnimationFrame !== "function") {
-    if (Game.debug === true) console.debug("Emulating requestAnimationFrame function");
-    window.requestAnimationFrame = function (callback) {
-        return setTimeout(callback, 16.6667);
-    }
-}
-
 //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
 // Game object
@@ -141,7 +131,16 @@ var Game = (function () {
             .add("background", "assets/background.png")
             .add("sky", "assets/sky.png")
             .add("sidebar", "assets/sidebar.png")
-            .add("characters", "assets/characters.json")
+            .add("popup", "assets/popup.png")
+            .add("head0", "assets/head0.png")
+            .add("hero0", "assets/hero0.png")
+            .add("head1", "assets/head1.png")
+            .add("hero1", "assets/hero1.png")
+            .add("head2", "assets/head2.png")
+            .add("hero2", "assets/hero2.png")
+            .add("flash", "assets/flash.png")
+            .add("playbutton", "assets/playbutton.png")
+            .add("rulebutton", "assets/rulebutton.png")
             .add("explosions", "assets/explosions.json")
             .on("progress", function (loader, resource) {
                 var str = constants.strings.loading + " " + Math.round(loader.progress) + "%";
@@ -179,12 +178,6 @@ var Game = (function () {
 
                 scene.resize();
 
-                characterTextures = [];
-                for (var i = 0; i < 3; i++) {
-                    var texture = PIXI.Texture.fromFrame("character" + i + ".png");
-                    characterTextures.push(texture);
-                }
-
                 sounds.initialize();
 
                 Player.init();
@@ -199,16 +192,21 @@ var Game = (function () {
                 screens.enter(constants.gameStates.menu);
 
                 mainloop();
+
+                app.ticker.add(function (delta) {
+                    screens.current.gameloop();
+                });
             });
     }
 
     //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
     function mainloop() {
-        if (app.ticker.started) {
+/*        if (app.ticker.started) {
             screens.current.gameloop();
             requestAnimationFrame(mainloop);
         }
+ */
     }
 
     //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
@@ -334,6 +332,12 @@ var Game = (function () {
 
             //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
+            instance.popupTextStyle = instance.defaultTextStyle.clone();
+            instance.popupTextStyle.fontSize = 40;
+            instance.popupTextStyle.fill = "#000000";
+
+            //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+
             instance.gameStates = {
                 load   : 0,
                 menu   : 1,
@@ -354,10 +358,7 @@ var Game = (function () {
                 loading  : "LOADING",
                 paused   : "PAUSED",
                 start    : "PLAY",
-                choose   : "CHOOSE YOUR\nCHARACTER",
-                instrcts : "ROLL THE DICE TO REACH\n" +
-                           "THE GOAL. EARN BONUS IF\n" +
-                           "YOU PASS SPECIAL GAMES",
+                choose   : "SELECT YOUR AVATAR AND PLAY",
                 exit     : "EXIT?",
                 yes      : "YES",
                 no       : "NO",
@@ -444,6 +445,8 @@ var Game = (function () {
 
         instance.character = null;
 
+        instance.flash = null;
+
         // Methods
         //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
@@ -455,7 +458,10 @@ var Game = (function () {
         //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
         instance.createCharacter = function (i) {
-            instance.character = new PIXI.Sprite(characterTextures[i]);
+            instance.flash = new PIXI.Sprite(PIXI.loader.resources["flash"].texture);
+            instance.flash.anchor.set(0.5);
+
+            instance.character = new PIXI.Sprite(PIXI.loader.resources["head" + i].texture);
             instance.character.anchor.set(0.5);
         };
 
@@ -472,8 +478,7 @@ var Game = (function () {
             backward = false;
             walks = 0;
             countmovestext.text = "0";
-            var player = instance.character;
-            player.position.set(squares[0].x, squares[0].y);
+            setpos(squares[0].x, squares[0].y);
         };
 
         //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
@@ -503,8 +508,8 @@ var Game = (function () {
         instance.walk = function () {
             var player = instance.character;
             if (--moves <= 0) {
-                player.position.set(squares[currSquare].x, squares[currSquare].y);
-                instance.center(stepx);
+                setpos(squares[currSquare].x, squares[currSquare].y);
+                instance.centerView(stepx);
                 sounds.stepSound.play();
                 if (--walks > 0) {
                     instance.move();
@@ -514,18 +519,45 @@ var Game = (function () {
                 }
             }
             else {
-                player.x += stepx;
-                player.y += stepy;
-                instance.center(stepx);
+                setpos(player.x + stepx, player.y + stepy);
+                instance.centerView(stepx);
             }
         };
 
         //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
-        instance.center = function (stepx) {
-            var player = instance.character;
-            //console.log(player.x, player.y);
-            scene.centerView(player.x, stepx);
+        instance.centerView = function (stepx) {
+            scene.centerView(instance.character.x, stepx);
+        }
+
+        //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+
+        instance.show = function () {
+            scene.front.addChild(instance.flash);
+            scene.front.addChild(instance.character);
+
+            app.ticker.add(function (delta) {
+                // delta is 1 if running at 100% performance
+                // creates frame-independent tranformation
+                if (backward)
+                    instance.flash.rotation -= 0.05 * delta;
+                else
+                    instance.flash.rotation += 0.01 * delta;
+            });
+        }
+
+        //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+
+        instance.hide = function () {
+            scene.front.removeChild(instance.character);
+            scene.front.removeChild(instance.flash);
+        }
+
+        //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+
+        function setpos(x, y) {
+            instance.flash.position.set(x, y);
+            instance.character.position.set(x, y);
         }
 
         //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
@@ -889,24 +921,16 @@ var Game = (function () {
 
                     //scene.fadeIn();
 
-                    var gmenu = new PIXI.Graphics();
-                    gmenu.beginFill(0x000000, 0.85);
-                    gmenu.drawRect(0, 0, 640, 640);
-                    gmenu.endFill();
+                    menu = new PIXI.Sprite(PIXI.loader.resources.popup.texture);
 
-                    menu = new PIXI.Sprite(gmenu.generateTexture());
-
-                    var t0 = generator.addText(constants.strings.choose, menu);
-                    t0.position.set(0, menu.y - 150);
-
-                    var t1 = generator.addText(constants.strings.instrcts, menu, constants.smallerTextStyle);
-                    t1.position.set(0, menu.y + 200);
+                    var t0 = generator.addText(constants.strings.choose, menu, constants.popupTextStyle);
+                    t0.position.set(0, menu.y - 240);
 
                     var characters = [];
                     for (var i = 0; i < 3; i++) {
-                        var character = new PIXI.Sprite(characterTextures[i]);
+                        var character = new PIXI.Sprite(PIXI.loader.resources["hero" + i].texture);
                         character.anchor.set(0.5);
-                        character.position.set(i * 150 - 150, 30);
+                        character.position.set((i-1) * 240, 0);
                         characters.push(character);
                         menu.addChild(character);
                     }
@@ -925,6 +949,31 @@ var Game = (function () {
                         Player.createCharacter(2);
                         screens.enter(constants.gameStates.start);
                     }, true);
+
+                    //var button = new PIXI.Sprite(PIXI.loader.resources.playbutton.texture);
+                    //button.anchor.set(0.5);
+                    //button.position.set(100, 240);
+                    //menu.addChild(character);
+
+                    //generator.makeButton(button, function () {
+                    //    Player.createCharacter(2);
+                    //    screens.enter(constants.gameStates.start);
+                    //}, true);
+
+                    var button = new PIXI.Sprite(PIXI.loader.resources.rulebutton.texture);
+                    button.anchor.set(0.5);
+                    button.position.set(0, 240);
+                    menu.addChild(button);
+
+                    generator.makeButton(button, function () {
+                        var a = document.createElement("a");
+                        a.style.display = "none!important;";
+                        a.href = Game.options.rulepage;
+                        a.target = "_blank";
+                        document.body.appendChild(a);
+                        a.click();
+                        document.body.removeChild(a);
+                    }, false);
 
                     app.stage.addChild(scene.center(menu));
                 }
@@ -1052,7 +1101,7 @@ var Game = (function () {
             var t0 = generator.addText("ROLL", dicebutton);
             t0.position.set(100, 100);
             generator.makeButton(dicebutton, function () {
-                state = ROLL;
+                if (!paused && state === DICE) state = ROLL;
             });
             sidebar.addChild(dicebutton);
 
@@ -1078,6 +1127,7 @@ var Game = (function () {
             exitbutton.endFill();
             exitbutton.position.set(0, 580);
             generator.makeButton(exitbutton, function () {
+                if (paused) return;
                 paused = true;
                 Game.suspend();
                 scene.fadeIn();
@@ -1110,7 +1160,7 @@ var Game = (function () {
             });
             sidebar.addChild(exitbutton);
 
-            scene.front.addChild(Player.character);
+            Player.show();
             Player.reset();
         };
 
@@ -1121,7 +1171,7 @@ var Game = (function () {
             sidebar.removeChild(pausebutton);
             sidebar.removeChild(exitbutton);
             Dice.clear();
-            scene.front.removeChild(Player.character);
+            Player.hide();
 
             sounds.playTrack.stop();
         };
@@ -1175,7 +1225,7 @@ var Game = (function () {
         //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
         screen.resize = function () {
-            Player.center();
+            Player.centerView();
             scene.centerx(pausetext, exittext, yestext, notext);
             if (yestext) yestext.x -= 96;
             if (notext) notext.x += 96;
@@ -1343,7 +1393,7 @@ var Game = (function () {
     var app;
 
     // pixi elements
-    var sidebar, loadingtext, characterTextures, countmovestext;
+    var sidebar, loadingtext, countmovestext;
 
     // game status
     var suspended = false, paused = false, countMoves = 0;
