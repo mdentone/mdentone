@@ -524,20 +524,13 @@ var Game = (function () {
         instance.show = function () {
             scene.front.addChild(instance.flash);
             scene.front.addChild(instance.character);
-
-            app.ticker.add(function (delta) {
-                // delta is 1 if running at 100% performance
-                // creates frame-independent tranformation
-                if (backward)
-                    instance.flash.rotation -= 0.05 * delta;
-                else
-                    instance.flash.rotation += 0.01 * delta;
-            });
+            app.ticker.add(ticker);
         }
 
         //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
         instance.hide = function () {
+            app.ticker.remove(ticker);
             scene.front.removeChild(instance.character);
             scene.front.removeChild(instance.flash);
         }
@@ -547,6 +540,15 @@ var Game = (function () {
         function setpos(x, y) {
             instance.flash.position.set(x, y);
             instance.character.position.set(x, y);
+        }
+
+        function ticker(delta) {
+            // delta is 1 if running at 100% performance
+            // creates frame-independent tranformation
+            if (backward)
+                instance.flash.rotation -= 0.05 * delta;
+            else
+                instance.flash.rotation += 0.01 * delta;
         }
 
         //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
