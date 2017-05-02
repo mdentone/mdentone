@@ -1,7 +1,7 @@
 TEXT_LOSE         = "GAME OVER";
 TEXT_WIN          = "CONGRATULATIONS!!!";
 TEXT_SCORE        = "SCORE";
-TEXT_PLAY         = "PLAY";
+TEXT_PLAY         = " ";
 TEXT_RESTART      = "RESTART";
 TEXT_EXIT         = "EXIT";
 TEXT_GAMEOVER     = "GAME OVER";

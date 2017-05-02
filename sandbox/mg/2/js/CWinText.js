@@ -11,7 +11,7 @@ function CWinText(iX,iY,szText,szColor){
         var oText = new createjs.Text("+"+szText,"70px "+FONT_GAME, szColor);
         oText.textAlign = "center";
         oText.textBaseline = "middle";
-        oText.shadow = new createjs.Shadow("#000000", 2, 2, 3);
+        //mat:oText.shadow = new createjs.Shadow("#000000", 2, 2, 3);
         _oContainer.addChild(oText);
         
         var iRandTime = Math.floor(Math.random()*1500) + 500;

@@ -83,7 +83,7 @@ function CMain(oData){
     this._loadImages = function(){
         s_oSpriteLibrary.init( this._onImagesLoaded,this._onAllImagesLoaded, this );
 
-        s_oSpriteLibrary.addSprite("but_bg","./sprites/but_play_bg.png");
+        s_oSpriteLibrary.addSprite("but_bg","./sprites/but_play.png");
         s_oSpriteLibrary.addSprite("but_exit","./sprites/but_exit.png");
         s_oSpriteLibrary.addSprite("bg_menu","./sprites/bg_menu.jpg");
         s_oSpriteLibrary.addSprite("audio_icon","./sprites/audio_icon.png");

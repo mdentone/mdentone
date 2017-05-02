@@ -4,7 +4,7 @@ function CTextButton(iXPos,iYPos,oSprite,szText,szFont,szColor,iFontSize){
     var _aCbOwner;
     var _oButton;
     var _oText;
-    var _oTextBack;
+    //mat: var _oTextBack;
     
     this._init =function(iXPos,iYPos,oSprite,szText,szFont,szColor,iFontSize){
         
@@ -13,6 +13,7 @@ function CTextButton(iXPos,iYPos,oSprite,szText,szFont,szColor,iFontSize){
 
         var oButtonBg = createBitmap( oSprite);
 
+        /* mat:
         var iStepShadow = Math.ceil(iFontSize/20);
 
         _oTextBack = new createjs.Text(szText,"bold "+iFontSize+"px "+szFont, "#000000");
@@ -20,21 +21,22 @@ function CTextButton(iXPos,iYPos,oSprite,szText,szFont,szColor,iFontSize){
         _oTextBack.textBaseline = "alphabetic";
         var oBounds = _oTextBack.getBounds();    
         _oTextBack.x = oSprite.width/2 + iStepShadow+1;
-        _oTextBack.y = Math.floor((oSprite.height)/2) +(oBounds.height/3) + iStepShadow +1;
+        _oTextBack.y = Math.floor((oSprite.height) / 2) + (oBounds.height / 3) + iStepShadow + 1;
+         /mat */
 
         _oText = new createjs.Text(szText,"bold "+iFontSize+"px "+szFont, szColor);
         _oText.textAlign = "center";
         _oText.textBaseline = "alphabetic";
-        var oBounds = _oText.getBounds();    
+        var oBounds = _oText.getBounds();
         _oText.x = oSprite.width/2;
-        _oText.y = Math.floor((oSprite.height)/2) +(oBounds.height/3);
+        _oText.y = Math.floor((oSprite.height/2) + (oBounds.height/3));
 
         _oButton = new createjs.Container();
         _oButton.x = iXPos;
         _oButton.y = iYPos;
         _oButton.regX = oSprite.width/2;
         _oButton.regY = oSprite.height/2;
-        _oButton.addChild(oButtonBg,_oTextBack,_oText);
+        _oButton.addChild(oButtonBg,/*mat:_oTextBack,*/_oText);
 
         s_oStage.addChild(_oButton);
 
@@ -85,7 +87,7 @@ function CTextButton(iXPos,iYPos,oSprite,szText,szFont,szColor,iFontSize){
     
     this.setTextPosition = function(iY){
         _oText.y= iY;
-        _oTextBack.y = iY+2;
+        //mat: _oTextBack.y = iY+2;
     };
     
     this.setPosition = function(iXPos,iYPos){

@@ -13,14 +13,14 @@ function CHelpPanel(){
         }else{
             szText = TEXT_HELP;
         }
-	_oText = new createjs.Text(szText,"70px "+FONT_GAME, "#FFCC00");
+	    _oText = new createjs.Text(szText,"70px "+FONT_GAME, "#FFCC00");
         _oText.x = CANVAS_WIDTH/2;
         _oText.y = 450; // mat 
         _oText.textAlign = "center";
         _oText.textBaseline = "alphabetic";
         _oText.lineHeight = 70;
-	_oText.lineWidth = 560;
-        _oText.shadow = new createjs.Shadow("#000", 2, 2, 2);
+	    _oText.lineWidth = 560;
+        //mat:_oText.shadow = new createjs.Shadow("#000", 2, 2, 2);
 
         var oSprite = s_oSpriteLibrary.getSprite('but_play');
         _oButExit = new CTextButton((CANVAS_WIDTH/2),CANVAS_HEIGHT -280,oSprite,TEXT_PLAY,FONT_GAME,"#ffc600",60,false);

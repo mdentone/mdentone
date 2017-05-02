@@ -9,12 +9,12 @@ function CInterface(iLevel /* mat */ , iScore, oBallSpriteSheet) {
     var _oNextBall;
     var _oNext;
     var _oNextBack;
-    var _oScoreTextBack;
+    //mat:var _oScoreTextBack;
     var _oScoreText;
     var _oLevelText;
-    var _oLevelTextBack;
+    //mat:var _oLevelTextBack;
     var _oCongratsText;
-    var _oCongratsTextBack;
+    //mat:var _oCongratsTextBack;
     var _oNextLevelPanel;
     var _oAudioToggle;
     
@@ -28,28 +28,32 @@ function CInterface(iLevel /* mat */ , iScore, oBallSpriteSheet) {
         _oBgGUI.graphics.beginFill("rgba(0,0,0,0.5)").drawRect(0,0,CANVAS_WIDTH,110);
         _oContainerGUI.addChild(_oBgGUI);
         
-	_oScoreTextBack = new createjs.Text(TEXT_SCORE +": "+iScore,"bold 40px "+FONT_GAME, "#000000");
+        /* mat:
+        _oScoreTextBack = new createjs.Text(TEXT_SCORE + ": " + iScore, "bold 40px " + FONT_GAME, "#000000");
         _oScoreTextBack.x = CANVAS_WIDTH/2 +2;
         _oScoreTextBack.y = CANVAS_HEIGHT - 254;
         _oScoreTextBack.textAlign = "center";
         _oScoreTextBack.textBaseline = "alphabetic";
         s_oStage.addChild(_oScoreTextBack);
+         /mat */
 		
-	_oScoreText = new createjs.Text(TEXT_SCORE +": "+iScore,"bold 40px "+FONT_GAME, "#ffffff");
+	    _oScoreText = new createjs.Text(TEXT_SCORE +": "+iScore,"bold 40px "+FONT_GAME, "#ffffff");
         _oScoreText.x = CANVAS_WIDTH/2;
         _oScoreText.y = CANVAS_HEIGHT - 256;
         _oScoreText.textAlign = "center";
         _oScoreText.textBaseline = "alphabetic";
         s_oStage.addChild(_oScoreText);
         
-        _oNextBack = new createjs.Text(TEXT_NEXT,"bold 34px "+FONT_GAME, "#000000");
+        /* mat:
+        _oNextBack = new createjs.Text(TEXT_NEXT, "bold 34px " + FONT_GAME, "#000000");
         _oNextBack.x = CANVAS_WIDTH/2 - 31;
         _oNextBack.y = 92;
         _oNextBack.textAlign = "center";
         _oNextBack.textBaseline = "alphabetic";
         _oContainerGUI.addChild(_oNextBack);
+         /mat */
 		
-	_oNext = new createjs.Text(TEXT_NEXT ,"bold 34px "+FONT_GAME, "#ffffff");
+	    _oNext = new createjs.Text(TEXT_NEXT ,"bold 34px "+FONT_GAME, "#ffffff");
         _oNext.x = (CANVAS_WIDTH/2) - 30;
         _oNext.y = 90;
         _oNext.textAlign = "center";
@@ -61,13 +65,15 @@ function CInterface(iLevel /* mat */ , iScore, oBallSpriteSheet) {
         _oNextBall.x = (CANVAS_WIDTH/2) + 26;
         _oNextBall.y = 56;
         _oContainerGUI.addChild(_oNextBall);
-        
-        _oLevelTextBack = new createjs.Text(TEXT_LEVEL + " " + iLevel /* mat */ , "bold 34px " + FONT_GAME, "#000000");
+
+        /* mat:
+        _oLevelTextBack = new createjs.Text(TEXT_LEVEL + " " + iLevel, "bold 34px " + FONT_GAME, "#000000");
         _oLevelTextBack.x = CANVAS_WIDTH/2 + 1;
         _oLevelTextBack.y = 47;
         _oLevelTextBack.textAlign = "center";
         _oLevelTextBack.textBaseline = "alphabetic";
         _oContainerGUI.addChild(_oLevelTextBack);
+         /mat */
         
         _oLevelText = new createjs.Text(TEXT_LEVEL + " " + iLevel /* mat */ , "bold 34px " + FONT_GAME, "#ffffff");
         _oLevelText.x = CANVAS_WIDTH/2;
@@ -76,12 +82,14 @@ function CInterface(iLevel /* mat */ , iScore, oBallSpriteSheet) {
         _oLevelText.textBaseline = "alphabetic";
         _oContainerGUI.addChild(_oLevelText);
 
+        /* mat:
         _oCongratsTextBack = new createjs.Text(TEXT_VERYGOOD ,"bold 60px "+FONT_GAME, "#000000");
         _oCongratsTextBack.x = CANVAS_WIDTH/2 + 4;
         _oCongratsTextBack.y = -76;
         _oCongratsTextBack.textAlign = "center";
         _oCongratsTextBack.textBaseline = "alphabetic";
         s_oStage.addChild(_oCongratsTextBack);
+         /mat */
         
         _oCongratsText = new createjs.Text(TEXT_VERYGOOD ,"bold 60px "+FONT_GAME, "#ffffff");
         _oCongratsText.x = CANVAS_WIDTH/2;
@@ -89,8 +97,6 @@ function CInterface(iLevel /* mat */ , iScore, oBallSpriteSheet) {
         _oCongratsText.textAlign = "center";
         _oCongratsText.textBaseline = "alphabetic";
         s_oStage.addChild(_oCongratsText);
-        
-        
 
         var oParent = this;
         _oHitArea = createBitmap(s_oSpriteLibrary.getSprite('hit_area'));
@@ -137,7 +143,7 @@ function CInterface(iLevel /* mat */ , iScore, oBallSpriteSheet) {
     };
 
     this.refreshScore = function(iScore){
-        _oScoreTextBack.text = TEXT_SCORE +": "+iScore;
+        //mat:_oScoreTextBack.text = TEXT_SCORE +": "+iScore;
         _oScoreText.text = TEXT_SCORE +": "+iScore;
     };
     
@@ -147,15 +153,15 @@ function CInterface(iLevel /* mat */ , iScore, oBallSpriteSheet) {
     
     this.showCongrats = function(szText){
         _oCongratsText.text = szText;
-        _oCongratsTextBack.text = szText;
+        //mat:_oCongratsTextBack.text = szText;
         
         createjs.Tween.get(_oCongratsText).to({y:CANVAS_HEIGHT/2} , CANVAS_HEIGHT/2,createjs.Ease.quintOut).call(function() {
                                                     createjs.Tween.get(_oCongratsText).to({y:-60} , 700,createjs.Ease.quintIn);
                                                 });
                                                 
-        createjs.Tween.get(_oCongratsTextBack).to({y:CANVAS_HEIGHT/2} , CANVAS_HEIGHT/2 + 2,createjs.Ease.quintOut).call(function() {
-                                                    createjs.Tween.get(_oCongratsTextBack).to({y:-56} , 700,createjs.Ease.quintIn);
-                                                });
+        //createjs.Tween.get(_oCongratsTextBack).to({y:CANVAS_HEIGHT/2} , CANVAS_HEIGHT/2 + 2,createjs.Ease.quintOut).call(function() {
+        //                                            createjs.Tween.get(_oCongratsTextBack).to({y:-56} , 700,createjs.Ease.quintIn);
+        //                                        });
     };
     
     this.showNextLevel = function(iLevel,iScore){
@@ -165,7 +171,7 @@ function CInterface(iLevel /* mat */ , iScore, oBallSpriteSheet) {
     
     this.refreshLevelText = function(iLevel){
         _oLevelText.text = TEXT_LEVEL +" "+iLevel;
-        _oLevelTextBack.text = TEXT_LEVEL +" "+iLevel;
+        //mat:_oLevelTextBack.text = TEXT_LEVEL +" "+iLevel;
     };
     
     this._onExit = function(){

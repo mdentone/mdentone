@@ -44,9 +44,9 @@ var gameData = {speed:0, sheepRange:0, paused:true, play:false};
  */
 function buildGameButton(){
 	if($.browser.mobile || isTablet){
-		txtInstruction.text = txtInstructionShadow.text = instructionMobileText;
+        txtInstruction.text = /* mat txtInstructionShadow.text =*/ instructionMobileText;
 	}else{
-		txtInstruction.text = txtInstructionShadow.text = instructionText;
+        txtInstruction.text = /* mat txtInstructionShadow.text =*/ instructionText;
 	}
 	stage.on("stagemousemove", function(evt) {
 		var stageX = evt.stageX / scalePercent;
@@ -209,7 +209,7 @@ function stopGame(){
 	
 	TweenMax.killTweensOf(instruction);
 	TweenMax.killTweensOf(txtInstruction);
-	TweenMax.killTweensOf(txtInstructionShadow);
+	//mat:TweenMax.killTweensOf(txtInstructionShadow);
 	TweenMax.killTweensOf(wood);
 	TweenMax.killTweensOf(gameData);
 }
@@ -238,23 +238,23 @@ function saveGame(score){
 function toggleInstruction(con){
 	TweenMax.killTweensOf(instruction);
 	TweenMax.killTweensOf(txtInstruction);
-	TweenMax.killTweensOf(txtInstructionShadow);
+	//mat:TweenMax.killTweensOf(txtInstructionShadow);
 	
 	if(con){
 		instruction.alpha = 1;
 		txtInstruction.alpha = 1;
-		txtInstructionShadow.alpha = .2;
+		//mat:txtInstructionShadow.alpha = .2;
 		
 		txtScore.alpha = 0;
-		txtScoreShadow.alpha = 0;
+		//mat:txtScoreShadow.alpha = 0;
 	}else{
 		var tweenSpeed = .5;
 		TweenMax.to(instruction, tweenSpeed, {alpha:0, overwrite:true});
 		TweenMax.to(txtInstruction, tweenSpeed, {alpha:0, overwrite:true});
-		TweenMax.to(txtInstructionShadow, tweenSpeed, {alpha:0, overwrite:true});
+		//mat:TweenMax.to(txtInstructionShadow, tweenSpeed, {alpha:0, overwrite:true});
 		
 		txtScore.alpha = 1;
-		txtScoreShadow.alpha = .2;
+		//mat:txtScoreShadow.alpha = .2;
 	}
 }
 
@@ -558,10 +558,10 @@ function updateScore(num){
 	playerData.score += num;
 	
 	txtScore.text = playerData.score;
-	txtScoreShadow.text = playerData.score;
+	//mat:txtScoreShadow.text = playerData.score;
 	
 	txtResultScore.text = playerData.score;
-	txtResultScoreShadow.text = playerData.score;
+	//mat:txtResultScoreShadow.text = playerData.score;
 }
 
 /*!

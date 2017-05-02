@@ -1,26 +1,29 @@
 function CHelpPanel(oSprite){
     var _oText;
-    var _oTextBack;
+    //mat: var _oTextBack;
     var _oHelpBg;
     var _oGroup;
 
     this._init = function(oSprite){
         _oHelpBg = createBitmap(oSprite); 
 
+        /* mat:
         _oTextBack = new createjs.Text(TEXT_HELP,"bold 40px "+FONT_GAME, "#000000");
         _oTextBack.textAlign = "center";
         _oTextBack.x = CANVAS_WIDTH/2 + 2;
         _oTextBack.y = CANVAS_HEIGHT/2 - 150;
         _oTextBack.lineWidth = CANVAS_WIDTH - 300;
+         /mat */
 		
-	_oText = new createjs.Text(TEXT_HELP,"bold 40px "+FONT_GAME, "#ffffff");
+	    _oText = new createjs.Text(TEXT_HELP,"bold 40px "+FONT_GAME, "#ffffff");
         _oText.textAlign = "center";
         _oText.x = CANVAS_WIDTH/2;
-        _oText.y = CANVAS_HEIGHT/2 - 152;
+        //mat: _oText.y = CANVAS_HEIGHT/2 - 152;
+        _oText.y = CANVAS_HEIGHT/2 - 120;
         _oText.lineWidth = CANVAS_WIDTH - 300;
 
         _oGroup = new createjs.Container();
-        _oGroup.addChild(_oHelpBg,_oTextBack,_oText);
+        _oGroup.addChild(_oHelpBg, /*mat:_oTextBack,*/ _oText);
         s_oStage.addChild(_oGroup);
         
         var oParent = this;

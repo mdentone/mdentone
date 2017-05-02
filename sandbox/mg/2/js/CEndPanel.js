@@ -16,12 +16,12 @@ function CEndPanel(){
         _oMsgText.x = CANVAS_WIDTH/2;
         _oMsgText.y = (CANVAS_HEIGHT/2)-132;
         _oMsgText.textAlign = "center";
-        _oMsgText.shadow = new createjs.Shadow("#000", 2, 2, 2);
+        //mat:_oMsgText.shadow = new createjs.Shadow("#000", 2, 2, 2);
 
         _oScoreText = new createjs.Text("","50px "+FONT_GAME, "#FFCC00");
         _oScoreText.x = CANVAS_WIDTH/2;
         _oScoreText.y = (CANVAS_HEIGHT/2) + 52;
-        _oScoreText.shadow = new createjs.Shadow("#000", 2, 2, 2);
+        //mat:_oScoreText.shadow = new createjs.Shadow("#000", 2, 2, 2);
         _oScoreText.textAlign = "center";
         
         var oSprite = s_oSpriteLibrary.getSprite('but_play');

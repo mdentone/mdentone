@@ -4,7 +4,7 @@ function CInterface(){
     var _oHelpPanel=null;
     var _oScoreText;
     var _oScoreNum;
-    var _oScoreNumTextOutline;
+    //mat:var _oScoreNumTextOutline;
     var _oTimeText;
     var _oBarFill;
     var _oMask;    
@@ -76,7 +76,8 @@ function CInterface(){
         _oTimeText.lineWidth = 200;        
         oInfoContainer.addChild(_oTimeText);
         
-        var oTimeTextOutline = new createjs.Text(TEXT_TIME,"bold 40px "+PRIMARY_FONT, "#000000");
+        /* mat:
+        var oTimeTextOutline = new createjs.Text(TEXT_TIME, "bold 40px " + PRIMARY_FONT, "#000000");
         oTimeTextOutline.x =10;
         oTimeTextOutline.y =0;
         oTimeTextOutline.textAlign = "left";
@@ -84,6 +85,7 @@ function CInterface(){
         oTimeTextOutline.lineWidth = 200;
         oTimeTextOutline.outline = 3;
         oInfoContainer.addChild(oTimeTextOutline);
+         /mat */
 
         var oSprite = s_oSpriteLibrary.getSprite('time_bar_fill');
         _oBarFill = createBitmap(oSprite);
@@ -114,6 +116,7 @@ function CInterface(){
         _oScoreText.lineWidth = 200;        
         oInfoContainer.addChild(_oScoreText);
         
+        /* mat:
         var oScoreTextOutline = new createjs.Text(TEXT_SCORE,"bold 40px "+PRIMARY_FONT, "#000000");
         oScoreTextOutline.x =10;
         oScoreTextOutline.y =110;
@@ -122,7 +125,8 @@ function CInterface(){
         oScoreTextOutline.lineWidth = 200;
         oScoreTextOutline.outline = 3;
         oInfoContainer.addChild(oScoreTextOutline);
-        
+         /mat */
+
         _oScoreNum = new createjs.Text("0","bold 36px "+PRIMARY_FONT, "#fcff00");
         _oScoreNum.x = 10;
         _oScoreNum.y = 155;
@@ -130,7 +134,8 @@ function CInterface(){
         _oScoreNum.textBaseline = "alphabetic";
         _oScoreNum.lineWidth = 200;
         oInfoContainer.addChild(_oScoreNum);
-        
+
+        /* mat:
         _oScoreNumTextOutline = new createjs.Text("0","bold 36px "+PRIMARY_FONT, "#000000");
         _oScoreNumTextOutline.x =10;
         _oScoreNumTextOutline.y =155;
@@ -139,7 +144,7 @@ function CInterface(){
         _oScoreNumTextOutline.lineWidth = 200;
         _oScoreNumTextOutline.outline = 3;
         oInfoContainer.addChild(_oScoreNumTextOutline);
-
+        /mat */
         
         this.refreshButtonPos(s_iOffsetX,s_iOffsetY);
         
@@ -167,7 +172,7 @@ function CInterface(){
 
     this.refreshScore = function(iValue){
         _oScoreNum.text = iValue;
-        _oScoreNumTextOutline.text = iValue;
+        //mat:_oScoreNumTextOutline.text = iValue;
     };
     
     this.refreshLives = function (iLives){

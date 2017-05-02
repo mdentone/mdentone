@@ -1,30 +1,34 @@
 function CEndPanel(oSpriteBg){
     
     var _oBg;
-    var _oScoreTextBack;
+    //mat:var _oScoreTextBack;
     var _oScoreText;
     var _oMsgText;
-    var _oMsgTextBack;
+    //mat:var _oMsgTextBack;
     var _oGroup;
     
     this._init = function(oSpriteBg){
         
         _oBg = createBitmap(oSpriteBg);
 
-        _oMsgTextBack = new createjs.Text("","bold 56px "+FONT_GAME, "#000");
+        /* mat:
+        _oMsgTextBack = new createjs.Text("", "bold 56px " + FONT_GAME, "#000");
         _oMsgTextBack.x = CANVAS_WIDTH/2 +2;
         _oMsgTextBack.y = (CANVAS_HEIGHT/2)-76;
         _oMsgTextBack.textAlign = "center";
+         /mat */
 
         _oMsgText = new createjs.Text("","bold 56px "+FONT_GAME, "#ffffff");
         _oMsgText.x = CANVAS_WIDTH/2;
         _oMsgText.y = (CANVAS_HEIGHT/2)-80;
         _oMsgText.textAlign = "center";
-        
+
+        /* mat:
         _oScoreTextBack = new createjs.Text("","bold 40px "+FONT_GAME, "#000");
         _oScoreTextBack.x = CANVAS_WIDTH/2 +1;
         _oScoreTextBack.y = (CANVAS_HEIGHT/2)+34;
         _oScoreTextBack.textAlign = "center";
+         /mat */
         
         _oScoreText = new createjs.Text("","bold 40px "+FONT_GAME, "#ffffff");
         _oScoreText.x = CANVAS_WIDTH/2;
@@ -35,7 +39,8 @@ function CEndPanel(oSpriteBg){
         _oGroup.alpha = 0;
         _oGroup.visible=false;
         
-        _oGroup.addChild(_oBg, _oScoreTextBack,_oScoreText,_oMsgTextBack,_oMsgText);
+        //mat:_oGroup.addChild(_oBg, _oScoreTextBack,_oScoreText,_oMsgTextBack,_oMsgText);
+        _oGroup.addChild(_oBg, _oScoreText, _oMsgText);
 
         s_oStage.addChild(_oGroup);
     };
@@ -51,13 +56,13 @@ function CEndPanel(oSpriteBg){
     
     this.show = function(iScore,bWin){
         if(bWin){
-            _oMsgTextBack.text = TEXT_CONGRATS;
+            //mat:_oMsgTextBack.text = TEXT_CONGRATS;
             _oMsgText.text = TEXT_CONGRATS;
         }else{
-            _oMsgTextBack.text = TEXT_GAMEOVER;
+            //mat:_oMsgTextBack.text = TEXT_GAMEOVER;
             _oMsgText.text = TEXT_GAMEOVER;
         }
-        _oScoreTextBack.text = TEXT_SCORE+": "+iScore;
+        //mat:_oScoreTextBack.text = TEXT_SCORE+": "+iScore;
         _oScoreText.text = TEXT_SCORE+": "+iScore;
         _oGroup.visible = true;
         

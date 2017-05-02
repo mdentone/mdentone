@@ -54,7 +54,7 @@ function CPreloader(){
        _oLoadingText = new createjs.Text("","30px "+FONT_GAME, "#fff");
        _oLoadingText.x = CANVAS_WIDTH/2;
        _oLoadingText.y = CANVAS_HEIGHT - 325;
-       _oLoadingText.shadow = new createjs.Shadow("#000", 2, 2, 2);
+       //mat:_oLoadingText.shadow = new createjs.Shadow("#000", 2, 2, 2);
        _oLoadingText.textBaseline = "alphabetic";
        _oLoadingText.textAlign = "center";
        _oContainer.addChild(_oLoadingText);

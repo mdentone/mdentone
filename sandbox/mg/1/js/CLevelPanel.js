@@ -2,32 +2,36 @@ function CLevelPanel(iCurLevel){
     
     var _oBg;
     var _oGroup;
-    var _oMsgTextBack;
+    //mat:var _oMsgTextBack;
     var _oMsgText;
-    var _oScoreTextBack;
+    //mat:var _oScoreTextBack;
     var _oScoreText;
     
     this._init = function(iCurLevel){
-        
+
         _oBg = createBitmap(s_oSpriteLibrary.getSprite('msg_box'));
         _oBg.x = 0;
         _oBg.y = 0;
-        
-        _oMsgTextBack = new createjs.Text("","bold 45px "+PRIMARY_FONT, "#000000");
+
+        /* mat:
+        _oMsgTextBack = new createjs.Text("", "bold 45px " + PRIMARY_FONT, "#000000");
         _oMsgTextBack.x = CANVAS_WIDTH/2 +4;
         _oMsgTextBack.y = (CANVAS_HEIGHT/2)-100;
         _oMsgTextBack.textAlign = "center";
+         /mat */
 
         _oMsgText = new createjs.Text("","bold 45px "+PRIMARY_FONT, "#fcff00");
         _oMsgText.x = CANVAS_WIDTH/2;
         _oMsgText.y = (CANVAS_HEIGHT/2) -104;
         _oMsgText.textAlign = "center";
-       
+
+        /* mat:
         _oScoreTextBack = new createjs.Text("","bold 40px "+PRIMARY_FONT, "#000000");
         _oScoreTextBack.x = CANVAS_WIDTH/2 +4;
         _oScoreTextBack.y = (CANVAS_HEIGHT/2) + 4;
         _oScoreTextBack.textAlign = "center";
-        
+         /mat */
+
         _oScoreText = new createjs.Text("","bold 40px "+PRIMARY_FONT, "#fcff00");
         _oScoreText.x = CANVAS_WIDTH/2;
         _oScoreText.y = (CANVAS_HEIGHT/2);
@@ -37,7 +41,8 @@ function CLevelPanel(iCurLevel){
         _oGroup.alpha = 0;
         _oGroup.visible=false;
         
-        _oGroup.addChild(_oBg, _oScoreTextBack, _oScoreText, _oMsgTextBack, _oMsgText);
+        //mat:_oGroup.addChild(_oBg, _oScoreTextBack, _oScoreText, _oMsgTextBack, _oMsgText);
+        _oGroup.addChild(_oBg, _oScoreText, _oMsgText);
 
         s_oStage.addChild(_oGroup);
     };
@@ -55,10 +60,10 @@ function CLevelPanel(iCurLevel){
 
         var oParent = this;
         oParent._initListener();
-        _oMsgTextBack.text = TEXT_LEVELEND + iCurLevel + TEXT_COMPLETEEND;
+        //mat:_oMsgTextBack.text = TEXT_LEVELEND + iCurLevel + TEXT_COMPLETEEND;
         _oMsgText.text = TEXT_LEVELEND + iCurLevel + TEXT_COMPLETEEND;
 
-        _oScoreTextBack.text = TEXT_SCORE +" "+iScore;
+        //mat:_oScoreTextBack.text = TEXT_SCORE +" "+iScore;
         _oScoreText.text = TEXT_SCORE +" "+iScore;
         
         _oGroup.visible = true;

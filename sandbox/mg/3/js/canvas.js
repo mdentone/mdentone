@@ -24,7 +24,7 @@ function initGameCanvas(w,h){
 }
 
 var canvasContainer, bgContainer, rockContainer, sheepContainer, shadowContainer, mainContainer, gameContainer, resultContainer;
-var background, logo, /* mat: buttonStartTxt */ buttonStart, bgGround, bgGrass, bgRock, sheepData, sheepAnimate, sheepShadow, txtScore, txtScoreShadow, wood, instruction, txtInstruction, txtInstructionShadow, buttonFacebook, buttonTwitter, buttonGoogle, txtResultTitle, txtResultTitleShadow, txtResultScore, txtResultScoreShadow, buttonReplayTxt, txtShare;
+var background, logo, /* mat: buttonStartTxt */ buttonStart, bgGround, bgGrass, bgRock, sheepData, sheepAnimate, sheepShadow, txtScore, /* mat: txtScoreShadow,*/ wood, instruction, txtInstruction, /* mat: txtInstructionShadow,*/ buttonFacebook, buttonTwitter, buttonGoogle, txtResultTitle, /* mat: txtResultTitleShadow,*/ txtResultScore, /* mat: txtResultScoreShadow,*/ buttonReplayTxt, txtShare;
 
 var background_arr = [];
 var rock_arr = [];
@@ -162,7 +162,8 @@ function buildGameCanvas(){
 	txtScore.textBaseline='alphabetic';
 	txtScore.x = canvasW/2;
 	txtScore.y = canvasH/100 * 25;
-	
+
+    /* mat:
 	txtScoreShadow = new createjs.Text();
 	txtScoreShadow.font = "120px " + FONT_GAME;
 	txtScoreShadow.color = "#000000";
@@ -172,6 +173,7 @@ function buildGameCanvas(){
 	txtScoreShadow.alpha = .2;
 	txtScoreShadow.x = txtScore.x;
 	txtScoreShadow.y = txtScore.y+10;
+     /mat */
 	
 	instruction = new createjs.Bitmap(loader.getResult('instruction'));
 	centerReg(instruction);
@@ -185,7 +187,8 @@ function buildGameCanvas(){
 	txtInstruction.textBaseline='alphabetic';
 	txtInstruction.x = canvasW/2;
 	txtInstruction.y = canvasH/100 * 22;
-	
+
+    /* mat:
 	txtInstructionShadow = new createjs.Text();
 	txtInstructionShadow.font = "50px " + FONT_GAME;
 	txtInstructionShadow.color = "#000000";
@@ -194,6 +197,7 @@ function buildGameCanvas(){
 	txtInstructionShadow.alpha = .2;
 	txtInstructionShadow.x = txtInstruction.x;
 	txtInstructionShadow.y = txtInstruction.y+10;
+     /mat */
 
     // mat:	
 	//buttonFacebook = new createjs.Bitmap(loader.getResult('buttonFacebook'));
@@ -220,7 +224,8 @@ function buildGameCanvas(){
 	txtResultTitle.textBaseline='alphabetic';
 	txtResultTitle.x = canvasW/2;
 	txtResultTitle.y = canvasH/100 * 20;
-	
+
+    /* mat:
 	txtResultTitleShadow = new createjs.Text();
 	txtResultTitleShadow.font = "90px " + FONT_GAME;
 	txtResultTitleShadow.color = "#000000";
@@ -230,6 +235,7 @@ function buildGameCanvas(){
 	txtResultTitleShadow.alpha = .2;
 	txtResultTitleShadow.x = txtResultTitle.x;
 	txtResultTitleShadow.y = txtResultTitle.y+10;
+     /mat */
 	
 	txtResultScore = new createjs.Text();
 	txtResultScore.font = "120px " + FONT_GAME;
@@ -240,7 +246,8 @@ function buildGameCanvas(){
 	txtResultScore.x = canvasW/2;
 	txtResultScore.y = canvasH/100 * 37;
 	
-	txtResultScoreShadow = new createjs.Text();
+    /* mat:
+    txtResultScoreShadow = new createjs.Text();
 	txtResultScoreShadow.font = "120px " + FONT_GAME;
 	txtResultScoreShadow.color = "#000000";
 	txtResultScoreShadow.text = '54';
@@ -249,6 +256,7 @@ function buildGameCanvas(){
 	txtResultScoreShadow.alpha = .2;
 	txtResultScoreShadow.x = txtResultScore.x;
 	txtResultScoreShadow.y = txtResultScore.y+10;
+     /mat */
 	
     // mat:	
 	//txtShare = new createjs.Text();
@@ -272,9 +280,10 @@ function buildGameCanvas(){
     // /mat
 
 	mainContainer.addChild(logo, /* mat: buttonStartTxt */ buttonStart);
-	gameContainer.addChild(sheepAnimate, sheepShadow, shadowContainer, wood, sheepContainer, txtScoreShadow, txtScore, instruction, txtInstructionShadow, txtInstruction);
+	// mat: gameContainer.addChild(sheepAnimate, sheepShadow, shadowContainer, wood, sheepContainer, txtScoreShadow, txtScore, instruction, txtInstructionShadow, txtInstruction);ù
+    gameContainer.addChild(sheepAnimate, sheepShadow, shadowContainer, wood, sheepContainer, txtScore, instruction, txtInstruction);
     // mat: resultContainer.addChild(buttonFacebook, buttonTwitter, buttonGoogle, txtResultTitleShadow, txtResultTitle, txtResultScoreShadow, txtResultScore, buttonReplayTxt, txtShare);
-	resultContainer.addChild(txtResultTitleShadow, txtResultTitle, txtResultScoreShadow, txtResultScore);
+	resultContainer.addChild(txtResultTitle, txtResultScore);
 	canvasContainer.addChild(background, bgContainer, rockContainer, mainContainer, gameContainer, resultContainer);
 	stage.addChild(canvasContainer);
 	

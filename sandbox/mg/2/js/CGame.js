@@ -198,7 +198,7 @@ function CGame(oData) {
         oComboText.alpha = 0;
         oComboText.x = _oComboPt.x;
         oComboText.y = _oComboPt.y; 
-        oComboText.shadow = new createjs.Shadow("#000", 2, 2, 2);
+        //mat:oComboText.shadow = new createjs.Shadow("#000", 2, 2, 2);
         oComboText.textAlign = "center";
         oComboText.textBaseline = "middle";
         _oAttachFruit.addChild(oComboText);

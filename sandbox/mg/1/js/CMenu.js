@@ -12,7 +12,7 @@ function CMenu(){
         s_oStage.addChild(_oBg);
 
         var oSprite = s_oSpriteLibrary.getSprite('but_play');
-        _oButPlay = new CTextButton((CANVAS_WIDTH/2),CANVAS_HEIGHT -200,oSprite,TEXT_PLAY,PRIMARY_FONT,"#fcff00",40); 
+        _oButPlay = new CTextButton((CANVAS_WIDTH / 2), CANVAS_HEIGHT - 200, oSprite, TEXT_PLAY, PRIMARY_FONT, /*mat: "#fcff00"*/ "#231F20", 40); 
         _oButPlay.addEventListener(ON_MOUSE_UP, this._onButPlayRelease, this);
      
         if(DISABLE_SOUND_MOBILE === false || s_bMobile === false){

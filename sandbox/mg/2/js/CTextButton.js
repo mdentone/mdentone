@@ -11,31 +11,32 @@ function CTextButton(iXPos,iYPos,oSprite,szText,szFont,szColor,iFontSize,bAttach
 
         var oButtonBg = createBitmap( oSprite);
 
+        /* mat:
         var iStepShadow = Math.ceil(iFontSize/30);
 
         var oTextBack = new createjs.Text(szText,iFontSize+"px "+szFont, "#000000");
         oTextBack.textAlign = "center";
         oTextBack.textBaseline = "middle";
         oTextBack.lineHeight = 1;
-        var oBounds = oTextBack.getBounds(); 
-	
+        var oBounds = oTextBack.getBounds();
         oTextBack.x = oSprite.width/2 + iStepShadow;
         oTextBack.y = Math.floor((oSprite.height)/2) +(oBounds.height/3) + iStepShadow;
+         /mat */
 
         var oText = new createjs.Text(szText,iFontSize+"px "+szFont, szColor);
         oText.textAlign = "center";
         oText.textBaseline = "middle";
         oText.lineHeight = 1;
-        var oBounds = oText.getBounds();    
+        var oBounds = oText.getBounds();
         oText.x = oSprite.width/2;
-        oText.y = Math.floor((oSprite.height)/2) +(oBounds.height/3);
+        oText.y = Math.floor((oSprite.height / 2) + (oBounds.height / 3));
 
         _oButton = new createjs.Container();
         _oButton.x = iXPos;
         _oButton.y = iYPos;
         _oButton.regX = oSprite.width/2;
         _oButton.regY = oSprite.height/2;
-        _oButton.addChild(oButtonBg,oTextBack,oText);
+        _oButton.addChild(oButtonBg, /*mat:_oTextBack,*/ oText);
 
         if(bAttach !== false){
             s_oStage.addChild(_oButton);

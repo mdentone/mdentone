@@ -5,7 +5,7 @@ function CTextButton(iXPos,iYPos,oSprite,szText,szFont,szColor,iFontSize){
     var _aCbCompleted;
     var _aCbOwner;
     var _oButton;
-    var _oTextBack;
+    //mat: var _oTextBack;
     var _oText;
 	var _oButtonBg;
     
@@ -18,6 +18,7 @@ function CTextButton(iXPos,iYPos,oSprite,szText,szFont,szColor,iFontSize){
 		_iWidth = oSprite.width;
         _iHeight = oSprite.height;
 		
+        /* mat:
         var iStepShadow = Math.ceil(iFontSize/20);
 
         _oTextBack = new createjs.Text(szText,"bold "+iFontSize+"px "+szFont, "#000000");
@@ -25,19 +26,21 @@ function CTextButton(iXPos,iYPos,oSprite,szText,szFont,szColor,iFontSize){
         var oBounds = _oTextBack.getBounds();    
         _oTextBack.x = oSprite.width/2 + iStepShadow;
         _oTextBack.y = ((oSprite.height) - oBounds.height)/2 + iStepShadow;
+         /mat */
 
         _oText = new createjs.Text(szText,"bold "+iFontSize+"px "+szFont, szColor);
         _oText.textAlign = "center";
         var oBounds = _oText.getBounds();    
         _oText.x = oSprite.width/2;
-        _oText.y = ((oSprite.height) - oBounds.height)/2;
+        //mat:_oText.y = ((oSprite.height) - oBounds.height)/2;
+        _oText.y = Math.floor((oSprite.height / 2) + (oBounds.height / 3));
 
         _oButton = new createjs.Container();
         _oButton.x = iXPos;
         _oButton.y = iYPos;
         _oButton.regX = oSprite.width/2;
         _oButton.regY = oSprite.height/2;
-        _oButton.addChild(_oButtonBg,_oTextBack,_oText);
+        _oButton.addChild(_oButtonBg,/*mat:_oTextBack,*/_oText);
 
         s_oStage.addChild(_oButton);
 
@@ -121,7 +124,7 @@ function CTextButton(iXPos,iYPos,oSprite,szText,szFont,szColor,iFontSize){
     
     this.changeText = function(szText){
         _oText.text = szText;
-        _oTextBack.text = szText;
+        //mat:_oTextBack.text = szText;
     };
     
     this.setX = function(iXPos){

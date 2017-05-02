@@ -4,12 +4,12 @@ function CCreditsPanel(){
     var _oButLogo;
     var _oButExit;
     var _oMsgText;
-    var _oMsgTextOutline;
+    //mat:var _oMsgTextOutline;
     
     var _oHitArea;
     
     var _oLink;
-    var _oLinkOutline;
+    //mat:var _oLinkOutline;
     
     var _pStartPosExit;
     
@@ -39,21 +39,23 @@ function CCreditsPanel(){
         _pStartPosExit = {x: CANVAS_WIDTH - 200, y: 450};  
         _oButExit = new CGfxButton(_pStartPosExit.x, _pStartPosExit.y, oSprite, _oContainer);
         _oButExit.addEventListener(ON_MOUSE_UP, this.unload, this);
-       
+
+        /* mat:
         _oMsgTextOutline = new createjs.Text(TEXT_CREDITS_DEVELOPED, "50px " + FONT_GAME, "#000");
         _oMsgTextOutline.textAlign = "center";
         _oMsgTextOutline.textBaseline = "alphabetic";
-	_oMsgTextOutline.x = CANVAS_WIDTH/2;
+	    _oMsgTextOutline.x = CANVAS_WIDTH/2;
         _oMsgTextOutline.y = 710;
         _oMsgTextOutline.outline = 2;
-	_oContainer.addChild(_oMsgTextOutline);
+	    _oContainer.addChild(_oMsgTextOutline);
+         /mat */
        
         _oMsgText = new createjs.Text(TEXT_CREDITS_DEVELOPED, "50px " + FONT_GAME, "#fff");
         _oMsgText.textAlign = "center";
         _oMsgText.textBaseline = "alphabetic";
-	_oMsgText.x = CANVAS_WIDTH/2;
+	    _oMsgText.x = CANVAS_WIDTH/2;
         _oMsgText.y = 710;
-	_oContainer.addChild(_oMsgText);
+	    _oContainer.addChild(_oMsgText);
 		
         oSprite = s_oSpriteLibrary.getSprite('logo_ctl');
         _oButLogo = createBitmap(oSprite);
@@ -62,19 +64,21 @@ function CCreditsPanel(){
         _oButLogo.x = CANVAS_WIDTH/2;
         _oButLogo.y = 780;
         _oContainer.addChild(_oButLogo);
-        
+
+        /* mat:
         _oLinkOutline = new createjs.Text(TEXT_LINK1, "50px " + FONT_GAME, "#000");
         _oLinkOutline.textAlign = "center";
         _oLinkOutline.textBaseline = "alphabetic";
-	_oLinkOutline.x = CANVAS_WIDTH/2;
+	    _oLinkOutline.x = CANVAS_WIDTH/2;
         _oLinkOutline.y = 880;
         _oLinkOutline.outline = 2;
         _oContainer.addChild(_oLinkOutline);
+         /mat */
         
         _oLink = new createjs.Text(TEXT_LINK1, "50px " + FONT_GAME, "#fff");
         _oLink.textAlign = "center";
         _oLink.textBaseline = "alphabetic";
-	_oLink.x = CANVAS_WIDTH/2;
+	    _oLink.x = CANVAS_WIDTH/2;
         _oLink.y = 880;
         _oContainer.addChild(_oLink);
         
