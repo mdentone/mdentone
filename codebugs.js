@@ -13,7 +13,7 @@
     var G = window;
     G.Bax = {};
 
-    var version = "CODEBUGS v0.00.00.0000";
+    var version = "CODEBUGS v0.00.00.0001";
 
     console && console.log &&
     console.log(document.childNodes[1].textContent + version);
@@ -149,10 +149,10 @@
             this.run = Bax.noop;
 
             var page = document.getElementsByTagName('html')[0];
-            page.style = 'background-color:#000022;color:#80DD00;';
+            page.style.cssText = 'background-color:#000022;color:#80DD00;';
 
             var body = document.body;
-            body.style = 'width:100%;height:100%;'
+            body.style.cssText = 'width:100%;height:100%;'
                 + 'margin:0;padding:0;overflow:hidden;';
 
             var viewport = document.createElement('div');
@@ -213,9 +213,9 @@
             this.viewport = viewport;
 
             var layer = document.createElement('canvas');
-            layer.style = 'position:absolute;left:0;top:0;right:0;bottom:0;'
-                        + 'width:100%;height:100%;z-index:' + zIndex + ';'
-                        + 'background:transparent;';
+            layer.style.cssText = 'position:absolute;left:0;top:0;right:0;bottom:0;'
+                                + 'width:100%;height:100%;z-index:' + zIndex + ';'
+                                + 'background:transparent;';
             layer.width = width;
             layer.height = height;
             viewport.appendChild(layer);
