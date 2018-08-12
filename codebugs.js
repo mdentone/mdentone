@@ -97,14 +97,17 @@
             return Math.random();
         };
 
-        this.nextInt = function(min, max) {
-            var imin = Math.ceil(min);
-            var imax = Math.floor(max);
-            return Math.floor(Math.random() * (imax - imin)) + imin;
+        this.nextBit = function() {
+            return Math.floor(Math.random() * 2);
         };
 
-        this.nextSingle = function(min, max) {
-            return Math.random() * (max - min) + min;
+        this.nextInt = function(max, min) {
+            if (arguments.length > 1) {
+                return Math.floor(Math.random() * (max - min + 1)) + min;
+            }
+            else {
+                return Math.floor(Math.random() * max);
+            }
         };
 
     })();
@@ -401,7 +404,7 @@
             g.fillStyle = '#80DD00';
             g.font = '14px monospace';
 
-            boss = new Bax.Game.Boss(400, 100, 16);
+            boss = new Bax.Game.Boss(400, 60, 16);
         }
 
         function onUpdate(c, g) {
@@ -409,7 +412,7 @@
             if (r === 0) {
                 g.clearRect(0, 0, c.width, c.height);
 
-                if (boss.isDoingSomething && Bax.Random.nextInt(0, 20) === 0)
+                if (boss.isDoingSomething && Bax.Random.nextInt(20) === 0)
                     boss.doNothing();
                 else
                     boss.walk(c.width);
@@ -436,8 +439,15 @@
             g.fillStyle = '#80FF00';
             g.font = '14px monospace';
 
-            for (var i = 0; i < 6; i++) {
+            var i = 0;
+            for (i = 0; i < 5; i++) {
+                bugs.push(new Bax.Game.Bug(20 + (i + 1) * 110, 400, 16));
+            }
+            for (i = 0; i < 6; i++) {
                 bugs.push(new Bax.Game.Bug((i + 1) * 100, 500, 16));
+            }
+            for (i = 0; i < 5; i++) {
+                bugs.push(new Bax.Game.Bug(20 + (i + 1) * 110, 600, 16));
             }
         }
 
@@ -446,16 +456,16 @@
             if (r === 0) {
                 g.clearRect(0, 0, c.width, c.height);
 
-                var ix = Bax.Random.nextInt(-2, +3),
-                    iy = Bax.Random.nextInt(-2, +3);
+                var ix = Bax.Random.nextInt(2, -2),
+                    iy = Bax.Random.nextInt(2, -2);
 
                 for (var i = 0; i < bugs.length; i++) {
                     bugs[i].move(ix, iy);
 
-                    if (Bax.Random.nextInt(0, 20) === 0
+                    if (Bax.Random.nextInt(20) === 0
                         && !bugs[i].isDoingSomething) {
 
-                        switch (Bax.Random.nextInt(0, 6)) {
+                        switch (Bax.Random.nextInt(6)) {
                             case 1:
                                 bugs[i].lookLeft();
                                 break;
@@ -589,7 +599,7 @@
             ' @@@@@@@@@@@@@@/.:::.\\/.:::.\\@@ ',
             '@@@@/@@@@@@@@@@|:::::||:::::|@@',
             ' @@/@@@@@@@@@@@\\\':::\'/\\\':::\'/@@ ',
-            '  / @@@@@@@@@@@@@@@@@//\\\\@@@@@@ ',
+            '  / @@@@@@@@@@@@@@@@//\\\\@@@@@@ ',
             ' (    /@@@@@@@@@@@@@@@@@@@@@@   ',
             '  \\  (   \\ (     /     \\     ',
             '      \\     \\    (      )    ',
@@ -609,7 +619,7 @@
         };
 
         This.walk = function(w) {
-            if (this.currDir === 0) this.currDir = Bax.Random.nextInt(0, 2) === 0 ? -1 : +1;
+            if (this.currDir === 0) this.currDir = Bax.Random.nextBit() === 0 ? -1 : +1;
             if (this.currDir === -1 && this.x <= 0) this.currDir = 1;
             if (this.currDir === +1 && this.x >= w - 14 * this.charSize) this.currDir = -1;
 
@@ -671,12 +681,12 @@
 
         This.lookLeft = function() {
             this.currEyes = 1;
-            this.doThisFor(Bax.Random.nextInt(500, 2000));
+            this.doThisFor(1000 + Bax.Random.nextInt(1000));
         };
 
         This.lookRight = function() {
             this.currEyes = 2;
-            this.doThisFor(Bax.Random.nextInt(500, 2000));
+            this.doThisFor(1000 + Bax.Random.nextInt(1000));
         };
 
         This.move = function(ix, iy) {
