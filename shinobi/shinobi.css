@@ -1,0 +1,84 @@
+/*
+                                                                              
+       _|_|_|  _|    _|  _|_|_|  _|      _|    _|_|    _|_|_|    _|_|_|       
+     _|        _|    _|    _|    _|_|    _|  _|    _|  _|    _|    _|         
+       _|_|    _|_|_|_|    _|    _|  _|  _|  _|    _|  _|_|_|      _|         
+           _|  _|    _|    _|    _|    _|_|  _|    _|  _|    _|    _|         
+     _|_|_|    _|    _|  _|_|_|  _|      _|    _|_|    _|_|_|    _|_|_|       
+                                                                              
+                    Copyright (c) MDE. All rights reserved.                   
+*/
+
+#game-view {
+    background-color: black;
+    display: block; /* avoid gap*/
+    margin: auto; /* allow aligning */
+}
+
+#dpad-area, #trig-area {
+    position: absolute;
+    bottom: 0;
+    width: 33.3%; /* vw fallback */
+    width: 33.3vmin;
+    height: 33.3%; /* vh fallback */
+    height: 33.3vmin;
+}
+
+#dpad-area {
+    left: 0;
+}
+
+#trig-area {
+    right: 0;
+}
+
+.dpad-trig {
+    position: absolute;
+    background-color: #DDDDDD; /* rgba fallback */
+    background-color: rgba(127, 127, 127, 0.5);
+    color: black;
+    border-radius: 16.7%;
+    border: 1px solid black;
+    width: 33.3%;
+    height: 33.3%;
+    text-align: center;
+    font-size: 8px; /* vmin fallback */
+    font-size: 4vmin;
+    cursor: pointer;
+}
+
+#dpad-up {
+    left: 33.3%;
+    top: 0;
+}
+
+#dpad-down {
+    left: 33.3%;
+    bottom: 0;
+}
+
+#dpad-left {
+    left: 0;
+    top: 33.3%;
+}
+
+#dpad-right {
+    right: 0;
+    top: 33.3%;
+}
+
+#trig-1 {
+    left: 0;
+    top: 33.3%;
+}
+
+#trig-2 {
+    right: 0;
+    top: 33.3%;
+}
+
+#trig-pause {
+    left: 33.3%;
+    top: 0;
+    height: 16.7%;
+}
