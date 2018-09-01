@@ -18,10 +18,10 @@
 #dpad-area, #trig-area {
     position: absolute;
     bottom: 0;
-    width: 33.3%; /* vw fallback */
-    width: 33.3vmin;
-    height: 33.3%; /* vh fallback */
-    height: 33.3vmin;
+    width: 45%; /* vw fallback */
+    width: 45vmin;
+    height: 45%; /* vh fallback */
+    height: 45vmin;
 }
 
 #dpad-area {
@@ -80,5 +80,5 @@
 #trig-pause {
     left: 33.3%;
     top: 0;
-    height: 16.7%;
+    height: 22.2%;
 }
