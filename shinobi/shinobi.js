@@ -37,32 +37,47 @@
             ////l.appendChild(view);
             ////document.body.appendChild(l);
 
+            var click, press, release;
+            if ('onpointerdown' in window) {
+                click = press = 'onpointerdown';
+                release = 'onpointerup';
+            }
+            else if ('ontouchstart' in window) {
+                click = press = 'ontouchstart';
+                release = 'ontouchend';
+            }
+            else {
+                click = 'click';
+                press = 'onmousedown';
+                release = 'onmouseup';
+            }
+
             l = document.getElementById('dpad-up');
-            l.onmousedown = function() { joystick &= ~1; };
-            l.onmouseup   = function() { joystick |= 1; };
+            l[press]   = function() { joystick &= ~1; };
+            l[release] = function() { joystick |= 1; };
 
             l = document.getElementById('dpad-down');
-            l.onmousedown = function() { joystick &= ~2; };
-            l.onmouseup   = function() { joystick |= 2; };
+            l[press]   = function() { joystick &= ~2; };
+            l[release] = function() { joystick |= 2; };
 
             l = document.getElementById('dpad-left');
-            l.onmousedown = function() { joystick &= ~4; };
-            l.onmouseup   = function() { joystick |= 4; };
+            l[press]   = function() { joystick &= ~4; };
+            l[release] = function() { joystick |= 4; };
 
             l = document.getElementById('dpad-right');
-            l.onmousedown = function() { joystick &= ~8; };
-            l.onmouseup   = function() { joystick |= 8; };
+            l[press]   = function() { joystick &= ~8; };
+            l[release] = function() { joystick |= 8; };
 
             l = document.getElementById('trig-1');
-            l.onmousedown = function() { joystick &= ~16; };
-            l.onmouseup   = function() { joystick |= 16; };
+            l[press]   = function() { joystick &= ~16; };
+            l[release] = function() { joystick |= 16; };
 
             l = document.getElementById('trig-2');
-            l.onmousedown = function() { joystick &= ~32; };
-            l.onmouseup   = function() { joystick |= 32; };
+            l[press]   = function() { joystick &= ~32; };
+            l[release] = function() { joystick |= 32; };
 
             l = document.getElementById('trig-pause');
-            l.onclick = function() { z80_nmi(); };
+            l[click] = function() { z80_nmi(); };
 
             this.view = view;
 
@@ -71,7 +86,28 @@
         };
 
         proto.layout = function(width, height) {
-            var vmin = Math.min(width, Math.floor(height * GR));
+            var vmin = Math.min(width, height);
+            var vgw, vgh;
+            if (width > height) {
+                vgw = Math.floor(vmin / GR);
+                if (vgw <= width) {
+                    vgh = vmin;
+                }
+                else {
+                    vgw = vmin;
+                    vgh = Math.floor(vmin * GR);
+                }
+            }
+            else {
+                vgh = Math.floor(vmin * GR);
+                if (vgh <= height) {
+                    vgw = vmin;
+                }
+                else {
+                    vgw = Math.floor(vmin / GR);
+                    vgh = vmin;
+                }
+            }
             var view = this.view;
             view.style.width = vmin + 'px';
             view.style.height = Math.floor(vmin * GR) + 'px';
