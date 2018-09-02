@@ -46,6 +46,18 @@ html {
     margin: auto; /* allow aligning */
 }
 
+#power-on {
+    border: 1px solid black;
+    outline: none;
+    background-color: #DDDDDD;
+    color: #DD0000;
+    position: absolute;
+    left: 33.3%;
+    top: 33.3%;
+    width: 33.3%;
+    height: 33.3%;
+}
+
 #dpad-area, #trig-area {
     position: absolute;
     bottom: 0;
