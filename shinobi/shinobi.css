@@ -19,6 +19,7 @@ html, body, a, div, img, p, pre, span {
 html, body {
     height: 100%;
     overflow: hidden;
+    touch-action: none;
     -moz-user-select: none;
     -ms-user-select: none;
     -webkit-user-select: none;

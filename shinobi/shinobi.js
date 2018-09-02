@@ -53,34 +53,34 @@
             }
 
             l = document.getElementById('dpad-up');
-            l[press]   = function() { joystick &= ~1; };
-            l[release] = function() { joystick |= 1; };
+            l[press]   = function(e) { joystick &= ~1; e.preventDefault(); };
+            l[release] = function(e) { joystick |= 1; e.preventDefault(); };
 
             l = document.getElementById('dpad-down');
-            l[press]   = function() { joystick &= ~2; };
-            l[release] = function() { joystick |= 2; };
+            l[press]   = function(e) { joystick &= ~2; e.preventDefault(); };
+            l[release] = function(e) { joystick |= 2; e.preventDefault(); };
 
             l = document.getElementById('dpad-left');
-            l[press]   = function() { joystick &= ~4; };
-            l[release] = function() { joystick |= 4; };
+            l[press]   = function(e) { joystick &= ~4; e.preventDefault(); };
+            l[release] = function(e) { joystick |= 4; e.preventDefault(); };
 
             l = document.getElementById('dpad-right');
-            l[press]   = function() { joystick &= ~8; };
-            l[release] = function() { joystick |= 8; };
+            l[press]   = function(e) { joystick &= ~8; e.preventDefault(); };
+            l[release] = function(e) { joystick |= 8; e.preventDefault(); };
 
             l = document.getElementById('trig-1');
-            l[press]   = function() { joystick &= ~16; };
-            l[release] = function() { joystick |= 16; };
+            l[press]   = function(e) { joystick &= ~16; e.preventDefault(); };
+            l[release] = function(e) { joystick |= 16; e.preventDefault(); };
 
             l = document.getElementById('trig-2');
-            l[press]   = function() { joystick &= ~32; };
-            l[release] = function() { joystick |= 32; };
+            l[press]   = function(e) { joystick &= ~32; e.preventDefault(); };
+            l[release] = function(e) { joystick |= 32; e.preventDefault(); };
 
             l = document.getElementById('trig-change');
-            l[click] = function() { loadNextRom(); };
+            l[click] = function(e) { loadNextRom(); e.preventDefault(); };
 
             l = document.getElementById('trig-pause');
-            l[click] = function() { z80_nmi(); };
+            l[click] = function(e) { z80_nmi(); e.preventDefault(); };
 
             this.view = view;
         };
