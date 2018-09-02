@@ -77,10 +77,10 @@ function run() {
             for (var i = 0; i < linesPerYield; ++i) {
                 if (line()) return;
             }
-        } catch (e) {
+        } catch (err) {
             running = false;
             audio_enable(false);
-            throw e;
+            throw err;
         }
         if (running) setTimeout(runner, 0);
     };
@@ -106,7 +106,7 @@ function audio_init() {
     var context = null;
     if (typeof AudioContext !== 'undefined') {
         context = new AudioContext();
-    } else if (typeof(webkitAudioContext) !== 'undefined') {
+    } else if (typeof webkitAudioContext !== 'undefined') {
         context = new webkitAudioContext();
     } else {
         // Disable sound without the new APIs.
@@ -185,7 +185,7 @@ var keys = {
     90: 16, // Z = JP1 fire 1
     88: 32, // Y = JP1 fire 2
 
-    82: 1 << 12,  // R for reset button
+    82: 1 << 12  // R for reset button
 };
 
 function keyCode(evt) {
@@ -284,9 +284,9 @@ function virtualAddress(address) {
         return romAddr(pages[1], address - 0x4000);
     }
     if (address < 0xc000) {
-        if ((ramSelectRegister & 12) == 8) {
+        if ((ramSelectRegister & 12) === 8) {
             return 'crm_' + hexword(address - 0x8000);
-        } else if ((ramSelectRegister & 12) == 12) {
+        } else if ((ramSelectRegister & 12) === 12) {
             return 'crm_' + hexword(address - 0x4000);
         } else {
             return romAddr(pages[2], address - 0x8000);
