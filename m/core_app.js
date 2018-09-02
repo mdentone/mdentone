@@ -16,10 +16,14 @@
         }
     }
 
-    x.addHandler(document, "DOMContentLoaded", showLayout);
+    ////x.addHandler(document, "DOMContentLoaded", showLayout);
     x.addHandler(window, "load", function() {
-        showLayout();
-        x.app && x.app.go();
+        var l = document.getElementById('power-on');
+        x.addHandler(l, 'click', function() {
+            l.style.display = 'none';
+            showLayout();
+            x.app && x.app.go();
+        });
     });
 
     //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
