@@ -8,7 +8,7 @@
 
     //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
-    function showLayout() {
+    x.showLayout = function() {
         // Render page elements if x-layout is used:
         var ls = document.getElementsByTagName('X-LAYOUT');
         for (var i = 0; i < ls.length; i++) {
@@ -17,14 +17,14 @@
     }
 
     ////x.addHandler(document, "DOMContentLoaded", showLayout);
-    x.addHandler(window, "load", function() {
-        var l = document.getElementById('power-on');
-        x.addHandler(l, 'click', function() {
-            l.style.display = 'none';
-            showLayout();
-            x.app && x.app.go();
-        });
-    });
+    ////x.addHandler(window, "load", function() {
+    ////    var l = document.getElementById('power-on');
+    ////    x.addHandler(l, 'click', function() {
+    ////        l.style.display = 'none';
+    ////        showLayout();
+    ////        x.app && x.app.go();
+    ////    });
+    ////});
 
     //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
