@@ -46,25 +46,13 @@ html {
     margin: auto; /* allow aligning */
 }
 
-#power-on {
-    border: 1px solid black;
-    outline: none;
-    background-color: #DDDDDD;
-    color: #DD0000;
-    position: absolute;
-    left: 33.3%;
-    top: 33.3%;
-    width: 33.3%;
-    height: 33.3%;
-}
-
 #dpad-area, #trig-area {
     position: absolute;
     bottom: 0;
     width: 45%; /* vw fallback */
-    width: 45vmin;
+    /*width: 45vw;*/
     height: 45%; /* vh fallback */
-    height: 45vmin;
+    /*height: 45vw;*/
 }
 
 #dpad-area {
@@ -75,17 +63,25 @@ html {
     right: 0;
 }
 
-.dpad-trig {
+#power-on, .dpad-trig {
     position: absolute;
     background-color: #DDDDDD; /* rgba fallback */
     background-color: rgba(127, 127, 127, 0.5);
     color: black;
-    border-radius: 16.7%;
+    border-radius: 16px;
     border: 1px solid black;
+    outline: none;
     width: 33.3%;
     height: 33.3%;
     text-align: center;
     cursor: pointer;
+}
+
+#power-on {
+    background-color: #DDDDDD;
+    color: #DD0000;
+    left: 33.3%;
+    top: 33.3%;
 }
 
 #dpad-up {
