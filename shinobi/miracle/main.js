@@ -1,7 +1,5 @@
-"use strict";
-
 var tstates = 0;
-var running;
+var running = false;
 var event_next_event;
 var currentRom = 0;
 
@@ -27,8 +25,8 @@ function loadRomData(rom) {
     request.onerror = function() {
         x.write(request.statusText);
     };
-    request.overrideMimeType('text/plain; charset=x-user-defined');
     request.open('GET', path, true);
+    request.overrideMimeType('text/plain; charset=x-user-defined');
     request.send();
 }
 
@@ -50,6 +48,13 @@ function getLastRom() {
 function loadNextRom() {
     miracle_reset();
     currentRom = ++currentRom % roms.length;
-    if (typeof localStorage !== "undefined") localStorage.rom = currentRom;
+    if (typeof localStorage !== "undefined") {
+        try {
+            localStorage.rom = currentRom;
+        }
+        catch(err) {
+            // go on
+        }
+    }
     loadRomData(roms[currentRom]);
 }
