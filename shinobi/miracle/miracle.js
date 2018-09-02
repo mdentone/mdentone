@@ -1,11 +1,3 @@
-// Work-around for people without Chrome/Firebug.
-if (typeof(console) === 'undefined') {
-    console = {
-        log: function (msg) {
-        }
-    };
-}
-
 var ram = [];
 var cartridgeRam = [];
 var romBanks = [];
@@ -41,12 +33,7 @@ function line() {
     var vdp_status = vdp_hblank();
     var irq = !!(vdp_status & 3);
     z80_set_irq(irq);
-    if (breakpointHit) {
-        running = false;
-        showDebug(z80.pc);
-        return true;
-    }
-    if (!!(vdp_status & 4)) {
+    if (vdp_status & 4) {
         paintScreen();
         return true;
     }
@@ -54,7 +41,6 @@ function line() {
 }
 
 function start() {
-    breakpointHit = false;
     if (running) return;
     running = true;
     audio_enable(true);
@@ -68,7 +54,6 @@ const linesPerYield = 20;
 
 function run() {
     if (!running) {
-        showDebug(z80.pc);
         return;
     }
     var now = Date.now();
@@ -92,7 +77,7 @@ function run() {
             }
         } catch (e) {
             running = false;
-            audio_enable(true);
+            audio_enable(false);
             throw e;
         }
         if (running) setTimeout(runner, 0);
@@ -213,12 +198,14 @@ function keyDown(evt) {
         }
     }
     switch (evt.keyCode) {
-        case 80:  // 'P' for pause
-            z80_nmi();
+        case 67:  // 'C' for change
+            loadNextRom();
+            evt.preventDefault();
             break;
         case 3:  // 'Break' and
-        case 19: // 'Pause' for debugger
-            breakpoint();
+        case 19: // 'Pause' and
+        case 80:  // 'P' for pause
+            z80_nmi();
             evt.preventDefault();
             break;
     }
@@ -237,7 +224,7 @@ function keyUp(evt) {
 
 function keyPress(evt) {
     if (!running) {
-        return debugKeyPress(keyCode(evt));
+        return;
     }
     if (!evt.metaKey) {
         evt.preventDefault();
@@ -249,6 +236,7 @@ function paintScreen() {
 }
 
 function loadRom(name, rom) {
+    x.write('Loading ' + name);
     var numRomBanks = rom.length / 0x4000;
     var i;
     console.log('Loading rom of ' + numRomBanks + ' banks');
@@ -262,7 +250,13 @@ function loadRom(name, rom) {
         pages[i] = i % numRomBanks;
     }
     romPageMask = (numRomBanks - 1) | 0;
-    debug_init(name);
+    var serial = (romBanks[1][0x3ffc] << 8) | romBanks[1][0x3ffd];
+    console.log('Running ' + name + ' serial 0x' + hexword(serial));
+}
+
+function hexbyte(value) {
+    return ((value >> 4) & 0xf).toString(16) +
+        (value & 0xf).toString(16);
 }
 
 function hexword(value) {
@@ -444,10 +438,3 @@ function writeport(addr, val) {
             break;
     }
 }
-
-function breakpoint() {
-    event_next_event = 0;
-    breakpointHit = true;
-    audio_enable(false);
-}
-

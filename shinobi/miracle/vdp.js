@@ -174,20 +174,21 @@ function dumpSprites() {
 }
 
 function dumpBackground() {
+    var dumpage = "";
     for (var y = 0; y < 224; y += 8) {
         var effectiveLine = y + vdp_regs[9];
         if (effectiveLine >= 224) {
             effectiveLine -= 224;
         }
         var nameAddr = ((vdp_regs[2] << 10) & 0x3800) + (effectiveLine >>> 3) * 64;
-        var dumpage = "";
         for (var i = 0; i < 32; i++) {
             var tileData = vram[nameAddr + i * 2] | (vram[nameAddr + i * 2 + 1] << 8);
             var tileNum = tileData & 511;
             dumpage += hexword(tileNum);
         }
-        console.log(dumpage);
+        dumpage += '\n';
     }
+    console.log(dumpage);
 }
 
 function showAllTiles() {
@@ -212,18 +213,18 @@ function showAllTiles() {
         rasterize_line(y);
     paintScreen();
     findSprites = temp;
-    breakpoint();
 }
 
 function dumpTile(tileNum) {
+    var dumpage = "";
     var tileDef = tileNum * 32;
     for (var y = 0; y < 8; ++y) {
-        var dumpage = "";
         for (var x = 0; x < 4; ++x) {
             dumpage += hexbyte(vram[tileDef + y * 4 + x]);
         }
-        console.log(dumpage);
+        dumpage += '\n';
     }
+    console.log(dumpage);
 }
 
 const reverse_table = function () {

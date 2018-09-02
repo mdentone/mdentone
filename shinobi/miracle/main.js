@@ -1,85 +1,59 @@
+"use strict";
+
 var tstates = 0;
 var running;
 var event_next_event;
-var breakpointHit = false;
+var currentRom = 0;
 
-function loadRomData(name) {
-    "use strict";
+function loadRomData(name, callback) {
     var path = "roms/" + name;
-    console.log("Loading ROM from " + path);
-    var request = new XMLHttpRequest();
-    request.open("GET", path, false);
-    request.overrideMimeType('text/plain; charset=x-user-defined');
-    request.send(null);
-    if (request.status != 200) return [];
-    return request.response;
-}
+    console.log("Loading rom data from " + path);
 
-function addRomToList(rom) {
-    $('#rom_list .template')
-        .clone()
-        .removeClass('template')
-        .text(rom)
-        .click(function () {
-            miracle_reset();
-            loadRom(rom, loadRomData(rom));
-            hideRomChooser();
-            start();
-        })
-        .appendTo('#rom_list');
+    var request = new XMLHttpRequest();
+    request.onload = function(e) {
+        if (request.readyState === 4) {
+            if (request.status === 200) {
+                callback(request.response);
+            } 
+            else {
+                x.write(request.statusText);
+            }
+        }
+    };
+    request.onerror = function() {
+        x.write(request.statusText);
+    };
+    request.overrideMimeType('text/plain; charset=x-user-defined');
+    request.open("GET", path, true);
+    request.send();
 }
 
 function go() {
     var i;
-    hideRomChooser();
-    hideAbout();
-    for (i = 0; i < RomList.length; ++i) {
-        addRomToList(RomList[i]);
-    }
-    var disass = $('#disassembly');
-    for (i = 0; i < 32; i++) {
-        disass.find('.template').clone().removeClass('template').appendTo(disass);
-    }
-    var vdp = $('#vdp_registers');
-    for (i = 0; i < 11; i++) {
-        vdp.find('.template').clone().removeClass('template').appendTo(vdp).find('.register').text('v' + i);
-    }
-    disass.find('.template').remove();
-    $('#menu button').each(function () {
-        var f = window[$(this).attr('class').match(/menu_(.*)/)[1]];
-        $(this).click(f);
-    });
     z80_init();
     miracle_init();
     miracle_reset();
-    const defaultRom = getDefaultRom();
-    if (defaultRom !== null) {
-        loadRom(defaultRom, loadRomData(defaultRom));
+    var romName = getLastRom();
+    loadRomData(romName, function(romData) { 
+        loadRom(romName, romData);
         start();
+    });
+}
+
+function getLastRom() {
+    if (typeof(localStorage) !== "undefined" && localStorage.rom) {
+        currentRom = RomList.indexOf(localStorage.rom);
+        return localStorage.rom;
     }
+    return RomList[0];
 }
 
-function getDefaultRom() {
-    if (typeof(localStorage) !== "undefined" && localStorage.rom) return localStorage.rom;
-    return RomList[0] || null;
+function loadNextRom() {
+    miracle_reset();
+    currentRom = ++currentRom % RomList.length;
+    var romName = RomList[currentRom];
+    loadRomData(romName, function(romData) { 
+        loadRom(romName, romData);
+        start();
+    });
 }
-
-function showRomChooser() {
-    $('#rom_chooser').show();
-}
-
-function hideRomChooser() {
-    $('#rom_chooser').hide();
-}
-
-function showAbout() {
-    $('#about').show();
-}
-
-function hideAbout() {
-    $('#about').hide();
-}
-
-//$(function () {
-//    go();
-//});

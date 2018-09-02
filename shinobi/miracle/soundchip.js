@@ -5,13 +5,10 @@ function SoundChip(sampleRate, cpuHz) {
     var samplesPerCycle = sampleRate / cpuHz;
 
     var register = [0, 0, 0, 0];
-    this.registers = register; // for debug
     var counter = [0, 0, 0, 0];
     var outputBit = [false, false, false, false];
     var volume = [0, 0, 0, 0];
-    this.volume = volume;  // for debug
     var generators = [null, null, null, null];
-
 
     var volumeTable = [];
     var f = 1.0;
