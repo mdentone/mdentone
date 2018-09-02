@@ -236,7 +236,6 @@ function paintScreen() {
 }
 
 function loadRom(name, rom) {
-    x.write('Loading ' + name);
     var numRomBanks = rom.length / 0x4000;
     var i;
     console.log('Loading rom of ' + numRomBanks + ' banks');
@@ -356,7 +355,7 @@ function writebyte(address, value) {
                 pages[2] = value;
                 break;
             default:
-                throw "zoiks";
+                console.log("zoiks");
         }
     }
     address -= 0xc000;

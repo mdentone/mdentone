@@ -5,18 +5,22 @@ var running;
 var event_next_event;
 var currentRom = 0;
 
-function loadRomData(name, callback) {
-    var path = "roms/" + name;
+function loadRomData(rom) {
+    x.write('Loading ' + rom.title);
+
+    var path = "roms/" + rom.file;
     console.log("Loading rom data from " + path);
 
     var request = new XMLHttpRequest();
     request.onload = function(e) {
         if (request.readyState === 4) {
             if (request.status === 200) {
-                callback(request.response);
-            } 
+                x.write('Rom loaded');
+                loadRom(rom.title, request.response);
+                start();
+            }
             else {
-                x.write(request.statusText);
+                x.write('Rom loading error: ' + request.statusText);
             }
         }
     };
@@ -24,7 +28,7 @@ function loadRomData(name, callback) {
         x.write(request.statusText);
     };
     request.overrideMimeType('text/plain; charset=x-user-defined');
-    request.open("GET", path, true);
+    request.open('GET', path, true);
     request.send();
 }
 
@@ -32,11 +36,7 @@ function go() {
     z80_init();
     miracle_init();
     miracle_reset();
-    var rom = getLastRom();
-    loadRomData(rom.file, function(romData) { 
-        loadRom(rom.title, romData);
-        start();
-    });
+    loadRomData(getLastRom());
 }
 
 function getLastRom() {
@@ -51,9 +51,5 @@ function loadNextRom() {
     miracle_reset();
     currentRom = ++currentRom % roms.length;
     if (typeof localStorage !== "undefined") localStorage.rom = currentRom;
-    var rom = roms[currentRom];
-    loadRomData(rom.file, function(romData) { 
-        loadRom(rom.title, romData);
-        start();
-    });
+    loadRomData(roms[currentRom]);
 }
