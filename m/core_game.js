@@ -4,7 +4,7 @@
 "use strict";
 
 (function(x) {
-    x.versions.push('+ m.core.game/0001');
+    x.versions[0] += ' m.core.game/0001';
 
     //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
@@ -22,8 +22,12 @@
     x.extendClass(x.App, x, 'Game', function ctor() {
 
         this.trapKeys(true);
+        this.go();
 
     }, function designer(proto, base) {
+
+        proto.go = function() {
+        };
 
     });
 

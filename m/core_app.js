@@ -4,7 +4,7 @@
 "use strict";
 
 (function(x) {
-    x.versions.push('+ m.core.app/0001');
+    x.versions[0] += ' m.core.app/1';
 
     //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 

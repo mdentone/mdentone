@@ -6,8 +6,10 @@
 //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
 (function(x) {
-    x.versions = ['m.JS/v1.0'];
-    x.versions.push('+ m.core/0001');
+    x.versions = ['m.JS/v1.0 :'];
+    x.versions.all = function() { return x.versions.join('\n'); };
+
+    x.versions[0] += ' m.core/1';
 
     //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
@@ -20,6 +22,20 @@
 
     x.dt = function() { return x.tc() - t0; };
     x.tc = function() { return +new Date(); };
+
+    //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+
+    if (!('console' in window)) {
+        window.console = {
+            log: x.noop,
+            assert: x.noop,
+            trace: x.noop,
+            debug: x.noop,
+            info: x.noop,
+            warn: x.noop,
+            error: x.noop
+        };
+    }
 
     //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
