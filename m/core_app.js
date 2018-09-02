@@ -8,6 +8,22 @@
 
     //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
+    function showLayout() {
+        // Render page elements if x-layout is used:
+        var ls = document.getElementsByTagName('X-LAYOUT');
+        for (var i = 0; i < ls.length; i++) {
+            ls[i].style.display = '';
+        }
+    }
+
+    x.addHandler(document, "DOMContentLoaded", showLayout);
+    x.addHandler(window, "load", function() {
+        showLayout();
+        x.app && x.app.go();
+    });
+
+    //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+
     // Improves usability on mobile devices:
     document.ondragstart = x.cancelEvent;
     document.ondrop = x.cancelEvent;

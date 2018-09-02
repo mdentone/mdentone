@@ -4,7 +4,7 @@
 "use strict";
 
 (function(x) {
-    x.versions[0] += ' m.core.game/0001';
+    x.versions[0] += ' m.core.game/1';
 
     //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
@@ -22,7 +22,6 @@
     x.extendClass(x.App, x, 'Game', function ctor() {
 
         this.trapKeys(true);
-        this.go();
 
     }, function designer(proto, base) {
 

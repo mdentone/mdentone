@@ -108,6 +108,8 @@
             }
         };
 
+    x.addDOMLoadedHandler = window.
+
     x.removeHandler = window.removeEventListener
         ? function(element, type, handler, capture) {
             if (x.isCollection(element)) {
