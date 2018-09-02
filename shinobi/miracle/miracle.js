@@ -16,6 +16,8 @@ var inputMode = 0;
 
 var soundChip;
 
+var initialized = false;
+
 const framesPerSecond = 50;
 const scanLinesPerFrame = 313; // 313 lines in PAL TODO: unify all this
 const scanLinesPerSecond = scanLinesPerFrame * framesPerSecond;
@@ -41,7 +43,7 @@ function line() {
 }
 
 function start() {
-    if (running) return;
+    if (!initialized || running) return;
     running = true;
     audio_enable(true);
     run();
@@ -53,7 +55,7 @@ var lastFrame = null;
 const linesPerYield = 20;
 
 function run() {
-    if (!running) {
+    if (!initialized || !running) {
         return;
     }
     var now = Date.now();
@@ -86,7 +88,7 @@ function run() {
 }
 
 function stop() {
-    if (!running) return;
+    if (!initialized || !running) return;
     running = false;
     audio_enable(false);
 }
@@ -147,6 +149,8 @@ function miracle_init() {
     document.onkeydown = keyDown;
     document.onkeyup = keyUp;
     document.onkeypress = keyPress;
+
+    initialized = true;
 }
 
 function miracle_reset() {
