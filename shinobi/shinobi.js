@@ -25,9 +25,9 @@
 
         proto.initialize = function() {
             ////var view = document.createElement('canvas');
+            ////view.id = 'game-view';
 
             var l, view = document.getElementById('game-view');
-            ////view.id = 'game-view';
             view.width = GW;
             view.height = GH;
 

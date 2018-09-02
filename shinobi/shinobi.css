@@ -17,6 +17,7 @@ html, body, a, div, img, p, pre, span {
 }
 
 html, body {
+    height: 100%;
     overflow: hidden;
     -moz-user-select: none;
     -ms-user-select: none;
