@@ -61,24 +61,24 @@
     <script type="text/javascript" src="roms.js"></script>
 </head>
 <body>
-    <noscript><p class="noscript">:| no javascript?!</p></noscript>
+    <noscript><p id="noscript">:| no javascript?!</p></noscript>
+    <x-layout style="display:none;">
+        <canvas id="game-view"></canvas>
 
-    <canvas id="game-view"></canvas>
+        <div id="dpad-area">
+            <div id="dpad-up" class="dpad-trig">W</div>
+            <div id="dpad-left" class="dpad-trig">A</div>
+            <div id="dpad-right" class="dpad-trig">D</div>
+            <div id="dpad-down" class="dpad-trig">D</div>
+        </div>
 
-    <div id="dpad-area">
-        <div id="dpad-up" class="dpad-trig">W</div>
-        <div id="dpad-left" class="dpad-trig">A</div>
-        <div id="dpad-right" class="dpad-trig">D</div>
-        <div id="dpad-down" class="dpad-trig">D</div>
-    </div>
-
-    <div id="trig-area">
-        <div id="trig-change" class="dpad-trig">C</div>
-        <div id="trig-pause" class="dpad-trig">P</div>
-        <div id="trig-1" class="dpad-trig">Z</div>
-        <div id="trig-2" class="dpad-trig">X</div>
-    </div>
-
+        <div id="trig-area">
+            <div id="trig-change" class="dpad-trig">C</div>
+            <div id="trig-pause" class="dpad-trig">P</div>
+            <div id="trig-1" class="dpad-trig">Z</div>
+            <div id="trig-2" class="dpad-trig">X</div>
+        </div>
+    </x-layout>
     <script>Shinobi();</script>
     <!--
         <h1>Miracle: Sega Master System emulator</h1>

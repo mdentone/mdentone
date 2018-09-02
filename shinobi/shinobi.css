@@ -30,11 +30,11 @@ html {
     background-color: #111;
     color: white;
     font-family: monospace;
-    font-size: 16px; /* vmin fallback */
-    font-size: 2vmin;
+    font-size: 16px; /* vw fallback */
+    font-size: 2vw;
 }
 
-p.noscript {
+#noscript {
     background: #c30;
     text-align: center;
 }
