@@ -7,24 +7,25 @@
      _|_|_|    _|    _|  _|_|_|  _|      _|    _|_|    _|_|_|    _|_|_|       
                                                                               
                     Copyright (c) MDE. All rights reserved.                   
+                                                                              
 */
 
 "use strict";
 
-(function(m, x) {
+(function(x) {
     x.versions.push('Shinobi/v1.0.0000');
+
+    console.log(document.childNodes[1].textContent);
 
     //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
-    x.extendClass(x.Game, m, 'Shinobi', x.noop, function(proto, base) {
+    x.extendClass(x.Game, g, 'Shinobi', x.noop, function(proto, base) {
 
         var GW = 256, GH = 192, GR = GH / GW;
 
         proto.initialize = function() {
-            ////var l = document.createElement('div');
-            ////l.style.cssText = 'text-align:center;';
+            ////var view = document.createElement('canvas');
 
-            //var view = document.createElement('canvas');
             var l, view = document.getElementById('game-view');
             ////view.id = 'game-view';
             view.width = GW;
@@ -34,8 +35,7 @@
                 throw new Error(x.E.BROWSER);
             }
 
-            ////l.appendChild(view);
-            ////document.body.appendChild(l);
+            ////document.body.appendChild(view);
 
             var click, press, release;
             if ('onpointerdown' in window) {
@@ -76,16 +76,22 @@
             l[press]   = function() { joystick &= ~32; };
             l[release] = function() { joystick |= 32; };
 
+            l = document.getElementById('trig-change');
+            l[click] = function() { loadNextRom(); };
+
             l = document.getElementById('trig-pause');
             l[click] = function() { z80_nmi(); };
 
             this.view = view;
+        };
 
+        proto.go = function() {
             // miracle: start:
             go();
         };
 
         proto.layout = function(width, height) {
+            x.write(width + 'x' + height);
             var vmin = Math.min(width, height);
             var vgw, vgh;
             if (width > height) {
@@ -129,4 +135,4 @@
 
     });
 
-})(m, x);
+})(x);

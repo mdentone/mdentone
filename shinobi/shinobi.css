@@ -7,7 +7,37 @@
      _|_|_|    _|    _|  _|_|_|  _|      _|    _|_|    _|_|_|    _|_|_|       
                                                                               
                     Copyright (c) MDE. All rights reserved.                   
+                                                                              
 */
+
+html, body, a, div, img, p, pre, span {
+    border: 0;
+    margin: 0;
+    padding: 0;
+}
+
+html, body {
+    overflow: hidden;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    -webkit-user-select: none;
+    user-select: none;
+}
+
+/* Shinobi */
+
+html {
+    background-color: #111;
+    color: white;
+    font-family: monospace;
+    font-size: 16px; /* vmin fallback */
+    font-size: 2vmin;
+}
+
+p.noscript {
+    background: #c30;
+    text-align: center;
+}
 
 #game-view {
     background-color: black;
@@ -42,8 +72,6 @@
     width: 33.3%;
     height: 33.3%;
     text-align: center;
-    font-size: 8px; /* vmin fallback */
-    font-size: 4vmin;
     cursor: pointer;
 }
 
@@ -77,8 +105,14 @@
     top: 33.3%;
 }
 
-#trig-pause {
-    left: 33.3%;
+#trig-change {
+    left: 0;
     top: 0;
-    height: 22.2%;
+    height: 20%;
+}
+
+#trig-pause {
+    right: 0;
+    top: 0;
+    height: 20%;
 }

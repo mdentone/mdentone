@@ -8,14 +8,15 @@
      _|_|_|    _|    _|  _|_|_|  _|      _|    _|_|    _|_|_|    _|_|_|       
                                                                               
                     Copyright (c) MDE. All rights reserved.                   
-
+                                                                              
     **************************************************************************
     *   SHINOBI: A new front-end for Miracle that works on any device type.  *
     *   Miracle: A Sega Master System emulator in JavaScript.                *
     **************************************************************************
-
+                                                                              
     Miracle emulator by Matt Godbolt : <matt@godbolt.org> under GNU License   
     Z80 support by Matt Westcott     : <matthew@west.co.tt> from JSSpeccy     
+                                                                              
 -->
 <html>
 <head>
@@ -41,11 +42,7 @@
     <meta name="msapplication-tap-highlight" content="no" />
     <meta name="theme-color" content="#111111">
 
-    <link rel="stylesheet" type="text/css" href="miracle/miracle.css">
     <link rel="stylesheet" type="text/css" href="shinobi.css">
-
-    <script type="text/javascript" src="lib/jquery-1.5.1.min.js"></script>
-    <script type="text/javascript" src="lib/jquery.editable-1.3.3.min.js"></script>
 
     <script type="text/javascript" src="../m/prefixes.js"></script>
     <script type="text/javascript" src="../m/core.js"></script>
@@ -55,50 +52,16 @@
 
     <script type="text/javascript" src="miracle/z80_full.js"></script>
     <script type="text/javascript" src="miracle/z80_ops_full.js"></script>
-    <script type="text/javascript" src="miracle/z80_dis.js"></script>
     <script type="text/javascript" src="miracle/vdp.js"></script>
     <script type="text/javascript" src="miracle/soundchip.js"></script>
     <script type="text/javascript" src="miracle/miracle.js"></script>
-    <script type="text/javascript" src="miracle/debug.js"></script>
-    <script type="text/javascript" src="miracle/benchmark.js"></script>
     <script type="text/javascript" src="miracle/main.js"></script>
 
     <script type="text/javascript" src="shinobi.js"></script>
     <script type="text/javascript" src="roms.js"></script>
-
-    <style>
-        html, body, a, div, span, img,
-        h1, h2, h3, h4, h5, h6, p, pre,
-        button, input, iframe {
-            border: 0;
-            margin: 0;
-            padding: 0;
-        }
-
-        html {
-            background-color: #111;
-            color: white;
-            font-family: monospace;
-            font-size: 2vw;
-        }
-
-        html, body {
-            overflow: hidden;
-            -moz-user-select: none;
-            -ms-user-select: none;
-            -webkit-user-select: none;
-            user-select: none;
-        }
-
-        h1.noscript {
-            background: #c30;
-            color: white;
-            text-align: center;
-        }
-    </style>
 </head>
 <body>
-    <noscript><h1 class="noscript">:| no javascript?!</h1></noscript>
+    <noscript><p class="noscript">:| no javascript?!</p></noscript>
 
     <canvas id="game-view"></canvas>
 
@@ -110,67 +73,19 @@
     </div>
 
     <div id="trig-area">
+        <div id="trig-change" class="dpad-trig">C</div>
+        <div id="trig-pause" class="dpad-trig">P</div>
         <div id="trig-1" class="dpad-trig">Z</div>
         <div id="trig-2" class="dpad-trig">X</div>
-        <div id="trig-pause" class="dpad-trig">P</div>
     </div>
 
-    <script>m.Shinobi();</script>
+    <script>Shinobi();</script>
     <!--
         <h1>Miracle: Sega Master System emulator</h1>
         <div class="help">
             Miracle is a Javascript Sega Master System emulator that runs totally inside your browser.<br>
-            Use the cursor keys and <span class="key">Z/Y</span> and <span class="key">X</span> to control the emulator. <span class="key">P</span> is the pause button, <span class="key">R</span> resets.<br>
-            There's a built-in debugger; hit <span class="key">Backspace</span> to bring it up.
-        </div>
-        <div id="menu">
-            <button class="menu_start">Play</button>
-            <button class="menu_stop">Pause</button>
-            <button class="menu_step">Step</button>
-            <button class="menu_stepOver">Step Over</button>
-            <button class="menu_stepOut">Step Out</button>
-            <button class="menu_reset" style="margin-left: 50px">Reset</button>
-            <button class="menu_showRomChooser">Open ROM</button>
-            <button class="menu_showAbout">About Miracle</button>
-        </div>
-        <div id="holder">
-            <canvas id="screen" width="256" height="192"></canvas>
-            <div id="debug">
-                <div id="disassembly">
-                    <div class="template"><span class="dis_addr">0000</span><span class="instr_bytes">11 22 33 44 55</span><span class="disassembly">LD A,(HL)</span></div>
-                </div>
-                <div id="registers">
-                    <div>
-                        <span class="flag" id="z80_flag_c">C</span><span class="flag" id="z80_flag_n">C</span><span class="flag" id="z80_flag_p">C</span><span class="flag" id="z80_flag_3">_</span><span class="flag" id="z80_flag_h">C</span><span class="flag" id="z80_flag_5">_</span><span class="flag" id="z80_flag_z">C</span><span class="flag" id="z80_flag_s">C</span>
-                    </div>
-                    <div><span class="register">AF</span>: <span class="h" id="z80_a">00</span><span class="l" id="z80_f">00</span></div>
-                    <div><span class="register">BC</span>: <span class="h" id="z80_b">00</span><span class="l" id="z80_c">00</span></div>
-                    <div><span class="register">DE</span>: <span class="h" id="z80_d">00</span><span class="l" id="z80_e">00</span></div>
-                    <div><span class="register">HL</span>: <span class="h" id="z80_h">00</span><span class="l" id="z80_l">00</span></div>
-                    <div><span class="register">IX</span>: <span class="h" id="z80_ixh">00</span><span class="l" id="z80_ixl">00</span></div>
-                    <div><span class="register">IY</span>: <span class="h" id="z80_iyh">00</span><span class="l" id="z80_iyl">00</span></div>
-                    <br>
-                    <div><span class="register">SP</span>: <span id="z80_sp">0000</span></div>
-                    <div><span class="register">PC</span>: <span id="z80_pc">0000</span></div>
-                    <div id="vdp_registers">
-                        <div class="template"><span class="register">00</span>:<span class="value">00</span></div>
-                    </div>
-                    <div id="pages">
-                        <div><span class="register">p0</span>:<span class="value">00</span></div>
-                        <div><span class="register">p1</span>:<span class="value">00</span></div>
-                        <div><span class="register">p2</span>:<span class="value">00</span></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <br />
-        <div id="rom_chooser">
-            <div>Open ROM file: <input type="file" id="file_upload" /></div>
-            <p>Or select a game:</p>
-            <ul id="rom_list">
-                <li class="template"><a href="javascript:void(0)">A rom</a></li>
-            </ul>
-            <a href="javascript:void(0)" class="close_button" onclick="hideRomChooser()">Close</a>
+            Use the cursor keys and <span class="key">Z</span> and <span class="key">X</span> to control the emulator.
+            <span class="key">P</span> is the pause button, <span class="key">R</span> resets.<br>
         </div>
         <div id="about">
             <h1>Miracle</h1>
