@@ -86,6 +86,7 @@ function run() {
 }
 
 function stop() {
+    if (!running) return;
     running = false;
     audio_enable(false);
 }
@@ -106,9 +107,8 @@ function audio_init() {
     } else if (typeof(webkitAudioContext) !== 'undefined') {
         context = new webkitAudioContext();
     } else {
-        // Disable sound without the new APIs. 
-        audioRun = function () {
-        };
+        // Disable sound without the new APIs.
+        x.write("Unable to render audio");
         soundChip = new SoundChip(10000, cpuHz);
         return;
     }

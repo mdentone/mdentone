@@ -29,31 +29,31 @@ function loadRomData(name, callback) {
 }
 
 function go() {
-    var i;
     z80_init();
     miracle_init();
     miracle_reset();
-    var romName = getLastRom();
-    loadRomData(romName, function(romData) { 
-        loadRom(romName, romData);
+    var rom = getLastRom();
+    loadRomData(rom.file, function(romData) { 
+        loadRom(rom.title, romData);
         start();
     });
 }
 
 function getLastRom() {
-    if (typeof(localStorage) !== "undefined" && localStorage.rom) {
-        currentRom = RomList.indexOf(localStorage.rom);
-        return localStorage.rom;
+    if (typeof localStorage !== "undefined" && localStorage.rom) {
+        currentRom = localStorage.rom;
+        return roms[currentRom];
     }
-    return RomList[0];
+    return roms[0];
 }
 
 function loadNextRom() {
     miracle_reset();
-    currentRom = ++currentRom % RomList.length;
-    var romName = RomList[currentRom];
-    loadRomData(romName, function(romData) { 
-        loadRom(romName, romData);
+    currentRom = ++currentRom % roms.length;
+    if (typeof localStorage !== "undefined") localStorage.rom = currentRom;
+    var rom = roms[currentRom];
+    loadRomData(rom.file, function(romData) { 
+        loadRom(rom.title, romData);
         start();
     });
 }
