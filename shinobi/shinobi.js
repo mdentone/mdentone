@@ -57,7 +57,7 @@
             x.addClickHandler('trig-change',
                 function(e) { loadNextRom(); x.cancelEvent(e); });
 
-            x.addClickHandler('trig-pause',
+            x.addPressHandler('trig-pause',
                 function(e) { z80_nmi(); x.cancelEvent(e); });
 
             this.view = view;
