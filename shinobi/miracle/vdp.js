@@ -117,6 +117,7 @@ function vdp_readbyte() {
 
 var prev_border = null;
 var borderColourCss = null;
+
 function update_border() {
     var borderIndex = 16 + (vdp_regs[7] & 0xf);
     if (paletteRGB[borderIndex] === prev_border) return;
