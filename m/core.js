@@ -43,7 +43,7 @@
         ARG         : 'invalid argument',
         BROWSER     : 'no browser support',
         CLASSCTOR   : 'class constructor expected',
-        FUNCTION    : 'class constructor expected',
+        FUNCTION    : 'function expected',
         INSTANCEOF  : 'instance of a class expected',
         SINGLEINST  : 'only one instance is allowed'
     };
@@ -76,75 +76,6 @@
         // old browsers' window has no Window constructor:
         return window.Window && o instanceof Window 
             || o && x.isFunction(o.Object);
-    };
-
-    //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-
-    x.addHandler = window.addEventListener
-        ? function(element, type, handler, capture) {
-            if (x.isCollection(element)) {
-                for (var i = 0; i < element.length; i++) {
-                    element[i].addEventListener(type, handler, !!capture);
-                }
-            }
-            else {
-                if (x.isString(element)) {
-                    element = document.getElementById(element);
-                }
-                element.addEventListener(type, handler, !!capture);
-            }
-        }
-        : function(element, type, handler) {
-            if (x.isCollection(element)) {
-                for (var i = 0; i < element.length; i++) {
-                    element[i].attachEvent('on' + type, handler);
-                }
-            }
-            else {
-                if (x.isString(element)) {
-                    element = document.getElementById(element);
-                }
-                element.attachEvent('on' + type, handler);
-            }
-        };
-
-    x.addDOMLoadedHandler = window.
-
-    x.removeHandler = window.removeEventListener
-        ? function(element, type, handler, capture) {
-            if (x.isCollection(element)) {
-                for (var i = 0; i < element.length; i++) {
-                    element[i].removeEventListener(type, handler, !!capture);
-                }
-            }
-            else {
-                if (x.isString(element)) {
-                    element = document.getElementById(element);
-                }
-                element.removeEventListener(type, handler, !!capture);
-            }
-        }
-        : function(element, type, handler) {
-            if (x.isCollection(element)) {
-                for (var i = 0; i < element.length; i++) {
-                    element[i].detachEvent('on' + type, handler);
-                }
-            }
-            else {
-                if (x.isString(element)) {
-                    element = document.getElementById(element);
-                }
-                element.detachEvent('on' + type, handler);
-            }
-        };
-
-    x.cancelEvent = function(e) {
-        e = e || window.event;
-        x.isFunction(e.stopPropagation) && e.stopPropagation();
-        x.isFunction(e.preventDefault) && e.preventDefault();  
-        e.returnValue = false;
-        e.cancelBubble = true;
-        return false;
     };
 
     //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
@@ -205,6 +136,10 @@
 
     //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
+    x.event = function() {
+        return new Delegate();
+    };
+
     x.property = function(initValue, onchange, onchanged) {
         var holder = null; // backing store works by closure
         if (x.isDefined(initValue)) holder = initValue;
@@ -219,5 +154,39 @@
             return holder;
         };
     };
+
+    //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+
+    x.createClass(x, 'Delegate', function ctor() {
+
+        this._fList = [];
+
+    }, function designer(proto) {
+
+        proto.add = function(f) {
+            if (!x.isFunction(f)) throw new Error(x.E.FUNCTION);
+            this._fList.push(f);
+        };
+
+        proto.call = function(args) {
+            var len = this._fList.length;
+            while (len--) {
+                this._fList[len].apply(this, arguments);
+            }
+        };
+
+        proto.length = function() { return this._fList.length; };
+
+        proto.remove = function(f) {
+            if (!x.isFunction(f)) throw new Error(x.E.FUNCTION);
+            var len = this._fList.length;
+            while (len--) {
+                if (this._fList[len] === f) {
+                    this._fList.splice(len, 1);
+                }
+            }
+        };
+
+    });
 
 })(x);

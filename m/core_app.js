@@ -16,16 +16,6 @@
         }
     }
 
-    ////x.addHandler(document, "DOMContentLoaded", showLayout);
-    ////x.addHandler(window, "load", function() {
-    ////    var l = document.getElementById('power-on');
-    ////    x.addHandler(l, 'click', function() {
-    ////        l.style.display = 'none';
-    ////        showLayout();
-    ////        x.app && x.app.go();
-    ////    });
-    ////});
-
     //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
     // Improves usability on mobile devices:
@@ -38,8 +28,10 @@
     x.createClass(x, 'App', function ctor() {
 
         if (x.app) throw new Error(x.E.SINGLEINST + ': ' + this.className);
+
         x.app = this;
-        initialize();
+        x.addContentLoadHandler(initialize);
+        x.addPageLoadHandler(this.go);
 
     }, function designer(proto) {
 
@@ -52,6 +44,9 @@
         };
 
         proto.initialize = function() {
+        };
+
+        proto.go = function() {
         };
 
         proto.layout = function(width, height) {
@@ -84,11 +79,11 @@
             x.app.critical(info);
         };
 
-        x.addHandler(window, 'blur', suspend, true);
-        x.addHandler(window, 'focus', resume, true);
-        x.addHandler(window, 'keydown', filter, true);
-        x.addHandler(window, 'keyup', filter, true);
-        x.addHandler(window, 'resize', resizing, true);
+        x.addEventHandler(window, 'blur', suspend, true);
+        x.addEventHandler(window, 'focus', resume, true);
+        x.addEventHandler(window, 'keydown', filter, true);
+        x.addEventHandler(window, 'keyup', filter, true);
+        x.addEventHandler(window, 'resize', resizing, true);
 
         x.app.initialize();
         resize();

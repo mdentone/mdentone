@@ -21,12 +21,10 @@
 
     x.extendClass(x.App, x, 'Game', function ctor() {
 
+        x.addEventHandler([document, window], 'contextmenu', x.cancelEvent);
         this.trapKeys(true);
 
     }, function designer(proto, base) {
-
-        proto.go = function() {
-        };
 
     });
 
