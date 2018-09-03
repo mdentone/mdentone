@@ -1,10 +1,10 @@
 /*
                                                                               
-       _|_|_|  _|    _|  _|_|_|  _|      _|    _|_|    _|_|_|    _|_|_|       
-     _|        _|    _|    _|    _|_|    _|  _|    _|  _|    _|    _|         
-       _|_|    _|_|_|_|    _|    _|  _|  _|  _|    _|  _|_|_|      _|         
-           _|  _|    _|    _|    _|    _|_|  _|    _|  _|    _|    _|         
-     _|_|_|    _|    _|  _|_|_|  _|      _|    _|_|    _|_|_|    _|_|_|       
+        _|_|_|  _|    _|  _|_|_|  _|      _|    _|_|    _|_|_|    _|_|_|      
+      _|        _|    _|    _|    _|_|    _|  _|    _|  _|    _|    _|        
+        _|_|    _|_|_|_|    _|    _|  _|  _|  _|    _|  _|_|_|      _|        
+            _|  _|    _|    _|    _|    _|_|  _|    _|  _|    _|    _|        
+      _|_|_|    _|    _|  _|_|_|  _|      _|    _|_|    _|_|_|    _|_|_|      
                                                                               
                     Copyright (c) MDE. All rights reserved.                   
                                                                               
@@ -85,14 +85,23 @@ html {
     top: 33.3%;
 }
 
+#dpad-upleft {
+    left: 0;
+    top: 0;
+    width: 30%;
+    height: 30%;
+}
+
 #dpad-up {
     left: 33.3%;
     top: 0;
 }
 
-#dpad-down {
-    left: 33.3%;
-    bottom: 0;
+#dpad-upright {
+    right: 0;
+    top: 0;
+    width: 30%;
+    height: 30%;
 }
 
 #dpad-left {
@@ -103,6 +112,25 @@ html {
 #dpad-right {
     right: 0;
     top: 33.3%;
+}
+
+#dpad-downleft {
+    left: 0;
+    bottom: 0;
+    width: 30%;
+    height: 30%;
+}
+
+#dpad-down {
+    left: 33.3%;
+    bottom: 0;
+}
+
+#dpad-downright {
+    right: 0;
+    bottom: 0;
+    width: 30%;
+    height: 30%;
 }
 
 #trig-1 {

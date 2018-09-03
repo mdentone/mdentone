@@ -1,10 +1,10 @@
 /*
                                                                               
-       _|_|_|  _|    _|  _|_|_|  _|      _|    _|_|    _|_|_|    _|_|_|       
-     _|        _|    _|    _|    _|_|    _|  _|    _|  _|    _|    _|         
-       _|_|    _|_|_|_|    _|    _|  _|  _|  _|    _|  _|_|_|      _|         
-           _|  _|    _|    _|    _|    _|_|  _|    _|  _|    _|    _|         
-     _|_|_|    _|    _|  _|_|_|  _|      _|    _|_|    _|_|_|    _|_|_|       
+        _|_|_|  _|    _|  _|_|_|  _|      _|    _|_|    _|_|_|    _|_|_|      
+      _|        _|    _|    _|    _|_|    _|  _|    _|  _|    _|    _|        
+        _|_|    _|_|_|_|    _|    _|  _|  _|  _|    _|  _|_|_|      _|        
+            _|  _|    _|    _|    _|    _|_|  _|    _|  _|    _|    _|        
+      _|_|_|    _|    _|  _|_|_|  _|      _|    _|_|    _|_|_|    _|_|_|      
                                                                               
                     Copyright (c) MDE. All rights reserved.                   
                                                                               
@@ -37,57 +37,44 @@
 
             ////document.body.appendChild(view);
 
-            var click, press, release;
-            if ('onpointerdown' in window) {
-                click = press = 'onpointerdown';
-                release = 'onpointerup';
-            }
-            else if ('ontouchstart' in window) {
-                click = press = 'ontouchstart';
-                release = 'ontouchend';
-            }
-            else {
-                click = 'click';
-                press = 'onmousedown';
-                release = 'onmouseup';
+            function input(element, i) {
+                x.addPressReleaseHandlers(element, 
+                    function(e) { joystick &= ~i; x.cancelEvent(e); },
+                    function(e) { joystick |= i; x.cancelEvent(e); });
             }
 
-            l = document.getElementById('dpad-up');
-            l[press]   = function(e) { joystick &= ~1; e.preventDefault(); };
-            l[release] = function(e) { joystick |= 1; e.preventDefault(); };
+            input('dpad-upleft', 1 | 4);
+            input('dpad-up', 1);
+            input('dpad-upright', 1 | 8);
+            input('dpad-downleft', 2 | 4);
+            input('dpad-down', 2);
+            input('dpad-downright', 2 | 8);
+            input('dpad-left', 4);
+            input('dpad-right', 8);
+            input('trig-1', 16);
+            input('trig-2', 32);
 
-            l = document.getElementById('dpad-down');
-            l[press]   = function(e) { joystick &= ~2; e.preventDefault(); };
-            l[release] = function(e) { joystick |= 2; e.preventDefault(); };
+            x.addClickHandler('trig-change',
+                function(e) { loadNextRom(); x.cancelEvent(e); });
 
-            l = document.getElementById('dpad-left');
-            l[press]   = function(e) { joystick &= ~4; e.preventDefault(); };
-            l[release] = function(e) { joystick |= 4; e.preventDefault(); };
-
-            l = document.getElementById('dpad-right');
-            l[press]   = function(e) { joystick &= ~8; e.preventDefault(); };
-            l[release] = function(e) { joystick |= 8; e.preventDefault(); };
-
-            l = document.getElementById('trig-1');
-            l[press]   = function(e) { joystick &= ~16; e.preventDefault(); };
-            l[release] = function(e) { joystick |= 16; e.preventDefault(); };
-
-            l = document.getElementById('trig-2');
-            l[press]   = function(e) { joystick &= ~32; e.preventDefault(); };
-            l[release] = function(e) { joystick |= 32; e.preventDefault(); };
-
-            l = document.getElementById('trig-change');
-            l[click] = function(e) { loadNextRom(); e.preventDefault(); };
-
-            l = document.getElementById('trig-pause');
-            l[click] = function(e) { z80_nmi(); e.preventDefault(); };
+            x.addClickHandler('trig-pause',
+                function(e) { z80_nmi(); x.cancelEvent(e); });
 
             this.view = view;
+            this.vgcx = view.getContext('2d');
         };
 
         proto.go = function() {
-            // miracle: start:
-            go();
+
+            var l = document.getElementById('power-on');
+            x.addClickHandler(l, function() {
+                l.style.display = 'none';
+                x.showLayout();
+
+                // miracle: start:
+                go();
+                ctx.fillStyle = 'rgba(127, 127, 127, 0.5)';
+            });
         };
 
         proto.layout = function(width, height) {
@@ -128,27 +115,13 @@
             // miracle: pause and stop emulation:
             z80_nmi();
             stop();
-            var g = this.view.getContext('2d');
-            g.fillStyle = 'rgba(127, 127, 127, 0.5)';
-            g.fillRect(0, 0, GW, GH);
+            this.vgcx.fillRect(0, 0, GW, GH);
         };
 
     });
 
     //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
-    ////x.addHandler(document, "DOMContentLoaded", showLayout);
-    x.addHandler(window, "load", function() {
-
-        var l = document.getElementById('power-on');
-        x.addHandler(l, 'click', function() {
-            l.style.display = 'none';
-            x.showLayout();
-
-            // Startup:
-            Shinobi().go();
-        });
-
-    });
+    Shinobi();
 
 })(x);

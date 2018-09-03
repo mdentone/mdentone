@@ -1,11 +1,11 @@
 ﻿<!DOCTYPE html>
 <!--
                                                                               
-       _|_|_|  _|    _|  _|_|_|  _|      _|    _|_|    _|_|_|    _|_|_|       
-     _|        _|    _|    _|    _|_|    _|  _|    _|  _|    _|    _|         
-       _|_|    _|_|_|_|    _|    _|  _|  _|  _|    _|  _|_|_|      _|         
-           _|  _|    _|    _|    _|    _|_|  _|    _|  _|    _|    _|         
-     _|_|_|    _|    _|  _|_|_|  _|      _|    _|_|    _|_|_|    _|_|_|       
+        _|_|_|  _|    _|  _|_|_|  _|      _|    _|_|    _|_|_|    _|_|_|      
+      _|        _|    _|    _|    _|_|    _|  _|    _|  _|    _|    _|        
+        _|_|    _|_|_|_|    _|    _|  _|  _|  _|    _|  _|_|_|      _|        
+            _|  _|    _|    _|    _|    _|_|  _|    _|  _|    _|    _|        
+      _|_|_|    _|    _|  _|_|_|  _|      _|    _|_|    _|_|_|    _|_|_|      
                                                                               
                     Copyright (c) MDE. All rights reserved.                   
                                                                               
@@ -29,10 +29,12 @@
           initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, minimal-ui" />
 
     <link rel="shortcut icon" href="favicon.ico">
-    <link rel="apple-touch-icon" href="apple-touch-icon.png">
-    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+    <link rel="icon" href="favicon.ico">
+    <link rel="icon" href="favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+    <link rel="apple-touch-icon" href="apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
     <link rel="manifest" href="site.webmanifest">
     <link rel="mask-icon" href="safari-pinned-tab.svg" color="#111111">
     <meta name="apple-mobile-web-app-title" content="SHINOBI">
@@ -47,6 +49,7 @@
 
     <script type="text/javascript" src="../m/prefixes.js"></script>
     <script type="text/javascript" src="../m/core.js"></script>
+    <script type="text/javascript" src="../m/core_compatibility.js"></script>
     <script type="text/javascript" src="../m/core_app.js"></script>
     <script type="text/javascript" src="../m/core_dom.js"></script>
     <script type="text/javascript" src="../m/core_game.js"></script>
@@ -67,10 +70,14 @@
         <canvas id="game-view"></canvas>
 
         <div id="dpad-area">
+            <div id="dpad-upleft" class="dpad-trig"></div>
             <div id="dpad-up" class="dpad-trig">UP</div>
+            <div id="dpad-upright" class="dpad-trig"></div>
             <div id="dpad-left" class="dpad-trig">LX</div>
             <div id="dpad-right" class="dpad-trig">RX</div>
+            <div id="dpad-downleft" class="dpad-trig"></div>
             <div id="dpad-down" class="dpad-trig">DN</div>
+            <div id="dpad-downright" class="dpad-trig"></div>
         </div>
 
         <div id="trig-area">
