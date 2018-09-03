@@ -21,7 +21,7 @@
     // Improves usability on mobile devices:
     document.ondragstart = x.cancelEvent;
     document.ondrop = x.cancelEvent;
-    document.touchmove = x.cancelEvent;
+    document.ontouchmove = x.cancelEvent;
 
     //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 

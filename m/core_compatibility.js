@@ -81,12 +81,12 @@
 
     var click, press, release;
     if ('onpointerdown' in window) {
-        click = press = 'pointerdown';
-        release = 'pointerup';
+        press = 'pointerdown';
+        click = release = 'pointerup';
     }
     else if ('ontouchstart' in window) {
-        click = press = 'touchstart';
-        release = 'touchend';
+        press = 'touchmove';
+        click = release = 'touchend';
     }
     else {
         click = 'click';
