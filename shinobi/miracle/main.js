@@ -6,8 +6,8 @@ var currentRom = 0;
 function loadRomData(rom) {
     x.write('Loading ' + rom.title);
 
-    var path = "roms/" + rom.file;
-    console.log("Loading rom data from " + path);
+    var path = 'roms/' + rom.file;
+    console.log('Loading rom data from ' + path);
 
     var request = new XMLHttpRequest();
     request.onload = function(e) {

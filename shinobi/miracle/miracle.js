@@ -18,7 +18,7 @@ var soundChip;
 
 var initialized = false;
 
-const framesPerSecond = 50;
+const framesPerSecond = 50; // Refresh rate: 59.922743 Hz (NTSC), 49.701459 Hz (PAL)
 const scanLinesPerFrame = 313; // 313 lines in PAL TODO: unify all this
 const scanLinesPerSecond = scanLinesPerFrame * framesPerSecond;
 const cpuHz = 3.58 * 1000 * 1000; // According to Sega docs.
@@ -50,38 +50,54 @@ function start() {
 }
 
 const targetTimeout = 1000 / framesPerSecond;
-var adjustedTimeout = targetTimeout;
-var lastFrame = null;
+const pausedTimeout = 2 * targetTimeout; // eternity
 const linesPerYield = 20;
+
+var lastFrame = Date.now();
+
+var cycles = 0; // cycle counter
+var cyclet = 0; // cycle time reference
 
 function run() {
     if (!initialized || !running) {
         return;
     }
+
+    setTimeout(run, 0);
+
+    var timeSinceLast = targetTimeout;
     var now = Date.now();
-    if (lastFrame) {
-        // Try and tweak the timeout to achieve target frame rate.
-        var timeSinceLast = now - lastFrame;
-        if (timeSinceLast < 2 * targetTimeout) {
-            // Ignore huge delays (e.g. trips in and out of the debugger)
-            var diff = timeSinceLast - targetTimeout;
-            adjustedTimeout -= 0.1 * diff;
-        }
+    timeSinceLast = now - lastFrame;
+    // Ignore huge delays (e.g. trips in and out of the debugger):
+    if (timeSinceLast > pausedTimeout) {
+        timeSinceLast = targetTimeout;
     }
-    lastFrame = now;
-    setTimeout(run, adjustedTimeout);
+
+    if (now - cyclet > 999) {
+        // Ignore huge delays (e.g. trips in and out of the debugger):
+        if (now - cyclet - 1000 < targetTimeout) {
+            document.getElementById('game-fps').textContent = cycles;
+        }
+        cycles = 0;
+        cyclet = now;
+    }
+
+    if (timeSinceLast < targetTimeout) return;
+
+    lastFrame = now - (timeSinceLast % targetTimeout);
+    cycles++;
 
     var runner = function () {
         if (!running) return;
-        try {
+        //try {
             for (var i = 0; i < linesPerYield; ++i) {
                 if (line()) return;
             }
-        } catch (err) {
-            running = false;
-            audio_enable(false);
-            throw err;
-        }
+        //} catch (err) {
+        //    running = false;
+        //    audio_enable(false);
+        //    throw err;
+        //}
         if (running) setTimeout(runner, 0);
     };
     runner();
@@ -110,7 +126,7 @@ function audio_init() {
         context = new webkitAudioContext();
     } else {
         // Disable sound without the new APIs.
-        x.write("Unable to render audio");
+        x.write('Unable to render audio');
         soundChip = new SoundChip(10000, cpuHz);
         return;
     }
@@ -308,7 +324,7 @@ function virtualAddress(address) {
         case 0xffff:
             return 'rpr_2';
     }
-    return "unk_" + hexword(address);
+    return 'unk_' + hexword(address);
 }
 
 function readbyte(address) {

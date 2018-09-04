@@ -164,6 +164,7 @@ function findSprites(line) {
     return active;
 }
 
+/*
 function dumpSprites() {
     var spriteInfo = (vdp_regs[5] & 0x7e) << 7;
     for (i = 0; i < 64; i++) {
@@ -242,6 +243,7 @@ const reverse_table = function () {
     }
     return table;
 }();
+*/
 
 function rasterize_background(lineAddr, pixelOffset, tileData, tileDef, transparent) {
     lineAddr = lineAddr | 0;
