@@ -58,7 +58,29 @@
         proto.suspend = function() {
         };
 
+        // Properties:
+
         proto.trapKeys = x.property(false);
+
+        // Methods:
+
+        proto.lockHistory = function() {
+            // WARNING: this method breaks BACKWARD and FORWARD navigation:
+            if ('history' in window) {
+                if (history.state !== this) {
+                    history.pushState(this, null, location.href);
+                }
+                window.onpopstate = function() { history.go(1); };
+            }
+        }
+
+        proto.unlockHistory = function() {
+            // WARNING: this method restores BACKWARD and FORWARD navigation,
+            // but history might be corrupted!
+            if ('history' in window) {
+                window.onpopstate = null;
+            }
+        }
 
     });
 
@@ -114,7 +136,7 @@
         if (this.pendingSize) {
             clearTimeout(this.pendingSize);
         }
-        pendingSize = setTimeout(resize, 66);
+        pendingSize = setTimeout(resize, 66); // 16 times per second, max
     }
 
     function resize() {
@@ -133,10 +155,12 @@
     }
 
     function resume() {
+        console.debug('execution resumable');
         x.app.resume();
     }
 
     function suspend() {
+        console.debug('execution suspended');
         x.app.suspend();
     }
 

@@ -168,7 +168,7 @@
             this._fList.push(f);
         };
 
-        proto.call = function(args) {
+        proto.all = function(args) {
             var len = this._fList.length;
             while (len--) {
                 this._fList[len].apply(this, arguments);

@@ -42,7 +42,7 @@
 
     function oninit() {
         if (initDelegate) {
-            initDelegate.call();
+            initDelegate.all();
             initDelegate = null;
         }
     }
@@ -50,20 +50,20 @@
     function onload() {
         oninit();
         if (loadDelegate) {
-            loadDelegate.call();
+            loadDelegate.all();
             loadDelegate = null;
         }
     }
 
-    if (document.readyState === "interactive") {
+    if (document.readyState === 'interactive') {
         oninit();
     }
-    else if (document.readyState === "complete") {
+    else if (document.readyState === 'complete') {
         onload();
     }
 
-    x.addEventHandler(document, "DOMContentLoaded", oninit);
-    x.addEventHandler(window, "load", onload);
+    x.addEventHandler(document, 'DOMContentLoaded', oninit);
+    x.addEventHandler(window, 'load', onload);
 
     //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
