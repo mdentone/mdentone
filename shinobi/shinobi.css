@@ -43,17 +43,27 @@ html {
 
 #game-view {
     background-color: black;
-    display: block; /* avoid gap*/
+    display: block; /* avoid gap */
     margin: auto; /* allow aligning */
+}
+
+.on-screen-text {
+    background-color: #333333; /* rgba fallback */
+    background-color: rgba(0,0,0,0.50);
+    color: white;
+}
+
+#game-fps {
+    position: absolute;
+    top: 0;
+    right: 0;
 }
 
 #dpad-area, #trig-area {
     position: absolute;
     bottom: 0;
-    width: 45%; /* vw fallback */
-    /*width: 45vw;*/
-    height: 45%; /* vh fallback */
-    /*height: 45vw;*/
+    width: 45%;
+    height: 45%;
 }
 
 #dpad-area {

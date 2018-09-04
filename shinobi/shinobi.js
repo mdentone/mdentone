@@ -19,7 +19,7 @@
 
     //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
-    x.extendClass(x.Game, g, 'Shinobi', x.noop, function(proto, base) {
+    x.extendClass(x.Game, window, 'Shinobi', x.noop, function(proto, base) {
 
         var GW = 256, GH = 192, GR = GH / GW;
 
