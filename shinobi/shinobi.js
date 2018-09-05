@@ -43,16 +43,45 @@
                     function(e) { joystick |= i; x.cancelEvent(e); });
             }
 
-            input('dpad-upleft', 1 | 4);
-            input('dpad-up', 1);
-            input('dpad-upright', 1 | 8);
-            input('dpad-downleft', 2 | 4);
-            input('dpad-down', 2);
-            input('dpad-downright', 2 | 8);
-            input('dpad-left', 4);
-            input('dpad-right', 8);
+            ////input('dpad-upleft', 1 | 4);
+            ////input('dpad-up', 1);
+            ////input('dpad-upright', 1 | 8);
+            ////input('dpad-downleft', 2 | 4);
+            ////input('dpad-down', 2);
+            ////input('dpad-downright', 2 | 8);
+            ////input('dpad-left', 4);
+            ////input('dpad-right', 8);
             input('trig-1', 16);
             input('trig-2', 32);
+
+            var options = {
+                zone: document.getElementById('dpad-area'),
+                color: '#DDDDDD',
+                mode: 'dynamic', // 'static' or 'semi'
+            };
+            var manager = nipplejs.create(options);
+
+            var inputs = 0;
+
+            manager.on('added', function (evt, nipple) {
+                nipple.on('dir:up', function (evt, nipple) {
+                    joystick &= ~1; joystick |= 2;
+                });
+                nipple.on('dir:down', function (evt, nipple) {
+                    joystick &= ~2; joystick |= 1;
+                });
+                nipple.on('dir:left', function (evt, nipple) {
+                    joystick &= ~4; joystick |= 8;
+                });
+                nipple.on('dir:right', function (evt, nipple) {
+                    joystick &= ~8; joystick |= 4;
+                });
+                nipple.on('end', function (evt, nipple) {
+                    joystick |= 1 | 2 | 4 | 8;
+                });
+            }).on('removed', function (evt, nipple) {
+                nipple.off('dir:up dir:right dir:down dir:left end');
+            });
 
             x.addClickHandler('trig-change',
                 function(e) { loadNextRom(); x.cancelEvent(e); });
