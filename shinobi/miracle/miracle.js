@@ -218,6 +218,9 @@ function keyDown(evt) {
         }
     }
     switch (evt.keyCode) {
+        case 9: // 'Tab' for on-screen texts
+            //todo
+            break;
         case 67:  // 'C' for change
             loadNextRom();
             evt.preventDefault();
