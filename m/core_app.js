@@ -151,16 +151,16 @@
         x.app.layout(vw = iW, vh = iH);
 
         // This trick for Safari on iOS hides the navigation bar:
-        setTimeout(function() { window.scrollTo(0, 1); }, 66);
+        setTimeout(function() { window.scrollTo(0, 1); }, 33);
     }
 
     function resume() {
-        console.debug('execution resumable');
+        x.write('resume');
         x.app.resume();
     }
 
     function suspend() {
-        console.debug('execution suspended');
+        x.write('suspend');
         x.app.suspend();
     }
 
