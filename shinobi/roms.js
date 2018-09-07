@@ -2,6 +2,7 @@
 // Copyright (c) MDE. All rights reserved.
 
 var roms = [
-    { file: "AlexKidd.asm", title: "Alex Kidd in Miracle World" },
-    { file: "Sonic.asm", title: "Sonic the Hedgehog" }
+    { file: "alexkidd.asm", title: "Alex Kidd in Miracle World" },
+    { file: "mickey.asm", title: "Mickey Mouse - Castle of Illusion" },
+    { file: "sonic.asm", title: "Sonic the Hedgehog" }
 ];
