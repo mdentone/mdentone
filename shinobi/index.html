@@ -56,23 +56,35 @@
     <x-layout style="display:none;">
         <canvas id="game-view"></canvas>
 
-        <div id="dpad-area">
-            <!--<div id="dpad-upleft" class="dpad-trig"></!--div>
+        <!--<div id="dpad-area">
+            <div id="dpad-upleft" class="dpad-trig"></!--div>
             <div id="dpad-up" class="dpad-trig">UP</div>
             <div id="dpad-upright" class="dpad-trig"></div>
             <div id="dpad-left" class="dpad-trig">LX</div>
             <div id="dpad-right" class="dpad-trig">RX</div>
             <div id="dpad-downleft" class="dpad-trig"></div>
             <div id="dpad-down" class="dpad-trig">DN</div>
-            <div id="dpad-downright" class="dpad-trig"></div>-->
+            <div id="dpad-downright" class="dpad-trig"></div>
         </div>
 
         <div id="trig-area">
             <div id="trig-change" class="dpad-trig">Change</div>
             <div id="trig-pause" class="dpad-trig">Pause</div>
             <!--<div id="trig-1" class="dpad-trig">Z 1</div>
-            <div id="trig-2" class="dpad-trig">X 2</div>-->
-        </div>
+            <div id="trig-2" class="dpad-trig">X 2</div>
+        </div>-->
+
+        <table id="input-area">
+            <tr>
+                <td id="dpad-area"></td>
+                <td id="opts-area">
+                    <div id="trig-change" class="dpad-trig">Change</div>
+                    <div id="trig-pause" class="dpad-trig">Pause</div>
+                </td>
+                <td id="trig1-area"></td>
+                <td id="trig2-area"></td>
+            </tr>
+        </table>
 
         <span id="game-fps" class="on-screen-text"></span>
     </x-layout>

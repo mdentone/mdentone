@@ -59,6 +59,34 @@ html {
     right: 0;
 }
 
+#input-area {
+    position: absolute;
+    table-layout: fixed;
+    bottom: 0;
+    width: 100%;
+    height: 33%;
+}
+
+#dpad-area {
+    background-color: red;
+    width: 45%;
+}
+
+#opts-area {
+    background-color: green;
+}
+
+#trig1-area {
+    background-color: blue;
+    width: 22%;
+}
+
+#trig2-area {
+    background-color: yellow;
+    width: 22%;
+}
+
+/*
 #dpad-area, #trig-area {
     position: absolute;
     bottom: 0;
@@ -73,28 +101,28 @@ html {
 #trig-area {
     right: 0;
 }
-
+    */
 #power-on, .dpad-trig {
-    position: absolute;
     background-color: #DDDDDD; /* rgba fallback */
     background-color: rgba(127, 127, 127, 0.5);
     color: black;
     border-radius: 16px;
     border: 1px solid black;
     outline: none;
-    width: 33.3%;
-    height: 33.3%;
     text-align: center;
     cursor: pointer;
 }
 
 #power-on {
+    position: absolute;
     background-color: #DDDDDD;
     color: #DD0000;
     left: 33.3%;
     top: 33.3%;
+    width: 33.3%;
+    height: 33.3%;
 }
-
+/*
 #dpad-upleft {
     left: 0;
     top: 0;
@@ -152,7 +180,7 @@ html {
     right: 0;
     top: 33.3%;
 }
-
+*/
 #trig-change {
     left: 0;
     top: 0;
