@@ -25,7 +25,7 @@
 
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="msapplication-tap-highlight" content="no" />
-    <meta name="viewport" content="width=device-width, user-scalable=no,
+    <meta name="viewport" content="width=667, height=375, user-scalable=no,
           initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, minimal-ui" />
 
     <meta name="application-name" content="SHINOBI">
@@ -74,13 +74,16 @@
             <div id="trig-2" class="dpad-trig">X 2</div>
         </div>-->
 
+        <div id="trig-reset"></div>
+        <div id="trig-load"></div>
+        <div id="trig-audio"></div>
+        <div id="trig-no-audio"></div>
+        <div id="trig-pause"></div>
+
         <table id="input-area">
             <tr>
                 <td id="dpad-area"></td>
-                <td id="opts-area">
-                    <div id="trig-change" class="dpad-trig">Change</div>
-                    <div id="trig-pause" class="dpad-trig">Pause</div>
-                </td>
+                <td id="opts-area"></td>
                 <td id="trig1-area"></td>
                 <td id="trig2-area"></td>
             </tr>
@@ -88,7 +91,8 @@
 
         <span id="game-fps" class="on-screen-text"></span>
     </x-layout>
-    <button id="power-on">POWER ON</button>
+    
+    <div id="emulator-play"></div>
     <!--
         <h1>Miracle: Sega Master System emulator</h1>
         <div class="help">

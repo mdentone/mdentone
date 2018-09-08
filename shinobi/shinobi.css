@@ -10,6 +10,10 @@
                                                                               
 */
 
+* {
+    box-sizing: border-box;
+}
+
 html, body, a, div, img, p, pre, span {
     border: 0;
     margin: 0;
@@ -64,7 +68,7 @@ html {
     table-layout: fixed;
     bottom: 0;
     width: 100%;
-    height: 120px;
+    height: 180px;
 }
 
 #dpad-area {
@@ -98,12 +102,70 @@ html {
     right: 0;
 }
     */
-#power-on, .dpad-trig {
+
+#emulator-play, #trig-audio, #trig-no-audio,
+#trig-load, #trig-reset, #trig-pause {
+    position: absolute;
+    cursor: pointer;
+}
+
+#emulator-play {
+    background: url('assets/play.png') no-repeat center 75%;
+    left: 0;
+    top: 0;
+    width: 100%; /* right fallback */
+    height: 100%; /* bottom fallback */
+    right: 0;
+    bottom: 0;
+}
+
+#trig-audio {
+    background: url('assets/audio.png') no-repeat center;
+    right: 0;
+    bottom: 240px;
+    display: none;
+}
+
+#trig-no-audio {
+    background: url('assets/no-audio.png') no-repeat center;
+    right: 0;
+    bottom: 240px;
+}
+
+#trig-load {
+    background: url('assets/load.png') no-repeat center;
+    left: 0;
+    bottom: 160px;
+}
+
+#trig-pause {
+    background: url('assets/pause.png') no-repeat center;
+    right: 0;
+    bottom: 160px;
+}
+
+#trig-reset {
+    background: url('assets/reset.png') no-repeat center;
+    left: 0;
+    bottom: 240px;
+}
+
+#emulator-play {
     background-color: #DDDDDD; /* rgba fallback */
-    background-color: rgba(127, 127, 127, 0.5);
+    background-color: rgba(127, 127, 127, 0.75);
+}
+
+#trig-audio, #trig-no-audio, #trig-load, #trig-reset, #trig-pause {
+    background-color: #DDDDDD; /* rgba fallback */
+    background-color: rgba(127, 127, 127, 0.33);
+    width: 80px;
+    height: 60px;
+    border-radius: 8px;
+}
+
+/*
+#power-on, .dpad-trig {
     color: black;
-    border-radius: 16px;
-    border: 1px solid black;
     outline: none;
     text-align: center;
     cursor: pointer;
@@ -118,7 +180,7 @@ html {
     width: 33.3%;
     height: 33.3%;
 }
-/*
+
 #dpad-upleft {
     left: 0;
     top: 0;
@@ -176,7 +238,7 @@ html {
     right: 0;
     top: 33.3%;
 }
-*/
+
 #trig-change {
     left: 0;
     top: 0;
@@ -188,3 +250,5 @@ html {
     top: 0;
     height: 20%;
 }
+
+*/
