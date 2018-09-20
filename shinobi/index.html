@@ -24,7 +24,6 @@
     <meta charset="utf-8">
 
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="msapplication-tap-highlight" content="no" />
     <meta name="viewport" content="width=device-width, user-scalable=no,
           initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, minimal-ui" />
 
@@ -33,100 +32,57 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="msapplication-config" content="none" />
-    <meta name="msapplication-square150x150logo" content="ms-tile-150x150.png">
-    <meta name="msapplication-square310x310logo" content="ms-tile-310x310.png">
+    <meta name="msapplication-square150x150logo" content="/shinobi/assets/ms-tile-150x150.png">
+    <meta name="msapplication-square310x310logo" content="/shinobi/assets/ms-tile-310x310.png">
     <meta name="msapplication-TileColor" content="#be7b6b">
     <meta name="msapplication-tap-highlight" content="no" />
     <meta name="theme-color" content="#111111">
 
-    <link rel="shortcut icon" href="/shinobi/favicon.ico">
-    <link rel="apple-touch-icon" sizes="180x180" href="/shinobi/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="/shinobi/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="/shinobi/favicon-16x16.png">
-    <link rel="mask-icon" href="/shinobi/safari-pinned-tab.svg" color="#111111">
-    <link rel="manifest" href="/shinobi/site.webmanifest">
+    <link rel="shortcut icon" type="image/x-icon" href="/shinobi/assets/favicon.ico">
+    <link rel="apple-touch-icon" sizes="180x180" href="/shinobi/assets/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/shinobi/assets/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/shinobi/assets/favicon-16x16.png">
+    <link rel="mask-icon" href="/shinobi/assets/safari-pinned-tab.svg" color="#111111">
+    <link rel="manifest" href="/shinobi/app.webmanifest">
 
-    <link rel="stylesheet" type="text/css" href="shinobi.css?v100">
-    <script type="text/javascript" src="nipplejs/nipplejs.js?v100"></script>
-    <script type="text/javascript" src="shinobi.js?v100"></script>
-    <script type="text/javascript" src="roms.js?v100"></script>
+    <link rel="stylesheet" href="app.css?v100">
+    <script src="app.js?v100"></script>
+    <script src="roms/roms.js?v100"></script>
 </head>
 <body>
-    <noscript><p id="noscript">:| no javascript?!</p></noscript>
-    <x-layout style="display:none;">
+    <noscript><div id="x-blue">:| no javascript?!</div></noscript>
+    <div class="x-layout" style="display:none;">
+
         <canvas id="game-view"></canvas>
 
-        <!--<div id="dpad-area">
-            <div id="dpad-upleft" class="dpad-trig"></!--div>
-            <div id="dpad-up" class="dpad-trig">UP</div>
-            <div id="dpad-upright" class="dpad-trig"></div>
-            <div id="dpad-left" class="dpad-trig">LX</div>
-            <div id="dpad-right" class="dpad-trig">RX</div>
-            <div id="dpad-downleft" class="dpad-trig"></div>
-            <div id="dpad-down" class="dpad-trig">DN</div>
-            <div id="dpad-downright" class="dpad-trig"></div>
+        <pre id="keyboard-keys"></pre>
+
+        <div id="mouse-triggers">
+            <div id="trig-reset"></div>
+            <div id="trig-load"></div>
+            <div id="trig-audio"></div>
+            <div id="trig-no-audio"></div>
+            <div id="trig-pause"></div>
         </div>
 
-        <div id="trig-area">
-            <div id="trig-change" class="dpad-trig">Change</div>
-            <div id="trig-pause" class="dpad-trig">Pause</div>
-            <!--<div id="trig-1" class="dpad-trig">Z 1</div>
-            <div id="trig-2" class="dpad-trig">X 2</div>
-        </div>-->
-
-        <div id="trig-reset"></div>
-        <div id="trig-load"></div>
-        <div id="trig-audio"></div>
-        <div id="trig-no-audio"></div>
-        <div id="trig-pause"></div>
-
-        <table id="input-area">
+        <table id="touch-triggers">
             <tr>
                 <td id="dpad-area"></td>
                 <td></td>
-                <td id="trig1-area"></td>
                 <td id="trig2-area"></td>
+                <td id="trig1-area"></td>
             </tr>
         </table>
 
-        <span id="game-fps" class="on-screen-text"></span>
-    </x-layout>
-    
-    <div id="emulator-play"></div>
-    <!--
-        <h1>Miracle: Sega Master System emulator</h1>
-        <div class="help">
-            Miracle is a Javascript Sega Master System emulator that runs totally inside your browser.<br>
-            Use the cursor keys and <span class="key">Z</span> and <span class="key">X</span> to control the emulator.
-            <span class="key">P</span> is the pause button, <span class="key">R</span> resets.<br>
-        </div>
-        <div id="about">
-            <h1>Miracle</h1>
-            <h2>a Sega Master System emulator in Javascript</h2>
-            <p>By <a href="http://xania.org/">Matt Godbolt</a></p>
-            <p>Based on <a href="http://matt.west.co.tt/category/javascript/jsspeccy/">JSSpeccy</a> by <a href="http://matt.west.co.tt/">Matt Westcott</a></p>
-            <p>..which in turn is based on <a href="http://fuse-emulator.sourceforge.net/">Fuse</a> by Philip Kendall et al. Icons from <a href="http://www.icon-king.com/projects/nuvola/">Nuvola</a> by David Vignoni.</p>
-            <div id="licence">
-                <p>
-                    This program is <a href="http://github.com/mattgodbolt/Miracle">free software</a>: you can redistribute it and/or modify
-                    it under the terms of the GNU General Public License as published by
-                    the Free Software Foundation, either version 3 of the License, or
-                    (at your option) any later version.
-                </p>
-                <p>
-                    This program is distributed in the hope that it will be useful,
-                    but WITHOUT ANY WARRANTY; without even the implied warranty of
-                    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-                    GNU General Public License for more details.
-                </p>
+        <div class="x-loader" style="display:none;"></div>
 
-                <p>
-                    You should have received a copy of the GNU General Public License
-                    along with this program.  If not, see &lt;<a href="http://www.gnu.org/licenses/">http://www.gnu.org/licenses/</a>&gt;.
-                </p>
-            </div>
-            <a href="javascript:void(0)" class="close_button" onclick="hideAbout()">Close</a>
+        <span id="game-fps" class="on-screen-text"></span>
+
+        <div id="title-play">
+            <pre id="title"></pre>
+            <br /><br />
+            <pre id="instr"></pre>
         </div>
-    -->
+    </div>
 </body>
 </html>
