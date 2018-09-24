@@ -4,6 +4,7 @@
         <tile>
             <square150x150logo src="/shinobi/assets/ms-tile-150x150.png"/>
             <square310x310logo src="/shinobi/assets/ms-tile-310x310.png"/>
+            <wide310x150logo src="/shinobi/assets/ms-tile-310x3150.png"/>
             <TileColor>#be7b6b</TileColor>
         </tile>
     </msapplication>
