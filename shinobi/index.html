@@ -14,9 +14,10 @@
     *   Miracle: A Sega Master System emulator in JavaScript.                *
     **************************************************************************
                                                                               
-    Miracle emulator by Matt Godbolt : <matt@godbolt.org> under GNU License   
-    Z80 support by Matt Westcott     : <matthew@west.co.tt> from JSSpeccy     
+      Miracle emulator by Matt Godbolt [matt@godbolt.org] under GNU License   
+        Z80 support by Matt Westcott [matthew@west.co.tt] from JSSpeccy       
                                                                               
+       &#10084; Thanks to Matt Boldt [www.mattboldt.com] for this lovely screen &#10084;    
 -->
 <html>
 <head>
@@ -60,14 +61,16 @@
 
         <div id="title-play">
             <pre id="title-text"></pre>
-            <br />
+            <br /><br />
             <pre id="versn-text"></pre>
             <br /><br />
             <pre id="instr-text"></pre>
         </div>
 
         <div id="touch-triggers">
-            <div id="dpad-area"></div>
+            <div id="dpad-area">
+                <div id="dpad"></div>
+            </div>
 
             <div id="trig-reset"></div>
             <div id="trig-load"></div>
