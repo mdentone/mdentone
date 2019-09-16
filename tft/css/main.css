@@ -1,0 +1,100 @@
+/*! --
+// (c) Mario Dentone 2019
+---------------------- */
+
+html, body, input, button {
+    font-family: serif;
+}
+
+html, body {
+    background-color: #333;
+    color: white;
+    margin: 0;
+    padding: 0;
+    height: 100%;
+}
+
+header, footer {
+    background-color: #666;
+    position: fixed;
+    left: 0;
+    width: 100%;
+    padding: 8px;
+    font-size: .8em;
+    font-weight: bold;
+}
+
+header {
+    top: 0;
+}
+
+footer {
+    bottom: 0;
+}
+
+#layout {
+    padding: 40px 8px;
+}
+
+.collapsible-header {
+    background-color: #777;
+    color: white;
+    cursor: pointer;
+    padding: 16px;
+    width: 100%;
+    border: none;
+    text-align: left;
+    outline: none;
+}
+
+.collapsible-header .active, .collapsible-header:hover {
+    background-color: #555;
+}
+
+.collapsible-content {
+    display: none;
+    padding: 8px 16px;
+    overflow: hidden;
+}
+
+.tft-baseitem, .tft-combitem, .tft-champion {
+    margin: 4px;
+    display: inline-block;
+    cursor: pointer;
+    text-align: center;
+}
+
+.tft-baseitem:active, .tft-baseitem:hover,
+.tft-combitem:active, .tft-combitem:hover,
+.tft-champion:active, .tft-champion:hover {
+    outline: #e2be0f solid 3px;
+}
+
+.tft-champion {
+    color: black;
+}
+
+.tier-1 {
+    border: 2px solid #f35103; /* red */
+    background-color: #f35103;
+}
+
+.tier-2 {
+    border: 2px solid gold;
+    background-color: gold;
+}
+
+.tier-3 {
+    border: 2px solid silver;
+    background-color: silver;
+}
+
+.tier-4 {
+    border: 2px solid #af881c; /* bronze */
+    background-color: #af881c;
+}
+
+.tier-5 {
+    border: 2px solid #888682; /* iron */
+    background-color: #888682;
+}
