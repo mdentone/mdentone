@@ -6,7 +6,7 @@
     window.data = window.data || {};
 
     data['game-version'] = '9.18';
-    data['data-sources'] = 'leagueofgraphs.com'
+    data['data-sources'] = 'leagueofgraphs.com; blitz.gg'
 
     var Aatrox = { id: 'Aatrox', name: "Aatrox", tier: 4, imgclass: 'champion-266-48' };
     var Ahri = { id: 'Ahri', name: "Ahri", tier: 3, imgclass: 'champion-103-48' };
@@ -91,42 +91,42 @@
     ];
 
     data['combined-items'] = [
-        { id: 'deathblade', img: imageurl + '11.png', tier: 0, baseitems: [sword, sword], champions: [Ashe, Vayne, Rengar, Draven, KhaZix, Zed] },
-        { id: 'lastwhisper', img: imageurl + '12.png', tier: 0, baseitems: [sword, bow], champions: [Ashe, Vayne, Rengar, Draven, KhaZix, Zed] },
-        { id: 'gunblade', img: imageurl + '13.png', tier: 0, baseitems: [sword, rod], champions: [Evelynn, Swain, Katarina, Akali, Garen] },
-        { id: 'spear', img: imageurl + '14.png', tier: 0, baseitems: [sword, tear], champions: [Akali, Ahri, Sejuani, Lulu, AurelionSol, Pyke] },
-        { id: 'angel', img: imageurl + '15.png', tier: 0, baseitems: [sword, vest], champions: [ChoGath, Shen, Sejuani, Yasuo, Vi, Pyke] },
-        { id: 'bloodthirster', img: imageurl + '16.png', tier: 0, baseitems: [sword, cloak], champions: [Nidalee, Draven, Camille, Aatrox] },
-        { id: 'herald', img: imageurl + '17.png', tier: 0, baseitems: [sword, belt], champions: [Morgana, Leona, Lulu, Lissandra, Braum, Kindred] },
+        { id: 'deathblade', img: imageurl + '11.png', tier: 2, baseitems: [sword, sword], champions: [Ashe, Vayne, Rengar, Draven, KhaZix, Zed, Jinx] },
+        { id: 'lastwhisper', img: imageurl + '12.png', tier: 4, baseitems: [sword, bow], champions: [Ashe, Vayne, Rengar, Draven, KhaZix, Zed] },
+        { id: 'gunblade', img: imageurl + '13.png', tier: 3, baseitems: [sword, rod], champions: [Evelynn, Swain, Katarina, Akali, Garen, Brand, Shyvana] },
+        { id: 'spear', img: imageurl + '14.png', tier: 3, baseitems: [sword, tear], champions: [Akali, Ahri, Sejuani, Lulu, AurelionSol, Pyke] },
+        { id: 'angel', img: imageurl + '15.png', tier: 1, baseitems: [sword, vest], champions: [ChoGath, Shen, Sejuani, Yasuo, Vi, Pyke, Evelynn, Gnar, Shyvana, Rengar, Draven, Jinx, Swain] },
+        { id: 'bloodthirster', img: imageurl + '16.png', tier: 3, baseitems: [sword, cloak], champions: [Nidalee, Draven, Camille, Aatrox, Rengar] },
+        { id: 'herald', img: imageurl + '17.png', tier: 5, baseitems: [sword, belt], champions: [Morgana, Leona, Lulu, Lissandra, Braum, Kindred] },
         { id: 'ghostblade', img: imageurl + '18.png', tier: 0, baseitems: [sword, spatula], champions: [] },
-        { id: 'firecannon', img: imageurl + '22.png', tier: 0, baseitems: [bow, bow], champions: [Vayne, Volibear, Draven] },
-        { id: 'rageblade', img: imageurl + '23.png', tier: 0, baseitems: [bow, rod], champions: [Kayle, Kassadin, Veigar, Blitzcrank, Ahri, AurelionSol, Lucian] },
-        { id: 'shiv', img: imageurl + '24.png', tier: 0, baseitems: [bow, tear], champions: [Tristana, Volibear, Jayce, Lucian] },
-        { id: 'dancer', img: imageurl + '25.png', tier: 0, baseitems: [bow, vest], champions: [Garen, Shen, Shyvana, Volibear, Darius, Gnar, Camille] },
-        { id: 'cursedblade', img: imageurl + '26.png', tier: 0, baseitems: [bow, cloak], champions: [Tristana, Graves, Volibear, Lucian] },
-        { id: 'hydra', img: imageurl + '27.png', tier: 0, baseitems: [bow, belt], champions: [ChoGath, Elise, Nidalee, Shen, Shyvana, Gnar, Aatrox] },
+        { id: 'firecannon', img: imageurl + '22.png', tier: 1, baseitems: [bow, bow], champions: [Vayne, Volibear, Draven, Rengar, Jinx, AurelionSol] },
+        { id: 'rageblade', img: imageurl + '23.png', tier: 1, baseitems: [bow, rod], champions: [Kayle, Kassadin, Veigar, Blitzcrank, Ahri, AurelionSol, Lucian, Brand, Ashe] },
+        { id: 'shiv', img: imageurl + '24.png', tier: 3, baseitems: [bow, tear], champions: [Tristana, Volibear, Jayce, Lucian, Ashe] },
+        { id: 'dancer', img: imageurl + '25.png', tier: 3, baseitems: [bow, vest], champions: [Garen, Shen, Shyvana, Volibear, Darius, Gnar, Camille] },
+        { id: 'cursedblade', img: imageurl + '26.png', tier: 3, baseitems: [bow, cloak], champions: [Tristana, Graves, Volibear, Lucian] },
+        { id: 'hydra', img: imageurl + '27.png', tier: 4, baseitems: [bow, belt], champions: [ChoGath, Elise, Nidalee, Shen, Shyvana, Gnar, Aatrox] },
         { id: 'blade', img: imageurl + '28.png', tier: 0, baseitems: [bow, spatula], champions: [] },
-        { id: 'deathcap', img: imageurl + '33.png', tier: 0, baseitems: [rod, rod], champions: [Morgana, Karthus, Anivia, Blitzcrank, Brand, Ahri, AurelionSol] },
-        { id: 'echo', img: imageurl + '34.png', tier: 0, baseitems: [rod, tear], champions: [Anivia, Katarina, Brand, Akali, Garen, Ahri] },
-        { id: 'locket', img: imageurl + '35.png', tier: 0, baseitems: [rod, vest], champions: [Morgana, Leona, Lulu, Lissandra, Braum, Kindred] },
-        { id: 'spark', img: imageurl + '36.png', tier: 0, baseitems: [rod, cloak], champions: [Morgana, Leona, Lulu, Lissandra, Braum, Kindred] },
-        { id: 'morellonomicon', img: imageurl + '37.png', tier: 0, baseitems: [rod, belt], champions: [Anivia, Katarina, Brand, Kennen, Garen, Lucian] },
+        { id: 'deathcap', img: imageurl + '33.png', tier: 3, baseitems: [rod, rod], champions: [Morgana, Karthus, Anivia, Blitzcrank, Brand, Ahri, AurelionSol, ChoGath] },
+        { id: 'echo', img: imageurl + '34.png', tier: 4, baseitems: [rod, tear], champions: [Anivia, Katarina, Brand, Akali, Garen, Ahri] },
+        { id: 'locket', img: imageurl + '35.png', tier: 3, baseitems: [rod, vest], champions: [Morgana, Leona, Lulu, Lissandra, Braum, Kindred] },
+        { id: 'spark', img: imageurl + '36.png', tier: 4, baseitems: [rod, cloak], champions: [Morgana, Leona, Lulu, Lissandra, Braum, Kindred] },
+        { id: 'morellonomicon', img: imageurl + '37.png', tier: 1, baseitems: [rod, belt], champions: [Anivia, Katarina, Brand, Kennen, Garen, Lucian, ChoGath, Swain, AurelionSol] },
         { id: 'yuumi', img: imageurl + '38.png', tier: 0, baseitems: [rod, spatula], champions: [] },
-        { id: 'embrace', img: imageurl + '44.png', tier: 0, baseitems: [tear, tear], champions: [Akali, Ahri, Sejuani, Lulu, AurelionSol, Pyke] },
-        { id: 'heart', img: imageurl + '45.png', tier: 0, baseitems: [tear, vest], champions: [ChoGath, Poppy, Leona, Braum, Vi] },
-        { id: 'hush', img: imageurl + '46.png', tier: 0, baseitems: [tear, cloak], champions: [Tristana, Graves, Volibear, Yasuo, Jinx, Lucian] },
-        { id: 'redemption', img: imageurl + '47.png', tier: 0, baseitems: [tear, belt], champions: [ChoGath, Poppy, Leona, Braum] },
+        { id: 'embrace', img: imageurl + '44.png', tier: 2, baseitems: [tear, tear], champions: [Akali, Ahri, Sejuani, Lulu, AurelionSol, Pyke, ChoGath, Anivia] },
+        { id: 'heart', img: imageurl + '45.png', tier: 3, baseitems: [tear, vest], champions: [ChoGath, Poppy, Leona, Braum, Vi] },
+        { id: 'hush', img: imageurl + '46.png', tier: 2, baseitems: [tear, cloak], champions: [Tristana, Graves, Volibear, Yasuo, Jinx, Lucian] },
+        { id: 'redemption', img: imageurl + '47.png', tier: 3, baseitems: [tear, belt], champions: [ChoGath, Poppy, Leona, Braum] },
         { id: 'darkin', img: imageurl + '48.png', tier: 0, baseitems: [tear, spatula], champions: [] },
-        { id: 'thornmail', img: imageurl + '55.png', tier: 0, baseitems: [vest, vest], champions: [Warwick, ChoGath, Volibear, RekSai] },
-        { id: 'breaker', img: imageurl + '56.png', tier: 0, baseitems: [vest, cloak], champions: [Tristana, Graves, Volibear, Lucian] },
-        { id: 'redbuff', img: imageurl + '57.png', tier: 0, baseitems: [vest, belt], champions: [Tristana, Graves, Volibear, Lucian] },
+        { id: 'thornmail', img: imageurl + '55.png', tier: 4, baseitems: [vest, vest], champions: [Warwick, ChoGath, Volibear, RekSai] },
+        { id: 'breaker', img: imageurl + '56.png', tier: 3, baseitems: [vest, cloak], champions: [Tristana, Graves, Volibear, Lucian] },
+        { id: 'redbuff', img: imageurl + '57.png', tier: 1, baseitems: [vest, belt], champions: [Tristana, Graves, Volibear, Lucian, Yasuo] },
         { id: 'vow', img: imageurl + '58.png', tier: 0, baseitems: [vest, spatula], champions: [] },
-        { id: 'claw', img: imageurl + '66.png', tier: 0, baseitems: [cloak, cloak], champions: [Poppy, Mordekaiser, Shen, Sejuani, Darius, Gnar] },
-        { id: 'zephyr', img: imageurl + '67.png', tier: 0, baseitems: [cloak, belt], champions: [Morgana, Leona, Lulu, Lissandra, Braum, Kindred] },
-        { id: 'hurricane', img: imageurl + '68.png', tier: 0, baseitems: [cloak, spatula], champions: [Ashe, Vayne, Jinx] },
-        { id: 'armor', img: imageurl + '77.png', tier: 0, baseitems: [belt, belt], champions: [Warwick, ChoGath, Volibear, Vi, RekSai] },
-        { id: 'mallet', img: imageurl + '78.png', tier: 0, baseitems: [belt, spatula], champions: [] },
-        { id: 'force', img: imageurl + '88.png', tier: 0, baseitems: [spatula, spatula], champions: [] }
+        { id: 'claw', img: imageurl + '66.png', tier: 2, baseitems: [cloak, cloak], champions: [Poppy, Mordekaiser, Shen, Sejuani, Darius, Gnar, Evelynn, Swain] },
+        { id: 'zephyr', img: imageurl + '67.png', tier: 5, baseitems: [cloak, belt], champions: [Morgana, Leona, Lulu, Lissandra, Braum, Kindred] },
+        { id: 'hurricane', img: imageurl + '68.png', tier: 2, baseitems: [cloak, spatula], champions: [Ashe, Vayne, Jinx] },
+        { id: 'armor', img: imageurl + '77.png', tier: 3, baseitems: [belt, belt], champions: [Warwick, ChoGath, Volibear, Vi, RekSai, Gnar, Shyvana] },
+        { id: 'mallet', img: imageurl + '78.png', tier: 3, baseitems: [belt, spatula], champions: [] },
+        { id: 'force', img: imageurl + '88.png', tier: 1, baseitems: [spatula, spatula], champions: [Braum, Leona, Pantheon, Blitzcrank] }
     ];
 
 })();

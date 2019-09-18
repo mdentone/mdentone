@@ -3,13 +3,20 @@
 ---------------------- */
 
 (function() {
+    var VERSION = '1.1';
 
     if (!window.addEventListener) {
         document.body.innerHTML = ':( browser too old';
         return;
     }
 
-    var VERSION = '1.0';
+    window.addEventListener('error', function(ev) {
+        if (ev.message) {
+            var el = document.createElement('<pre>');
+            el.innerHTML = ev.message;
+            document.appendChild(el);
+        }
+    });
 
     function makeCollapsible(el) {
         el.addEventListener('click', function() {
@@ -50,11 +57,12 @@
 
     function createDescriptionPopup() {
         var el = document.createElement('div');
-        el.style.cssText = 'position: fixed; top: 50px; left: 50px; right: 50px; bottom: 50px;'
-                         + 'background-color: #111; border: 4px solid #555; padding: 40px;';
+        el.className = 'overlay';
+        el.innerHTML = '<div id="aligner"><div id="description"></div></div>';
 
-        el.id = 'description';
-        el.addEventListener('click', function() {
+        el.addEventListener('click', function(ev) {
+            ev.stopImmediatePropagation();
+
             document.body.removeChild(el);
         });
         document.body.appendChild(el);
@@ -74,67 +82,70 @@
 
     function createCombinedItem(combItem) {
         var el = document.createElement('a');
-        el.className = 'tft-combitem';
+        el.className = 'tft-combitem tier-' + combItem.tier;
 
-        var img = document.createElement('img');
-        img.alt = img.title = ls[combItem.id.toUpperCase() + "_NAME"];
-        img.src = combItem.img;
+        var name = ls[combItem.id.toUpperCase() + "_NAME"];
+        var desc = ls[combItem.id.toUpperCase() + "_DESC"];
 
-        el.addEventListener('click', function() {
+        var imghtml = '<img class="tft-object-image" src="' + combItem.img + '" alt="' + name + '" title="' + name + '">';
+
+        el.innerHTML = imghtml;
+
+        el.addEventListener('click', function(ev) {
+            ev.stopImmediatePropagation();
+
             if (!document.getElementById('description')) {
                 createDescriptionPopup();
             }
             description.innerHTML =
-                '<h1><img src="' + combItem.img + '">'
-                + ls[combItem.id.toUpperCase() + "_NAME"] + '</h1>'
-                + '<p>' + ls[combItem.id.toUpperCase() + "_DESC"] + '</p>'
-                + '<p><h3>' + ls['BASEITEMS'] + '</h3><div id="combbaseitems"></div></p>'
-                + '<p><h3>' + ls['CHAMPIONS'] + '</h3><div id="combchampions"></div></p>';
+                '<h2>' + imghtml + ' ' + name + '</h2>' +
+                '<p>' + desc + '</p>' +
+                '<h3>' + ls['BASEITEMS'] + '</h3>' +
+                '<span id="combitem-baseitem-0"></span><b>+</b><span id="combitem-baseitem-1"></span>' +
+                '<h3>' + ls['CHAMPIONS'] + '</h3>' +
+                '<div id="combitem-champions"></div>';
 
-            combbaseitems.appendChild(createBaseItem(combItem.baseitems[0]));
-            combbaseitems.append('+');
-            combbaseitems.appendChild(createBaseItem(combItem.baseitems[1]));
+            for (var i = 0; i < combItem.baseitems.length; i++) {
+                document.getElementById('combitem-baseitem-' + i).appendChild(createBaseItem(combItem.baseitems[i]));
+            }
 
             for (var i = 0; i < combItem.champions.length; i++) {
-                combchampions.appendChild(createChampion(combItem.champions[i]));
+                document.getElementById('combitem-champions').appendChild(createChampion(combItem.champions[i]));
             }
         });
-        el.appendChild(img);
         return el;
     }
 
     function createChampion(champion) {
-        var size = champion.imgclass.slice(-2);
-
         var el = document.createElement('a');
         el.className = 'tft-champion tier-' + champion.tier;
-        el.style.width = '90px'; //tbr: Number(size) *2 + 'px';
         el.title = champion.name;
 
-        var img = document.createElement('div');
-        img.style.width = img.style.height = size + 'px';
-        img.className = champion.imgclass;
+        var imghtml  = '<div class="tft-object-image ' + champion.imgclass + '"></div>';
 
-        var name = document.createElement('span');
-        name.innerHTML = champion.name;
+        el.innerHTML = imghtml + '<br><span>' + champion.name + '</span>';
 
-        el.addEventListener('click', function() {
+        el.addEventListener('click', function(ev) {
+            ev.stopImmediatePropagation();
+
             if (!document.getElementById('description')) {
                 createDescriptionPopup();
             }
             description.innerHTML =
-                '<h1><div class="' + champion.imgclass + '" style="width: ' + size + 'px; height: ' + size + 'px;"></div>'
-                + champion.name + '</h1>'
-                + '<p><h3>' + ls['COMBITEMS'] + '</h3><div id="championcombitems"></div></p>';
+                '<h2>' + imghtml + ' ' + champion.name + '</h2>' +
+                '<p>' + '' + '</p>' +
+                '<h3>' + ls['COMBITEMS'] + '</h3>' +
+                '<div id="champions-combitem"></div>';
 
             var dataCombItems = data['combined-items'];
             for (var i = 0; i < dataCombItems.length; i++) {
                 for (var j = 0; j < dataCombItems[i].champions.length; j++) {
                     if (dataCombItems[i].champions[j] === champion) {
+                        var championcombitems = document.getElementById('champions-combitem');
                         championcombitems.appendChild(createCombinedItem(dataCombItems[i]));
-                        championcombitems.append(ls[dataCombItems[i].id.toUpperCase() + "_NAME"] + ' =');
+                        championcombitems.append(' = ');
                         championcombitems.appendChild(createBaseItem(dataCombItems[i].baseitems[0]));
-                        championcombitems.append('+');
+                        championcombitems.append(' + ');
                         championcombitems.appendChild(createBaseItem(dataCombItems[i].baseitems[1]));
                         championcombitems.appendChild(document.createElement('br'));
                         break;
@@ -142,8 +153,6 @@
                 }
             }
         });
-        el.appendChild(img);
-        el.appendChild(name);
         return el;
     }
 

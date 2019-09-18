@@ -15,25 +15,39 @@ html, body {
 }
 
 header, footer {
-    background-color: #666;
-    position: fixed;
-    left: 0;
-    width: 100%;
     padding: 8px;
     font-size: .8em;
     font-weight: bold;
-}
-
-header {
-    top: 0;
-}
-
-footer {
-    bottom: 0;
+    color: #ddd;
 }
 
 #layout {
-    padding: 40px 8px;
+}
+
+.overlay {
+    position: fixed;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    background: #00000080;
+}
+
+#aligner {
+    position: absolute;
+    left: 50%;
+}
+
+#description {
+    position: relative;
+    left: -50%;
+    top: 80px;
+    min-width: 270px;
+    max-width: 90vw;
+    bottom: 80px;
+    background: #111;
+    border: 4px solid #555;
+    padding: 20px 40px;
 }
 
 .collapsible-header {
@@ -57,44 +71,62 @@ footer {
     overflow: hidden;
 }
 
-.tft-baseitem, .tft-combitem, .tft-champion {
-    margin: 4px;
+.tft-object-image {
     display: inline-block;
-    cursor: pointer;
-    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+    vertical-align: middle;
 }
 
-.tft-baseitem:active, .tft-baseitem:hover,
+.tft-baseitem, .tft-combitem, .tft-champion {
+    border: 1px solid transparent;
+    border-radius: 3px;
+    margin: 4px;
+    padding: 2px;
+    display: inline-block;
+    width: 64px;
+    height: 64px;
+    text-align: center;
+    vertical-align: middle;
+    overflow: hidden;
+    font-size: .8em;
+}
+
+.tft-combitem, .tft-champion {
+    cursor: pointer;
+}
+
 .tft-combitem:active, .tft-combitem:hover,
 .tft-champion:active, .tft-champion:hover {
-    outline: #e2be0f solid 3px;
+    outline: #84e2ffcc solid 1px;
+    box-shadow: 0 0 9px 3px #84e2ff;
 }
 
 .tft-champion {
     color: black;
 }
 
-.tier-1 {
-    border: 2px solid #f35103; /* red */
+.tier-1 { /* red */
+    border-color: #f35103;
     background-color: #f35103;
 }
 
-.tier-2 {
-    border: 2px solid gold;
+.tier-2 { /* gold */
+    border-color: gold;
     background-color: gold;
 }
 
-.tier-3 {
-    border: 2px solid silver;
+.tier-3 { /* silver */
+    border-color: silver;
     background-color: silver;
 }
 
-.tier-4 {
-    border: 2px solid #af881c; /* bronze */
+.tier-4 { /* bronze */
+    border-color: #af881c;
     background-color: #af881c;
 }
 
-.tier-5 {
-    border: 2px solid #888682; /* iron */
-    background-color: #888682;
+.tier-5 { /* iron */
+    border-color: #777672;
+    background-color: #777672;
 }
