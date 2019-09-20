@@ -40,9 +40,9 @@
 
     var ls = strings['it'];
     document.title = ls['PAGETITLE'];
-    footer.innerHTML += ' | VER ' + data['app-version']
-                      + ' | TFT ' + data['game-version']
-                      + ' | SRC ' + data['data-sources'];
+    footer.innerHTML += ' | VER: ' + data['app-version']
+                      + ' | TFT: ' + data['game-version']
+                      + ' | DATA: ' + data['data-sources'];
 
     document.querySelectorAll('.localizable').forEach(function(el) {
         var lsid = el['ls-id'];
@@ -69,6 +69,13 @@
             document.body.removeChild(el);
         });
         document.body.appendChild(el);
+    }
+    
+    function createElement(name, html, className) {
+        var el = document.createElement(name);
+        if (html) el.innerHTML = html;
+        if (className) el.className = className;
+        return el;
     }
 
     function createBaseItem(baseItem) {
@@ -103,9 +110,7 @@
             description.innerHTML =
                 '<h2>' + imghtml + ' ' + name + '</h2>' +
                 '<p>' + desc + '</p>' +
-                '<h3>' + ls['BASEITEMS'] + '</h3>' +
                 '<span id="combitem-baseitem-0"></span><b> + </b><span id="combitem-baseitem-1"></span>' +
-                '<h3>' + ls['CHAMPIONS'] + '</h3>' +
                 '<div id="combitem-champions"></div>';
 
             for (var i = 0; i < combItem.baseitems.length; i++) {
@@ -148,11 +153,11 @@
                 var item = champion.bestItems[i];
                 var championcombitems = document.getElementById('champions-combitem');
                 championcombitems.appendChild(createCombinedItem(item));
-                championcombitems.innerHTML += '<b> = </b>';
+                championcombitems.appendChild(createElement('b', ' = '));
                 championcombitems.appendChild(createBaseItem(item.baseitems[0]));
-                championcombitems.innerHTML += '<b> + </b>';
+                championcombitems.appendChild(createElement('b', ' + '));
                 championcombitems.appendChild(createBaseItem(item.baseitems[1]));
-                championcombitems.innerHTML += '<br>';
+                championcombitems.appendChild(createElement('br'));
             }
         });
         return el;
