@@ -104,7 +104,7 @@
                 '<h2>' + imghtml + ' ' + name + '</h2>' +
                 '<p>' + desc + '</p>' +
                 '<h3>' + ls['BASEITEMS'] + '</h3>' +
-                '<span id="combitem-baseitem-0"></span><b>+</b><span id="combitem-baseitem-1"></span>' +
+                '<span id="combitem-baseitem-0"></span><b> + </b><span id="combitem-baseitem-1"></span>' +
                 '<h3>' + ls['CHAMPIONS'] + '</h3>' +
                 '<div id="combitem-champions"></div>';
 
@@ -142,19 +142,17 @@
             }
             description.innerHTML =
                 '<h2>' + imghtml + ' ' + champion.name + '</h2>' +
-                '<p>' + '' + '</p>' +
-                '<h3>' + ls['COMBITEMS'] + '</h3>' +
                 '<div id="champions-combitem"></div>';
 
             for (var i = 0; i < champion.bestItems.length; i++) {
                 var item = champion.bestItems[i];
                 var championcombitems = document.getElementById('champions-combitem');
                 championcombitems.appendChild(createCombinedItem(item));
-                championcombitems.append(' = ');
+                championcombitems.innerHTML += '<b> = </b>';
                 championcombitems.appendChild(createBaseItem(item.baseitems[0]));
-                championcombitems.append(' + ');
+                championcombitems.innerHTML += '<b> + </b>';
                 championcombitems.appendChild(createBaseItem(item.baseitems[1]));
-                championcombitems.appendChild(document.createElement('br'));
+                championcombitems.innerHTML += '<br>';
             }
         });
         return el;
