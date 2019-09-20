@@ -7,7 +7,7 @@
 
     var imageurl = 'https://cdn.leagueofgraphs.com/img/tft/items/';
 
-    data['app-version'] = '1.2';
+    data['app-version'] = '1.2.1';
     data['game-version'] = '9.18';
     data['data-sources'] = 'leagueofgraphs.com; blitz.gg; esportstales.com; lolchess.gg; thegamehaus.com; scarraofficial'
 

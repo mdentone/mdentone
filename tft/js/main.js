@@ -17,6 +17,10 @@
         }
     });
 
+    if (typeof NodeList.prototype.forEach !== "function" ) {
+        NodeList.prototype.forEach = Array.prototype.forEach;
+    }
+
     function makeCollapsible(el) {
         el.addEventListener('click', function() {
             this.classList.toggle('active');
