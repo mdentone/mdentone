@@ -43,6 +43,7 @@ header, footer {
     left: -50%;
     top: 80px;
     min-width: 290px;
+    width: 50vw;
     max-width: 90vw;
     bottom: 80px;
     background: #111;
