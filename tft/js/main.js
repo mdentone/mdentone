@@ -3,7 +3,6 @@
 ---------------------- */
 
 (function() {
-    var VERSION = '1.1';
 
     if (!window.addEventListener) {
         document.body.innerHTML = ':( browser too old';
@@ -37,7 +36,7 @@
 
     var ls = strings['it'];
     document.title = ls['PAGETITLE'];
-    footer.innerHTML += ' | VER ' + VERSION
+    footer.innerHTML += ' | VER ' + data['app-version']
                       + ' | TFT ' + data['game-version']
                       + ' | SRC ' + data['data-sources'];
 
@@ -109,8 +108,14 @@
                 document.getElementById('combitem-baseitem-' + i).appendChild(createBaseItem(combItem.baseitems[i]));
             }
 
-            for (var i = 0; i < combItem.champions.length; i++) {
-                document.getElementById('combitem-champions').appendChild(createChampion(combItem.champions[i]));
+            var champions = data['champions'];
+            for (var i = 0; i < champions.length; i++) {
+                for (var j = 0; j < champions[i].bestItems.length; j++) {
+                    if (champions[i].bestItems[j] === combItem) {
+                        document.getElementById('combitem-champions').appendChild(createChampion(champions[i]));
+                        break;
+                    }
+                }
             }
         });
         return el;
@@ -137,20 +142,15 @@
                 '<h3>' + ls['COMBITEMS'] + '</h3>' +
                 '<div id="champions-combitem"></div>';
 
-            var dataCombItems = data['combined-items'];
-            for (var i = 0; i < dataCombItems.length; i++) {
-                for (var j = 0; j < dataCombItems[i].champions.length; j++) {
-                    if (dataCombItems[i].champions[j] === champion) {
-                        var championcombitems = document.getElementById('champions-combitem');
-                        championcombitems.appendChild(createCombinedItem(dataCombItems[i]));
-                        championcombitems.append(' = ');
-                        championcombitems.appendChild(createBaseItem(dataCombItems[i].baseitems[0]));
-                        championcombitems.append(' + ');
-                        championcombitems.appendChild(createBaseItem(dataCombItems[i].baseitems[1]));
-                        championcombitems.appendChild(document.createElement('br'));
-                        break;
-                    }
-                }
+            for (var i = 0; i < champion.bestItems.length; i++) {
+                var item = champion.bestItems[i];
+                var championcombitems = document.getElementById('champions-combitem');
+                championcombitems.appendChild(createCombinedItem(item));
+                championcombitems.append(' = ');
+                championcombitems.appendChild(createBaseItem(item.baseitems[0]));
+                championcombitems.append(' + ');
+                championcombitems.appendChild(createBaseItem(item.baseitems[1]));
+                championcombitems.appendChild(document.createElement('br'));
             }
         });
         return el;
