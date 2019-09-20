@@ -3,9 +3,10 @@
 ---------------------- */
 
 (function() {
+    window.VERSION = '1.2.2';
 
     window.onerror = function(message) {
-        document.body.innerHTML += '<pre>' + message || ':( error!' + '</pre>';
+        document.body.innerHTML += '<pre>v' VERSION + ' ' + message || ':( error!' + '</pre>';
     };
 
 })();
