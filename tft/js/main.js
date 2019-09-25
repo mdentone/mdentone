@@ -135,7 +135,15 @@
         el.className = 'tft-champion tier-' + champion.tier;
         el.title = champion.name;
 
-        var imghtml  = '<div class="tft-object-image ' + champion.imgclass + '"></div>';
+        var imghtml = '';
+        if (champion.imgclass) {
+            imghtml = '<div class="tft-object-image ' + champion.imgclass + '"></div>';
+        }
+        else {
+            imghtml = '<img class="tft-object-image" src="' + champion.img +
+                '" alt="' + champion.name + '" title="' + champion.name +
+                '" style="width:48px; height:48px;">';
+        }
 
         el.innerHTML = imghtml + '<br><span>' + champion.name + '</span>';
 

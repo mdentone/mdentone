@@ -3,7 +3,7 @@
 ---------------------- */
 
 (function() {
-    window.VERSION = '1.3';
+    window.VERSION = '1.4';
 
     window.onerror = function(message) {
         document.body.innerHTML +=

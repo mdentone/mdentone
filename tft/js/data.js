@@ -5,10 +5,11 @@
 (function() {
     window.data = window.data || {};
 
-    var imageurl = 'https://cdn.leagueofgraphs.com/img/tft/items/';
+    var championImageUrl = 'https://ddragon.leagueoflegends.com/cdn/9.19.1/img/champion/';
+    var itemImageUrl = 'https://cdn.leagueofgraphs.com/img/tft/items/';
 
     data['app-version'] = VERSION;
-    data['game-version'] = '9.18';
+    data['game-version'] = '9.19';
     data['data-sources'] = 'leagueofgraphs.com; blitz.gg; esportstales.com; lolchess.gg; thegamehaus.com'
 
     var Aatrox = { id: 'Aatrox', name: "Aatrox", tier: 4, imgclass: 'champion-266-48' };
@@ -33,6 +34,7 @@
     var Graves = { id: 'Graves', name: "Graves", tier: 4, imgclass: 'champion-104-48' };
     var Jayce = { id: 'Jayce', name: "Jayce", tier: 3, imgclass: 'champion-126-48' };
     var Jinx = { id: 'Jinx', name: "Jinx", tier: 3, imgclass: 'champion-222-48' };
+    var KaiSa = { id: 'KaiSa', name: "Kai'Sa", tier: -1, img: championImageUrl + 'Kaisa.png' };
     var Karthus = { id: 'Karthus', name: "Karthus", tier: 2, imgclass: 'champion-30-48' };
     var Kassadin = { id: 'Kassadin', name: "Kassadin", tier: 3, imgclass: 'champion-38-48' };
     var Katarina = { id: 'Katarina', name: "Katarina", tier: 4, imgclass: 'champion-55-48' };
@@ -71,68 +73,79 @@
     data['champions'] = [
         Aatrox, Ahri, Akali, Anivia, Ashe, AurelionSol, Blitzcrank, Brand,
         Braum, Camille, ChoGath, Darius, Draven, Elise, Evelynn, Fiora,
-        Gangplank, Garen, Gnar, Graves, Jayce, Jinx, Karthus, Kassadin,
+        Gangplank, Garen, Gnar, Graves, Jayce, Jinx, KaiSa, Karthus, Kassadin,
         Katarina, Kayle, Kennen, KhaZix, Kindred, Leona, Lissandra, Lucian,
         Lulu, MissFortune, Mordekaiser, Morgana, Nidalee, Pantheon, Poppy,
         Pyke, RekSai, Rengar, Sejuani, Shen, Shyvana, Swain, Tristana,
         TwistedFate, Varus, Vayne, Veigar, Vi, Volibear, Warwick, Yasuo, Zed
     ];
 
-    var sword = { id: 'sword', img: imageurl + '1.png' };
-    var bow = { id: 'bow', img: imageurl + '2.png' };
-    var rod = { id: 'rod', img: imageurl + '3.png' };
-    var tear = { id: 'tear', img: imageurl + '4.png' };
-    var vest = { id: 'vest', img: imageurl + '5.png' };
-    var cloak = { id: 'cloak', img: imageurl + '6.png' };
-    var belt = { id: 'belt', img: imageurl + '7.png' };
-    var spatula = { id: 'spatula', img: imageurl + '8.png' };
+    var sword = { id: 'sword', img: itemImageUrl + '1.png' };
+    var bow = { id: 'bow', img: itemImageUrl + '2.png' };
+    var rod = { id: 'rod', img: itemImageUrl + '3.png' };
+    var tear = { id: 'tear', img: itemImageUrl + '4.png' };
+    var vest = { id: 'vest', img: itemImageUrl + '5.png' };
+    var cloak = { id: 'cloak', img: itemImageUrl + '6.png' };
+    var belt = { id: 'belt', img: itemImageUrl + '7.png' };
+    var spatula = { id: 'spatula', img: itemImageUrl + '8.png' };
+    var gloves = { id: 'glove', img: itemImageUrl + '9.png' };
 
     data['base-items'] = [
-        sword, bow, rod, tear, vest, cloak, belt, spatula
+        sword, bow, rod, tear, vest, cloak, belt, gloves, spatula
     ];
 
-    var deathblade = { id: 'deathblade', img: imageurl + '11.png', tier: 2, baseitems: [sword, sword] };
-    var lastwhisper = { id: 'lastwhisper', img: imageurl + '12.png', tier: 4, baseitems: [sword, bow] };
-    var gunblade = { id: 'gunblade', img: imageurl + '13.png', tier: 3, baseitems: [sword, rod] };
-    var spear = { id: 'spear', img: imageurl + '14.png', tier: 2, baseitems: [sword, tear] };
-    var angel = { id: 'angel', img: imageurl + '15.png', tier: 1, baseitems: [sword, vest] };
-    var bloodthirster = { id: 'bloodthirster', img: imageurl + '16.png', tier: 3, baseitems: [sword, cloak] };
-    var herald = { id: 'herald', img: imageurl + '17.png', tier: 5, baseitems: [sword, belt] };
-    var ghostblade = { id: 'ghostblade', img: imageurl + '18.png', tier: 0, baseitems: [sword, spatula] };
-    var firecannon = { id: 'firecannon', img: imageurl + '22.png', tier: 1, baseitems: [bow, bow] };
-    var rageblade = { id: 'rageblade', img: imageurl + '23.png', tier: 1, baseitems: [bow, rod] };
-    var shiv = { id: 'shiv', img: imageurl + '24.png', tier: 3, baseitems: [bow, tear] };
-    var dancer = { id: 'dancer', img: imageurl + '25.png', tier: 3, baseitems: [bow, vest] };
-    var cursedblade = { id: 'cursedblade', img: imageurl + '26.png', tier: 3, baseitems: [bow, cloak] };
-    var hydra = { id: 'hydra', img: imageurl + '27.png', tier: 4, baseitems: [bow, belt] };
-    var blade = { id: 'blade', img: imageurl + '28.png', tier: 0, baseitems: [bow, spatula] };
-    var deathcap = { id: 'deathcap', img: imageurl + '33.png', tier: 3, baseitems: [rod, rod] };
-    var echo = { id: 'echo', img: imageurl + '34.png', tier: 4, baseitems: [rod, tear] };
-    var locket = { id: 'locket', img: imageurl + '35.png', tier: 3, baseitems: [rod, vest] };
-    var spark = { id: 'spark', img: imageurl + '36.png', tier: 4, baseitems: [rod, cloak] };
-    var morellonomicon = { id: 'morellonomicon', img: imageurl + '37.png', tier: 1, baseitems: [rod, belt] };
-    var yuumi = { id: 'yuumi', img: imageurl + '38.png', tier: 0, baseitems: [rod, spatula] };
-    var embrace = { id: 'embrace', img: imageurl + '44.png', tier: 2, baseitems: [tear, tear] };
-    var heart = { id: 'heart', img: imageurl + '45.png', tier: 3, baseitems: [tear, vest] };
-    var hush = { id: 'hush', img: imageurl + '46.png', tier: 2, baseitems: [tear, cloak] };
-    var redemption = { id: 'redemption', img: imageurl + '47.png', tier: 3, baseitems: [tear, belt] };
-    var darkin = { id: 'darkin', img: imageurl + '48.png', tier: 0, baseitems: [tear, spatula] };
-    var thornmail = { id: 'thornmail', img: imageurl + '55.png', tier: 4, baseitems: [vest, vest] };
-    var breaker = { id: 'breaker', img: imageurl + '56.png', tier: 3, baseitems: [vest, cloak] };
-    var redbuff = { id: 'redbuff', img: imageurl + '57.png', tier: 1, baseitems: [vest, belt] };
-    var vow = { id: 'vow', img: imageurl + '58.png', tier: 0, baseitems: [vest, spatula] };
-    var claw = { id: 'claw', img: imageurl + '66.png', tier: 2, baseitems: [cloak, cloak] };
-    var zephyr = { id: 'zephyr', img: imageurl + '67.png', tier: 5, baseitems: [cloak, belt] };
-    var hurricane = { id: 'hurricane', img: imageurl + '68.png', tier: 2, baseitems: [cloak, spatula] };
-    var armor = { id: 'armor', img: imageurl + '77.png', tier: 3, baseitems: [belt, belt] };
-    var mallet = { id: 'mallet', img: imageurl + '78.png', tier: 3, baseitems: [belt, spatula] };
-    var force = { id: 'force', img: imageurl + '88.png', tier: 1, baseitems: [spatula, spatula] };
+    var deathblade = { id: 'deathblade', img: itemImageUrl + '11.png', tier: -1, baseitems: [sword, sword] };
+    var giantslayer = { id: 'giantslayer', img: itemImageUrl + '12.png', tier: -1, baseitems: [sword, bow] };
+    var gunblade = { id: 'gunblade', img: itemImageUrl + '13.png', tier: 3, baseitems: [sword, rod] };
+    var spear = { id: 'spear', img: itemImageUrl + '14.png', tier: 2, baseitems: [sword, tear] };
+    var angel = { id: 'angel', img: itemImageUrl + '15.png', tier: 1, baseitems: [sword, vest] };
+    var bloodthirster = { id: 'bloodthirster', img: itemImageUrl + '16.png', tier: 3, baseitems: [sword, cloak] };
+    var herald = { id: 'herald', img: itemImageUrl + '17.png', tier: 5, baseitems: [sword, belt] };
+    var ghostblade = { id: 'ghostblade', img: itemImageUrl + '18.png', tier: 0, baseitems: [sword, spatula] };
+    var edge = { id: 'edge', img: itemImageUrl + '19.png', tier: -1, baseitems: [sword, gloves] };
+    var firecannon = { id: 'firecannon', img: itemImageUrl + '22.png', tier: 1, baseitems: [bow, bow] };
+    var rageblade = { id: 'rageblade', img: itemImageUrl + '23.png', tier: 1, baseitems: [bow, rod] };
+    var shiv = { id: 'shiv', img: itemImageUrl + '24.png', tier: 3, baseitems: [bow, tear] };
+    var dancer = { id: 'dancer', img: itemImageUrl + '25.png', tier: 3, baseitems: [bow, vest] };
+    var cursedblade = { id: 'cursedblade', img: itemImageUrl + '26.png', tier: 3, baseitems: [bow, cloak] };
+    var hydra = { id: 'hydra', img: itemImageUrl + '27.png', tier: 4, baseitems: [bow, belt] };
+    var blade = { id: 'blade', img: itemImageUrl + '28.png', tier: 0, baseitems: [bow, spatula] };
+    var crossbow = { id: 'crossbow', img: itemImageUrl + '29.png', tier: -1, baseitems: [bow, gloves] };
+    var deathcap = { id: 'deathcap', img: itemImageUrl + '33.png', tier: 3, baseitems: [rod, rod] };
+    var echo = { id: 'echo', img: itemImageUrl + '34.png', tier: 4, baseitems: [rod, tear] };
+    var locket = { id: 'locket', img: itemImageUrl + '35.png', tier: 3, baseitems: [rod, vest] };
+    var spark = { id: 'spark', img: itemImageUrl + '36.png', tier: 4, baseitems: [rod, cloak] };
+    var morellonomicon = { id: 'morellonomicon', img: itemImageUrl + '37.png', tier: 1, baseitems: [rod, belt] };
+    var yuumi = { id: 'yuumi', img: itemImageUrl + '38.png', tier: 0, baseitems: [rod, spatula] };
+    var gauntlet = { id: 'gauntlet', img: itemImageUrl + '39.png', tier: -1, baseitems: [rod, gloves] };
+    var embrace = { id: 'embrace', img: itemImageUrl + '44.png', tier: 2, baseitems: [tear, tear] };
+    var heart = { id: 'heart', img: itemImageUrl + '45.png', tier: 3, baseitems: [tear, vest] };
+    var hush = { id: 'hush', img: itemImageUrl + '46.png', tier: 2, baseitems: [tear, cloak] };
+    var redemption = { id: 'redemption', img: itemImageUrl + '47.png', tier: 3, baseitems: [tear, belt] };
+    var darkin = { id: 'darkin', img: itemImageUrl + '48.png', tier: 0, baseitems: [tear, spatula] };
+    var justice = { id: 'justice', img: itemImageUrl + '49.png', tier: -1, baseitems: [tear, gloves] };
+    var thornmail = { id: 'thornmail', img: itemImageUrl + '55.png', tier: 4, baseitems: [vest, vest] };
+    var breaker = { id: 'breaker', img: itemImageUrl + '56.png', tier: 3, baseitems: [vest, cloak] };
+    var redbuff = { id: 'redbuff', img: itemImageUrl + '57.png', tier: 1, baseitems: [vest, belt] };
+    var vow = { id: 'vow', img: itemImageUrl + '58.png', tier: 0, baseitems: [vest, spatula] };
+    var icegauntlet = { id: 'icegauntlet', img: itemImageUrl + '59.png', tier: -1, baseitems: [vest, gloves] };
+    var claw = { id: 'claw', img: itemImageUrl + '66.png', tier: 2, baseitems: [cloak, cloak] };
+    var zephyr = { id: 'zephyr', img: itemImageUrl + '67.png', tier: 5, baseitems: [cloak, belt] };
+    var hurricane = { id: 'hurricane', img: itemImageUrl + '68.png', tier: 2, baseitems: [cloak, spatula] };
+    var quicksilver = { id: 'quicksilver', img: itemImageUrl + '69.png', tier: -1, baseitems: [cloak, gloves] };
+    var armor = { id: 'armor', img: itemImageUrl + '77.png', tier: 3, baseitems: [belt, belt] };
+    var mallet = { id: 'mallet', img: itemImageUrl + '78.png', tier: 3, baseitems: [belt, spatula] };
+    var trapclaw = { id: 'trapclaw', img: itemImageUrl + '79.png', tier: -1, baseitems: [belt, gloves] };
+    var force = { id: 'force', img: itemImageUrl + '88.png', tier: 1, baseitems: [spatula, spatula] };
+    var mittens = { id: 'mittens', img: itemImageUrl + '89.png', tier: -1, baseitems: [spatula, gloves] };
+    var thief = { id: 'thief', img: itemImageUrl + '99.png', tier: -1, baseitems: [gloves, gloves] };
 
     data['combined-items'] = [
-        deathblade, lastwhisper, gunblade, spear, angel, bloodthirster, herald, ghostblade,
-        firecannon, rageblade, shiv, dancer, cursedblade, hydra, blade, deathcap, echo,
-        locket, spark, morellonomicon, yuumi, embrace, heart, hush, redemption, darkin,
-        thornmail, breaker, redbuff, vow, claw, zephyr, hurricane, armor, mallet, force
+        deathblade, giantslayer, gunblade, spear, angel, bloodthirster, herald, ghostblade,
+        edge, firecannon, rageblade, shiv, dancer, cursedblade, hydra, blade, crossbow, deathcap,
+        echo, locket, spark, morellonomicon, yuumi, gauntlet, embrace, heart, hush, redemption,
+        darkin, justice, thornmail, breaker, redbuff, vow, icegauntlet, claw, zephyr, hurricane,
+        quicksilver, armor, mallet, trapclaw, force, mittens, thief
     ];
 
     // data taken from above sources:
@@ -140,7 +153,7 @@
     Ahri.bestItems = [spear, rageblade, deathcap, shiv, echo, morellonomicon, embrace];
     Akali.bestItems = [embrace, gunblade, spear, echo, claw, heart, armor];
     Anivia.bestItems = [rageblade, spear, echo, morellonomicon, deathcap, embrace];
-    Ashe.bestItems = [shiv, firecannon, rageblade, hurricane, deathblade, lastwhisper, cursedblade];
+    Ashe.bestItems = [shiv, firecannon, rageblade, hurricane, cursedblade];
     AurelionSol.bestItems = [firecannon, spear, rageblade, deathcap, morellonomicon, embrace];
     Blitzcrank.bestItems = [spear, deathcap, gunblade, rageblade, force, armor, thornmail, claw];
     Brand.bestItems = [firecannon, spear, rageblade, deathcap, echo, gunblade, morellonomicon];
@@ -148,7 +161,7 @@
     Camille.bestItems = [bloodthirster, dancer, redbuff, spear, rageblade, shiv, ghostblade];
     ChoGath.bestItems = [angel, deathcap, morellonomicon, heart, redemption, thornmail, armor, hydra];
     Darius.bestItems = [armor, dancer, claw, heart];
-    Draven.bestItems = [firecannon, bloodthirster, rageblade, deathblade, lastwhisper, angel];
+    Draven.bestItems = [firecannon, bloodthirster, rageblade, angel];
     Elise.bestItems = [armor, heart, claw, dancer, hydra];
     Evelynn.bestItems = [embrace, deathcap, morellonomicon, gunblade, angel, claw];
     Fiora.bestItems = [rageblade, bloodthirster, firecannon, shiv, gunblade];
@@ -157,13 +170,14 @@
     Gnar.bestItems = [armor, claw, angel, dancer, hydra, bloodthirster];
     Graves.bestItems = [redbuff, hydra, cursedblade, hush, breaker];
     Jayce.bestItems = [bloodthirster, armor, hydra, dancer, redbuff];
-    Jinx.bestItems = [firecannon, hurricane, redbuff, bloodthirster, deathblade, angel, dancer, hush];
+    Jinx.bestItems = [firecannon, hurricane, redbuff, bloodthirster, angel, dancer, hush];
+    KaiSa.bestItems = [edge, firecannon, rageblade, hurricane];
     Karthus.bestItems = [embrace, morellonomicon, deathcap];
     Kassadin.bestItems = [rageblade, firecannon, ghostblade, dancer, claw];
     Katarina.bestItems = [embrace, morellonomicon, deathcap, gunblade, echo];
     Kayle.bestItems = [spear, rageblade, firecannon, embrace, shiv];
     Kennen.bestItems = [morellonomicon, angel, deathcap, claw, dancer, gunblade];
-    KhaZix.bestItems = [firecannon, deathblade, embrace, deathcap, echo, dancer, lastwhisper];
+    KhaZix.bestItems = [firecannon, embrace, deathcap, echo, dancer, deathblade];
     Kindred.bestItems = [spear, angel, dancer, shiv, herald, locket, spark, zephyr];
     Leona.bestItems = [armor, thornmail, claw, herald, locket, heart, redemption, zephyr, force];
     Lissandra.bestItems = [herald, locket, spark, zephyr];
@@ -177,7 +191,7 @@
     Poppy.bestItems = [armor, thornmail, claw, dancer, heart, redemption];
     Pyke.bestItems = [spear, firecannon, morellonomicon, heart, angel, embrace];
     RekSai.bestItems = [armor, spear, thornmail, claw, spark, hydra];
-    Rengar.bestItems = [firecannon, angel, claw, bloodthirster, dancer, deathblade, lastwhisper];
+    Rengar.bestItems = [firecannon, angel, claw, bloodthirster, dancer, deathblade];
     Sejuani.bestItems = [morellonomicon, armor, claw, angel, heart];
     Shen.bestItems = [dancer, armor, claw, thornmail, locket, angel];
     Shyvana.bestItems = [armor, thornmail, dancer, rageblade, firecannon, gunblade, angel, hydra];
@@ -185,12 +199,12 @@
     Tristana.bestItems = [redbuff, cursedblade, hush, breaker, shiv];
     TwistedFate.bestItems = [shiv, echo, rageblade, embrace, firecannon];
     Varus.bestItems = [shiv, rageblade, firecannon, spear, deathcap, embrace];
-    Vayne.bestItems = [shiv, rageblade, firecannon, deathblade, lastwhisper];
+    Vayne.bestItems = [shiv, rageblade, firecannon];
     Veigar.bestItems = [embrace, rageblade, firecannon, cursedblade, spear];
     Vi.bestItems = [morellonomicon, angel, heart, armor, spear, deathcap];
     Volibear.bestItems = [firecannon, rageblade, redbuff, cursedblade, bloodthirster, dancer, breaker];
     Warwick.bestItems = [armor, thornmail, heart];
     Yasuo.bestItems = [embrace, hush, redbuff, breaker, armor, angel];
-    Zed.bestItems = [firecannon, bloodthirster, angel, deathblade, lastwhisper, herald];
+    Zed.bestItems = [firecannon, bloodthirster, angel, herald, deathblade];
 
 })();

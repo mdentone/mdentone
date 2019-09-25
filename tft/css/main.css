@@ -73,6 +73,10 @@ header, footer {
     overflow: hidden;
 }
 
+#champions, #combitems, #baseitems {
+    text-align: center;
+}
+
 .tft-object-image {
     display: inline-block;
     margin-left: auto;
@@ -106,6 +110,10 @@ header, footer {
 
 .tft-champion {
     color: black;
+}
+
+.tier--1 {
+    box-shadow: 0 0 9px 2px pink;
 }
 
 .tier-1 { /* red */
